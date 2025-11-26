@@ -158,5 +158,83 @@ export const neighborhoodsData = {
                 "Internationale scholen en voorzieningen"
             ]
         }
+    },
+    "de-pijp": {
+        en: {
+            title: "De Pijp",
+            description: "Known as the Latin Quarter of Amsterdam, De Pijp is a vibrant and multicultural neighborhood famous for the Albert Cuyp Market, diverse restaurants, and lively atmosphere.",
+            atmosphere: "De Pijp is bustling with energy, attracting students, young professionals, and creatives. It's a food lover's paradise with countless brunch spots, cafes, and international cuisines. The streets are narrow and lively, giving it a cozy, urban village feel.",
+            highlights: [
+                "Albert Cuyp Market - Europe's largest daily market",
+                "Sarphatipark - A beautiful green oasis",
+                "Heineken Experience",
+                "Gerard Douplein for nightlife and dining",
+                "Diverse mix of cultures and cuisines"
+            ]
+        },
+        nl: {
+            title: "De Pijp",
+            description: "Bekend als het Quartier Latin van Amsterdam, is De Pijp een levendige en multiculturele wijk beroemd om de Albert Cuypmarkt, diverse restaurants en levendige sfeer.",
+            atmosphere: "De Pijp bruist van energie en trekt studenten, jonge professionals en creatieven aan. Het is een paradijs voor voedselliefhebbers met talloze brunchplekken, cafés en internationale keukens. De straten zijn smal en levendig, wat het een gezellig, stedelijk dorpsgevoel geeft.",
+            highlights: [
+                "Albert Cuypmarkt - Europa's grootste dagmarkt",
+                "Sarphatipark - Een prachtige groene oase",
+                "Heineken Experience",
+                "Gerard Douplein voor uitgaan en dineren",
+                "Diverse mix van culturen en keukens"
+            ]
+        }
+    },
+    "oud-zuid": {
+        en: {
+            title: "Oud-Zuid",
+            description: "One of Amsterdam's most elegant and affluent neighborhoods, known for its luxury shopping, world-class museums, and stately architecture.",
+            atmosphere: "Oud-Zuid exudes luxury and sophistication. It attracts families, expats, and professionals who appreciate high-end living. The area is quieter and more spacious than the center, with wide avenues and proximity to Vondelpark.",
+            highlights: [
+                "Museumplein (Rijksmuseum, Van Gogh Museum)",
+                "Vondelpark - Amsterdam's most famous park",
+                "P.C. Hooftstraat luxury shopping",
+                "Concertgebouw",
+                "Elegant 19th-century architecture"
+            ]
+        },
+        nl: {
+            title: "Oud-Zuid",
+            description: "Een van de meest elegante en welvarende wijken van Amsterdam, bekend om zijn luxe winkels, musea van wereldklasse en statige architectuur.",
+            atmosphere: "Oud-Zuid straalt luxe en verfijning uit. Het trekt gezinnen, expats en professionals aan die houden van hoogwaardig wonen. Het gebied is rustiger en ruimer dan het centrum, met brede lanen en nabijheid van het Vondelpark.",
+            highlights: [
+                "Museumplein (Rijksmuseum, Van Gogh Museum)",
+                "Vondelpark - Het beroemdste park van Amsterdam",
+                "P.C. Hooftstraat luxe winkelen",
+                "Concertgebouw",
+                "Elegante 19e-eeuwse architectuur"
+            ]
+        }
+    },
+    "nieuw-west": {
+        en: {
+            title: "Nieuw-West",
+            description: "A spacious and green district known for the Sloterplas lake and modern urban planning. It offers affordable living with plenty of recreational opportunities.",
+            atmosphere: "Nieuw-West is a multicultural and family-friendly area. It's characterized by space, light, and greenery. The atmosphere is relaxed and diverse, with a mix of post-war architecture and new developments.",
+            highlights: [
+                "Sloterplas and Sloterpark - Water sports and recreation",
+                "Meervaart Theater",
+                "Diverse shopping centers (Osdorpplein)",
+                "Affordable housing options",
+                "Good public transport connections"
+            ]
+        },
+        nl: {
+            title: "Nieuw-West",
+            description: "Een ruim en groen stadsdeel bekend om de Sloterplas en moderne stedenbouw. Het biedt betaalbaar wonen met volop recreatiemogelijkheden.",
+            atmosphere: "Nieuw-West is een multicultureel en gezinsvriendelijk gebied. Het wordt gekenmerkt door ruimte, licht en groen. De sfeer is ontspannen en divers, met een mix van naoorlogse architectuur en nieuwbouw.",
+            highlights: [
+                "Sloterplas en Sloterpark - Watersport en recreatie",
+                "Theater de Meervaart",
+                "Diverse winkelcentra (Osdorpplein)",
+                "Betaalbare woonopties",
+                "Goede openbaar vervoer verbindingen"
+            ]
+        }
     }
 };
