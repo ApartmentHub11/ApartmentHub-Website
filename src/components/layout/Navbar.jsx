@@ -17,10 +17,8 @@ const Navbar = () => {
     const t = translations.nav[currentLang] || translations.nav.en;
 
     const navLinks = [
-        { name: t.home, path: currentLang === 'nl' ? '/nl' : '/' },
         { name: t.rentOut, path: currentLang === 'nl' ? '/nl/rent-out' : '/en/rent-out' },
         { name: t.rentIn, path: currentLang === 'nl' ? '/nl/rent-in' : '/en/rent-in' },
-        { name: t.neighborhoods, path: currentLang === 'nl' ? '/nl/neighborhoods' : '/en/neighborhoods' },
         { name: t.faq, path: currentLang === 'nl' ? '/nl/faq' : '/en/faq' },
         { name: t.about, path: currentLang === 'nl' ? '/nl/about-us' : '/en/about-us' },
         { name: t.contact, path: currentLang === 'nl' ? '/nl/contact' : '/en/contact' },

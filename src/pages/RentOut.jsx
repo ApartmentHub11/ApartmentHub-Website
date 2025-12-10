@@ -7,20 +7,20 @@ import BrochureModal from '../components/common/BrochureModal';
 import useInView from '../hooks/useInView';
 import {
     Shield, Search, Heart, UserCheck, Euro, Calendar,
-    Camera, CheckCircle, TrendingUp, MessageSquare,
+    Camera, CheckCircle, TrendingUp, MessageSquare, Users,
     MapPin, FileText, Clock, ArrowRight
 } from 'lucide-react';
 import styles from './RentOut.module.css';
 
 // Import images
-import rentoutHeroImage from '../assets/rentout.jpg';
+import rentoutHeroImage from '../assets/verhuren-hero-BNLyqM_Y.jpg';
 import logoImage from '../assets/5a9afd14-27a5-40d8-a185-fac727f64fdf.png';
 import rentOutVideo from '../assets/Apartmenthub Rent out.mov';
 
 // Import images for story section steps
-import verhurenDetectiveImage from '../assets/RentOut1.jpg';
-import verhurenMarketingImage from '../assets/rentout2.jpg';
-import verhurenMatchImage from '../assets/rentout3.jpg';
+import verhurenDetectiveImage from '../assets/verhuren-detective-new-C-o8nHsh.jpg';
+import verhurenMarketingImage from '../assets/verhuren-marketing-Blxw-RcR.jpg';
+import verhurenMatchImage from '../assets/verhuren-match--7hY_h4N.jpg';
 
 const RentOut = () => {
     const currentLang = useSelector((state) => state.ui.language);
@@ -274,7 +274,87 @@ const RentOut = () => {
                 </div>
             </section>
 
+            {/* What do we offer? Section */}
+            <section className={styles.offerSection}>
+                <div className={styles.offerContainer}>
+                    <div className={styles.offerHeader}>
+                        <h2 className={styles.offerTitle}>
+                            {currentLang === 'nl' ? 'Wat bieden wij aan?' : 'What do we offer?'}
+                        </h2>
+                        <div className={styles.pricingBadge}>
+                            <Euro className={styles.pricingIcon} />
+                            <span className={styles.pricingText}>
+                                €1.000,- <span className={styles.pricingDetails}>{currentLang === 'nl' ? 'excl. BTW' : 'excl. VAT'}</span>
+                            </span>
+                        </div>
+                    </div>
 
+                    <div className={styles.servicesGrid}>
+                        <div className={styles.serviceCard}>
+                            <div className={styles.serviceIconWrapper}>
+                                <MessageSquare className={styles.serviceIcon} strokeWidth={2} />
+                            </div>
+                            <span className={styles.serviceText}>{currentLang === 'nl' ? 'Gratis advies' : 'Free advice'}</span>
+                        </div>
+
+                        <div className={styles.serviceCard}>
+                            <div className={styles.serviceIconWrapper}>
+                                <Camera className={styles.serviceIcon} strokeWidth={2} />
+                            </div>
+                            <span className={styles.serviceText}>{currentLang === 'nl' ? 'Gratis foto\'s & video' : 'Free photos & video'}</span>
+                        </div>
+
+                        <div className={styles.serviceCard}>
+                            <div className={styles.serviceIconWrapper}>
+                                <UserCheck className={styles.serviceIcon} strokeWidth={2} />
+                            </div>
+                            <span className={styles.serviceText}>{currentLang === 'nl' ? 'Huurder screenings' : 'Tenant screenings'}</span>
+                        </div>
+
+                        <div className={styles.serviceCard}>
+                            <div className={styles.serviceIconWrapper}>
+                                <TrendingUp className={styles.serviceIcon} strokeWidth={2} />
+                            </div>
+                            <span className={styles.serviceText}>{currentLang === 'nl' ? 'Adverteren op Funda & Pararius' : 'Advertising on Funda & Pararius'}</span>
+                        </div>
+
+                        <div className={styles.serviceCard}>
+                            <div className={styles.serviceIconWrapper}>
+                                <Users className={styles.serviceIcon} strokeWidth={2} />
+                            </div>
+                            <span className={styles.serviceText}>{currentLang === 'nl' ? 'Hulp bij onderhandelingen' : 'Assistance with negotiations'}</span>
+                        </div>
+
+                        <div className={styles.serviceCard}>
+                            <div className={styles.serviceIconWrapper}>
+                                <MapPin className={styles.serviceIcon} strokeWidth={2} />
+                            </div>
+                            <span className={styles.serviceText}>{currentLang === 'nl' ? 'Distributie naar internationale relocators' : 'Distribution to international relocators'}</span>
+                        </div>
+
+                        <div className={styles.serviceCard}>
+                            <div className={styles.serviceIconWrapper}>
+                                <FileText className={styles.serviceIcon} strokeWidth={2} />
+                            </div>
+                            <span className={styles.serviceText}>{currentLang === 'nl' ? 'Huurcontract' : 'Rental contract'}</span>
+                        </div>
+
+                        <div className={styles.serviceCard}>
+                            <div className={styles.serviceIconWrapper}>
+                                <Calendar className={styles.serviceIcon} strokeWidth={2} />
+                            </div>
+                            <span className={styles.serviceText}>{currentLang === 'nl' ? 'Bezichtigingen 7 dagen per week' : 'Property showings 7 days a week'}</span>
+                        </div>
+                    </div>
+
+                    <div className={styles.offerCtaWrapper}>
+                        <button className={styles.getStartedBtn}>
+                            {currentLang === 'nl' ? 'Start Nu' : 'Get Started'}
+                            <ArrowRight className={styles.btnArrowIcon} />
+                        </button>
+                    </div>
+                </div>
+            </section>
 
             {/* Numbers Section */}
             <section className={styles.numbersSection}>
@@ -359,10 +439,10 @@ const RentOut = () => {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* Risks Section */}
-            <section className={styles.risksSection}>
+            < section className={styles.risksSection} >
                 <div className={styles.container}>
                     <div className={styles.sectionHeader}>
                         <h2 className={styles.sectionTitle}>{t.risksTitle}</h2>
@@ -478,10 +558,10 @@ const RentOut = () => {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* Final Section / Contact Form */}
-            <section className={styles.finalSection}>
+            < section className={styles.finalSection} >
                 <div className={styles.finalBg}></div>
                 <div className={styles.wideContainer}>
                     <div className={styles.finalGrid}>
@@ -641,14 +721,14 @@ const RentOut = () => {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* Brochure Modal */}
-            <BrochureModal
+            < BrochureModal
                 isOpen={isBrochureModalOpen}
                 onClose={() => setIsBrochureModalOpen(false)}
             />
-        </div>
+        </div >
     );
 };
 

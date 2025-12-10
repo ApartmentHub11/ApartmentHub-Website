@@ -47,13 +47,13 @@
 .heroSubtitle {
     font-size: 1.125rem;
     color: #6b7280;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 @media (min-width: 768px) {
     .heroSubtitle {
         font-size: 1.25rem;
-        margin-bottom: 2rem;
+        margin-bottom: 1.5rem;
     }
 }
 
@@ -67,6 +67,12 @@
     font-size: 0.875rem;
     font-weight: 400;
     margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+    .responseTimeBadge {
+        margin-bottom: 1.5rem;
+    }
 }
 
 .clockIcon {
@@ -91,6 +97,7 @@
     cursor: pointer;
     transition: all 0.3s;
     box-shadow: 0 10px 15px -3px rgba(34, 197, 94, 0.3);
+    text-decoration: none;
 }
 
 .whatsappHeroBtn:hover {
@@ -310,6 +317,13 @@
     position: relative;
     display: flex;
     justify-content: center;
+}
+
+.guideVideo {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 1rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
 .guideCard {

@@ -2,6 +2,7 @@ import React from 'react';
 import { FileText, Home, Shield, Users, CheckCircle, Download } from 'lucide-react';
 import styles from '../../pages/RentIn.module.css';
 import rentalGuide from '../../assets/amsterdam-rental-guide-2024.pdf';
+import rentInVideo from '../../assets/Apartmenthub rent in.mov';
 
 const RentalGuideDownload = ({ translations }) => {
     const t = translations;
@@ -85,48 +86,17 @@ const RentalGuideDownload = ({ translations }) => {
                     </div>
 
                     <div className={styles.guideVisual}>
-                        <div className={styles.docStack}>
-                            <div className={styles.docStackHeader}>
-                                <div className={styles.docStackGradientBar}></div>
-                                <div className={styles.docStackGrayBarLg}></div>
-                                <div className={styles.docStackGrayBarMd}></div>
-                            </div>
-                            <div className={styles.docStackBody}>
-                                <div className={styles.docStackRow}>
-                                    <div className={styles.docStackRowHeader}>
-                                        <div className={`${styles.docStackIconBox} ${styles.bgMyrtleTwenty}`}></div>
-                                        <div className={`${styles.docStackRowTitleLine} ${styles.wTwoThirds}`}></div>
-                                    </div>
-                                    <div className={styles.docStackRowLines}>
-                                        <div className={`${styles.docStackLine} ${styles.wFull}`}></div>
-                                        <div className={`${styles.docStackLine} ${styles.wFiveSixths}`}></div>
-                                        <div className={`${styles.docStackLine} ${styles.wFourFifths}`}></div>
-                                    </div>
-                                </div>
-                                <div className={styles.docStackRow}>
-                                    <div className={styles.docStackRowHeader}>
-                                        <div className={`${styles.docStackIconBox} ${styles.bgOrangeTwenty}`}></div>
-                                        <div className={`${styles.docStackRowTitleLine} ${styles.wThreeFifths}`}></div>
-                                    </div>
-                                    <div className={styles.docStackRowLines}>
-                                        <div className={`${styles.docStackLine} ${styles.wFull}`}></div>
-                                        <div className={`${styles.docStackLine} ${styles.wFourFifths}`}></div>
-                                    </div>
-                                </div>
-                                <div className={styles.docStackRow}>
-                                    <div className={styles.docStackRowHeader}>
-                                        <div className={`${styles.docStackIconBox} ${styles.bgMyrtleTwenty}`}></div>
-                                        <div className={`${styles.docStackRowTitleLine} ${styles.wHalf}`}></div>
-                                    </div>
-                                    <div className={styles.docStackRowLines}>
-                                        <div className={`${styles.docStackLine} ${styles.wFiveSixths}`}></div>
-                                        <div className={`${styles.docStackLine} ${styles.wFull}`}></div>
-                                        <div className={`${styles.docStackLine} ${styles.wThreeQuarters}`}></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className={styles.docStackBadge}>32 Pages</div>
-                        </div>
+                        <video
+                            src={rentInVideo}
+                            className={styles.guideVideo}
+                            controls
+                            muted
+                            loop
+                            playsInline
+                            preload="metadata"
+                        >
+                            Your browser does not support the video tag.
+                        </video>
                     </div>
                 </div>
             </div>

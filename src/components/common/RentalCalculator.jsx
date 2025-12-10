@@ -1,7 +1,7 @@
 import React from 'react';
 import { MapPin, Calculator, ChevronDown } from 'lucide-react';
 import styles from './RentalCalculator.module.css';
-import { supabase } from '../../lib/supabase';
+import { supabase } from '../../integrations/supabase/client';
 
 
 const RentalCalculator = ({ onSubmit, onReset, submitted }) => {
@@ -167,6 +167,36 @@ const RentalCalculator = ({ onSubmit, onReset, submitted }) => {
         if (!validateForm()) return;
 
         const calculatedRent = await calculateRent();
+
+        // Save to Supabase
+        try {
+            const { data, error } = await supabase
+                .from('rental_leads')
+                .insert([
+                    {
+                        address: formData.address,
+                        postal_code: formData.postalCode,
+                        square_meters: parseInt(formData.squareMeters) || null,
+                        rooms: parseInt(formData.rooms) || null,
+                        interior: formData.interior,
+                        condition: formData.condition,
+                        full_name: formData.fullName,
+                        email: formData.email,
+                        phone: formData.phone,
+                        estimated_rent: calculatedRent || null
+                    }
+                ]);
+
+            if (error) {
+                console.error('Error saving to Supabase:', error);
+                // Still show the calculation even if save fails
+            } else {
+                console.log('Successfully saved to Supabase:', data);
+            }
+        } catch (error) {
+            console.error('Supabase submission error:', error);
+            // Continue showing calculation even if database save fails
+        }
 
         // Pass result to parent, but keep component displaying the form + result in screen
         if (typeof onSubmit === 'function') {
