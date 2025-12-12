@@ -1324,28 +1324,31 @@
 }
 
 .solutionBoxGreen {
-    background-color: rgba(0, 155, 138, 0.05);
+    background-color: #f0fdf4;
+    /* Light Green shade (Green-50) */
     padding: 1.5rem;
     border-radius: 1rem;
-    border: 1px solid rgba(0, 155, 138, 0.2);
+    border: 1px solid #dcfce7;
+    /* Green-100 */
 }
 
 .solutionBoxOrange {
     background-color: white;
     padding: 1.5rem;
     border-radius: 1rem;
-    border: 1px solid #f3f4f6;
-    /* Gray-100 */
+    border: 1px solid #d1d5db;
+    /* Darker boundary (Gray-300) */
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
 }
 
 .solutionBoxBlue {
-    background-color: #ecfeff;
-    /* Cyan-50 - Visual match for "Our Strategy" */
+    background-color: white;
+    /* User requested White */
     padding: 1.5rem;
     border-radius: 1rem;
-    border: 1px solid #cffafe;
-    /* Cyan-100 */
+    border: 1px solid #f3f4f6;
+    /* Gray-100 to match other white boxes */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
 }
 
 .solutionHeader {
@@ -1372,8 +1375,8 @@
 .solutionIconBlue {
     width: 2rem;
     height: 2rem;
-    color: #0891b2;
-    /* Cyan-600 */
+    color: #497772;
+    /* Myrtle (Bluish Green) */
     margin-right: 0.75rem;
 }
 
@@ -1393,8 +1396,8 @@
 .solutionTitleBlue {
     font-size: 1.125rem;
     font-weight: 600;
-    color: #164e63;
-    /* Cyan-900 */
+    color: #497772;
+    /* Myrtle (Bluish Green) */
 }
 
 .solutionListGreen {
@@ -1422,8 +1425,8 @@
     list-style: none;
     padding: 0;
     margin: 0;
-    color: #0e7490;
-    /* Cyan-700 */
+    color: #497772;
+    /* Myrtle (Bluish Green) */
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
