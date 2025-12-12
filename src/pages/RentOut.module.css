@@ -1342,12 +1342,12 @@
 }
 
 .solutionBoxBlue {
-    background-color: #f6f8f8;
-    /* Myrtle-50 (Calculated) */
+    background-color: white;
+    /* User requested White */
     padding: 1.5rem;
     border-radius: 1rem;
-    border: 1px solid #dbe4e3;
-    /* Myrtle-200 (Calculated) */
+    border: 1px solid #cffafe;
+    /* Cyan-100 border */
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
 }
 
@@ -1376,8 +1376,8 @@
 .solutionIconBlue {
     width: 2rem;
     height: 2rem;
-    color: #497772;
-    /* Myrtle (Bluish Green) */
+    color: #06b6d4;
+    /* Bright Cyan-500 */
     margin-right: 0.75rem;
 }
 
@@ -1398,8 +1398,8 @@
 .solutionTitleBlue {
     font-size: 1.125rem;
     font-weight: 600;
-    color: #497772;
-    /* Myrtle (Bluish Green) */
+    color: #0891b2;
+    /* Cyan-600 (Brighter than 900) */
 }
 
 .solutionListGreen {
@@ -1428,8 +1428,8 @@
     list-style: none;
     padding: 0;
     margin: 0;
-    color: #497772;
-    /* Myrtle (Bluish Green) */
+    color: #0891b2;
+    /* Cyan-600 (Brighter than 700) */
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
