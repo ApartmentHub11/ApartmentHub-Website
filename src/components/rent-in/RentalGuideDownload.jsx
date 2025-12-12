@@ -2,7 +2,7 @@ import React from 'react';
 import { FileText, Home, Shield, Users, CheckCircle, Download } from 'lucide-react';
 import styles from '../../pages/RentIn.module.css';
 import rentalGuide from '../../assets/amsterdam-rental-guide-2024.pdf';
-import rentInVideo from '../../assets/Apartmenthub rent in.mov';
+import rentInVideo from '../../assets/Apartmenthub rent in.mp4';
 
 const RentalGuideDownload = ({ translations }) => {
     const t = translations;
