@@ -1,6 +1,7 @@
 import React from 'react';
-import { MapPin, Calculator, ChevronDown } from 'lucide-react';
+import { MapPin, Calculator } from 'lucide-react';
 import styles from './RentalCalculator.module.css';
+import CustomSelect from './CustomSelect';
 import { supabase } from '../../integrations/supabase/client';
 
 
@@ -11,7 +12,7 @@ const RentalCalculator = ({ onSubmit, onReset, submitted }) => {
         squareMeters: '',
         rooms: '1',
         interior: 'unfurnished',
-        condition: 'average',
+        condition: '',
         fullName: '',
         email: '',
         phone: ''
@@ -323,38 +324,32 @@ const RentalCalculator = ({ onSubmit, onReset, submitted }) => {
                 <div className={`${styles.formGrid} ${styles.gridCols2} `}>
                     <div className={styles.formGroup}>
                         <label className={styles.formLabel}>ROOMS *</label>
-                        <div className={styles.selectWrapper}>
-                            <select
-                                value={formData.rooms}
-                                onChange={(e) => handleInputChange('rooms', e.target.value)}
-                                className={styles.formSelect}
-                                required
-                            >
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5+</option>
-                            </select>
-                            <ChevronDown className={styles.selectIcon} />
-                        </div>
+                        <CustomSelect
+                            value={formData.rooms}
+                            onChange={(val) => handleInputChange('rooms', val)}
+                            options={[
+                                { value: "1", label: "1" },
+                                { value: "2", label: "2" },
+                                { value: "3", label: "3" },
+                                { value: "4", label: "4" },
+                                { value: "5", label: "5+" }
+                            ]}
+                            required
+                        />
                     </div>
                     <div className={styles.formGroup}>
                         <label className={styles.formLabel}>INTERIOR *</label>
-                        <div className={styles.selectWrapper}>
-                            <select
-                                value={formData.interior}
-                                onChange={(e) => handleInputChange('interior', e.target.value)}
-                                className={styles.formSelect}
-                                required
-                            >
-                                <option value="shell">Shell</option>
-                                <option value="unfurnished">Unfurnished</option>
-                                <option value="partlyFurnished">Partly furnished</option>
-                                <option value="furnished">Furnished</option>
-                            </select>
-                            <ChevronDown className={styles.selectIcon} />
-                        </div>
+                        <CustomSelect
+                            value={formData.interior}
+                            onChange={(val) => handleInputChange('interior', val)}
+                            options={[
+                                { value: "shell", label: "Shell" },
+                                { value: "unfurnished", label: "Unfurnished" },
+                                { value: "partlyFurnished", label: "Partly furnished" },
+                                { value: "furnished", label: "Furnished" }
+                            ]}
+                            required
+                        />
                     </div>
                 </div>
 
@@ -362,19 +357,17 @@ const RentalCalculator = ({ onSubmit, onReset, submitted }) => {
                 <div className={`${styles.formGrid} ${styles.gridCols2} `}>
                     <div className={styles.formGroup}>
                         <label className={styles.formLabel}>CONDITION *</label>
-                        <div className={styles.selectWrapper}>
-                            <select
-                                value={formData.condition}
-                                onChange={(e) => handleInputChange('condition', e.target.value)}
-                                className={styles.formSelect}
-                                required
-                            >
-                                <option value="brandNew">New</option>
-                                <option value="average">Average</option>
-                                <option value="belowAverage">Below average</option>
-                            </select>
-                            <ChevronDown className={styles.selectIcon} />
-                        </div>
+                        <CustomSelect
+                            value={formData.condition}
+                            onChange={(val) => handleInputChange('condition', val)}
+                            placeholder="Select condition"
+                            options={[
+                                { value: "brandNew", label: "New" },
+                                { value: "average", label: "Average" },
+                                { value: "belowAverage", label: "Below average" }
+                            ]}
+                            required
+                        />
                     </div>
                     <div className={styles.formGroup}>
                         <label className={styles.formLabel}>FULL NAME *</label>

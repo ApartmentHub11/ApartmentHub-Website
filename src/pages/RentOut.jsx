@@ -521,12 +521,12 @@ const RentOut = () => {
                                     <p className={styles.riskDesc}>{t.risk3Desc}</p>
                                 </div>
                                 <div className={styles.riskSolution}>
-                                    <div className={styles.solutionBoxGreen}>
+                                    <div className={styles.solutionBoxBlue}>
                                         <div className={styles.solutionHeader}>
-                                            <CheckCircle className={styles.solutionIconGreen} />
-                                            <h4 className={styles.solutionTitleGreen}>{t.sol3Title}</h4>
+                                            <CheckCircle className={styles.solutionIconBlue} />
+                                            <h4 className={styles.solutionTitleBlue}>{t.sol3Title}</h4>
                                         </div>
-                                        <ul className={styles.solutionListGreen}>
+                                        <ul className={styles.solutionListBlue}>
                                             <li>• {t.sol3List1}</li>
                                             <li>• {t.sol3List2}</li>
                                             <li>• {t.sol3List3}</li>

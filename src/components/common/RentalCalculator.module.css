@@ -224,6 +224,12 @@
     padding: 0.5rem;
 }
 
+.formSelect option:checked,
+.formSelect option:hover {
+    background-color: #F36B19;
+    color: black;
+}
+
 .errorText {
     color: #fca5a5;
     /* red-300 */
