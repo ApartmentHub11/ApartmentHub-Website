@@ -7,6 +7,10 @@ import { translations } from '../../../data/translations';
 import chatLogoImage from '../../../assets/chatlogo.png';
 import ChatModal from './ChatModal';
 
+import img32 from '../../../assets/32.jpg';
+import img44 from '../../../assets/44.jpg';
+import img67 from '../../../assets/67.jpg';
+
 const TestimonialSection = () => {
     const currentLang = useSelector((state) => state.ui.language);
     const t = translations.home[currentLang] || translations.home.en;
@@ -38,7 +42,7 @@ const TestimonialSection = () => {
 
     const robertData = {
         name: "Robert van Dijk",
-        avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=600&fit=crop&crop=face",
+        avatar: img32,
         location: "Jordaan",
         date: "December 2024",
         rating: 5,
@@ -99,7 +103,7 @@ const TestimonialSection = () => {
 
     const mariaData = {
         name: "Maria Santos",
-        avatarPlaceholder: "MS",
+        avatar: img44,
         location: "De Pijp",
         date: "November 2024",
         rating: 5,
@@ -145,7 +149,7 @@ const TestimonialSection = () => {
 
     const janData = {
         name: "Jan Willem Bakker",
-        avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=600&fit=crop&crop=face",
+        avatar: img67,
         location: "Noord",
         date: "Oktober 2024",
         rating: 5,
@@ -185,7 +189,7 @@ const TestimonialSection = () => {
                         <div className={styles.cardHeader}>
                             <div className={styles.userInfo}>
                                 <span className={styles.avatar}>
-                                    <img className={styles.avatarImg} alt="Robert van Dijk" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=600&fit=crop&crop=face" />
+                                    <img className={styles.avatarImg} alt={robertData.name} src={robertData.avatar} />
                                 </span>
                                 <div className={styles.userDetails}>
                                     <div className={styles.userNameWrapper}>
@@ -229,7 +233,7 @@ const TestimonialSection = () => {
                                     </div>
                                 </div>
                                 <span className={styles.avatarSmall}>
-                                    <img className={styles.avatarImg} alt="Robert van Dijk" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=600&fit=crop&crop=face" />
+                                    <img className={styles.avatarImg} alt={robertData.name} src={robertData.avatar} />
                                 </span>
                             </div>
                             <div className={styles.cardFooter}>
@@ -251,7 +255,7 @@ const TestimonialSection = () => {
                         <div className={styles.cardHeader}>
                             <div className={styles.userInfo}>
                                 <span className={styles.avatar}>
-                                    <span className={styles.avatarPlaceholder}>MS</span>
+                                    <img className={styles.avatarImg} alt={mariaData.name} src={mariaData.avatar} />
                                 </span>
                                 <div className={styles.userDetails}>
                                     <div className={styles.userNameWrapper}>
@@ -295,7 +299,7 @@ const TestimonialSection = () => {
                                     </div>
                                 </div>
                                 <span className={styles.avatarSmall}>
-                                    <span className={styles.avatarPlaceholderSmall}>MS</span>
+                                    <img className={styles.avatarImg} alt={mariaData.name} src={mariaData.avatar} />
                                 </span>
                             </div>
                             <div className={styles.cardFooter}>
@@ -317,7 +321,7 @@ const TestimonialSection = () => {
                         <div className={styles.cardHeader}>
                             <div className={styles.userInfo}>
                                 <span className={styles.avatar}>
-                                    <img className={styles.avatarImg} alt="Jan Willem Bakker" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=600&fit=crop&crop=face" />
+                                    <img className={styles.avatarImg} alt={janData.name} src={janData.avatar} />
                                 </span>
                                 <div className={styles.userDetails}>
                                     <div className={styles.userNameWrapper}>
@@ -361,7 +365,7 @@ const TestimonialSection = () => {
                                     </div>
                                 </div>
                                 <span className={styles.avatarSmall}>
-                                    <img className={styles.avatarImg} alt="Jan Willem Bakker" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=600&fit=crop&crop=face" />
+                                    <img className={styles.avatarImg} alt={janData.name} src={janData.avatar} />
                                 </span>
                             </div>
                             <div className={styles.cardFooter}>

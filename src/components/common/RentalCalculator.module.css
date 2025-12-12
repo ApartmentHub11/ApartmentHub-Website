@@ -11,6 +11,7 @@
     box-sizing: border-box;
     max-width: 100%;
     width: 100%;
+    height: 100%;
     /* Adding ring effect like the reference */
     outline: 1px solid rgba(0, 0, 0, 0.2);
     outline-offset: -1px;

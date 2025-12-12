@@ -51,7 +51,7 @@ export const translations = {
             neighborhoodsTitle: "Discover Amsterdam's Neighborhoods",
             neighborhoodsAction: "Discover more",
 
-            testimonialsStatsLandlords: "500+ satisfied landlords",
+            testimonialsStatsLandlords: "2500+ satisfied landlords",
             testimonialsStatsRating: "4.8/5 average rating",
             testimonialsStatsTime: "3 days average rental time",
             testimonialsTitle: "Real conversations we've had with our rental clients",
@@ -102,7 +102,7 @@ export const translations = {
             neighborhoodsTitle: "Ontdek Amsterdam's Wijken",
             neighborhoodsAction: "Ontdek meer",
 
-            testimonialsStatsLandlords: "500+ tevreden verhuurders",
+            testimonialsStatsLandlords: "2500+ tevreden verhuurders",
             testimonialsStatsRating: "4.8/5 gemiddelde beoordeling",
             testimonialsStatsTime: "3 dagen gemiddelde verhuur tijd",
             testimonialsTitle: "Echte gesprekken die wij hebben gevoerd met onze verhuur klanten",
@@ -131,7 +131,7 @@ export const translations = {
             heroSubtitle: "We take care of everything, you receive rent monthly without stress",
             heroBtn: "Free Brochure",
 
-            priceCheckTitle: "Rental Price Check",
+            priceCheckTitle: "Let's Do the Math",
             priceCheckDesc: "Enter your property details and receive a free rental price estimate from our experts.",
             labelAddress: "ADDRESS",
             labelPostal: "POSTAL CODE",
@@ -196,7 +196,7 @@ export const translations = {
 
             impactTitle: "What Does This Mean For You?",
             impactIncome: "Extra income per year",
-            impactIncomeDesc: "Through our market knowledge and optimization, you earn an average of almost €850 more per month",
+            impactIncomeDesc: "Through our market knowledge and optimization, you earn an average of €247 more per month",
             impactHours: "Hours saved per year",
             impactHoursDesc: "No hassle with viewings, screening and administration. We arrange everything.",
             impactLegal: "Legal certainty",
@@ -613,7 +613,7 @@ export const translations = {
 
             statsTitle: "Proven results",
             statsSubtitle: "Numbers that prove our expertise and dedication",
-            stat1Value: "5+",
+            stat1Value: "10+",
             stat1Label: "Years experience",
             stat2Value: "2500+",
             stat2Label: "Satisfied clients",
@@ -653,7 +653,7 @@ export const translations = {
 
             statsTitle: "Bewezen resultaten",
             statsSubtitle: "Cijfers die onze expertise en toewijding bewijzen",
-            stat1Value: "5+",
+            stat1Value: "10+",
             stat1Label: "Jaren ervaring",
             stat2Value: "2500+",
             stat2Label: "Tevreden klanten",

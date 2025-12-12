@@ -368,7 +368,7 @@ const RentOut = () => {
                         <div className={styles.statItem}>
                             <div className={styles.statIconBoxOrange}>
                                 <div className={styles.statValue}>
-                                    <AnimatedCounter end={847} duration={2000} shouldStart={statsInView} prefix="€" />
+                                    <AnimatedCounter end={247} duration={2000} shouldStart={statsInView} prefix="€" />
                                 </div>
                             </div>
                             <h4 className={styles.statLabel}>{t.statMonth}</h4>
@@ -377,7 +377,7 @@ const RentOut = () => {
                         <div className={styles.statItem}>
                             <div className={styles.statIconBoxGreen}>
                                 <div className={styles.statValue}>
-                                    <AnimatedCounter end={12} duration={2000} shouldStart={statsInView} />
+                                    <AnimatedCounter end={5} duration={2000} shouldStart={statsInView} />
                                 </div>
                             </div>
                             <h4 className={styles.statLabel}>{t.statDays}</h4>
@@ -410,7 +410,7 @@ const RentOut = () => {
                                 <div className={styles.impactBoxOrange}>
                                     <Euro className={styles.impactIconOrange} />
                                     <div className={styles.impactValueOrange}>
-                                        <AnimatedCounter end={10164} duration={2500} shouldStart={impactInView} prefix="€" />
+                                        <AnimatedCounter end={2964} duration={2500} shouldStart={impactInView} prefix="€" separator="." />
                                     </div>
                                     <div className={styles.impactLabel}>{t.impactIncome}</div>
                                 </div>

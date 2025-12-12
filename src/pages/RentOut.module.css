@@ -258,12 +258,13 @@
 .priceCheckGrid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 3rem;
 }
 
 @media (min-width: 1024px) {
     .priceCheckGrid {
         grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 5rem;
     }
 }
 
@@ -324,6 +325,8 @@
     min-height: 400px;
     display: flex;
     flex-direction: column;
+    /* Card styling removed as per user request */
+    position: relative;
 }
 
 @media (min-width: 768px) {
@@ -335,8 +338,8 @@
 .sectionTitle {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #009B8A;
-    /* Changed to exact teal from original design */
+    color: #111827;
+    /* Changed to black/dark gray to match reference */
     margin-bottom: 1rem;
 }
 
