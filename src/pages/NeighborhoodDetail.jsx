@@ -150,7 +150,7 @@ const NeighborhoodDetail = () => {
                                     </div>
 
                                     <div className={styles.chartCard}>
-                                        <h3 className={styles.chartTitle}>{currentLang === 'nl' ? `Prijsontwikkeling in ${neighborhood.title} (2020-2024)` : `Price Development in ${neighborhood.title} (2020-2024)`}</h3>
+                                        <h3 className={styles.chartTitle}>{currentLang === 'nl' ? `Prijsontwikkeling in ${neighborhood.title} (2020-2025)` : `Price Development in ${neighborhood.title} (2020-2025)`}</h3>
                                         <div className={styles.chartContainer}>
                                             <ResponsiveContainer width="100%" height="100%">
                                                 <LineChart data={neighborhood.marketData.priceTrend}>

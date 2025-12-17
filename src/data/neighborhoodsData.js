@@ -13,8 +13,8 @@ export const neighborhoodsData = {
             ],
             marketData: {
                 indicators: [
-                    { label: "Rental Growth (4 years)", value: "+12.8%", subtext: "Average growth", trend: "up", color: "yellow" },
-                    { label: "Purchase Price Growth (4 years)", value: "+37.8%", subtext: "High growth", trend: "up", color: "yellow" },
+                    { label: "Rental Growth (5 years)", value: "+15.0%", subtext: "Average growth", trend: "up", color: "yellow" },
+                    { label: "Purchase Price Growth (5 years)", value: "+42.2%", subtext: "High growth", trend: "up", color: "yellow" },
                     { label: "Demand Index", value: "10/10", subtext: "Very high demand", trend: "stable", color: "green" },
                     { label: "Availability", value: "1/10", subtext: "Very scarce", trend: "down", color: "red" }
                 ],
@@ -35,7 +35,8 @@ export const neighborhoodsData = {
                     { year: "2021", rent: 2100, buy: 500000 },
                     { year: "2022", rent: 2200, buy: 560000 },
                     { year: "2023", rent: 2300, buy: 590000 },
-                    { year: "2024", rent: 2400, buy: 620000 }
+                    { year: "2024", rent: 2400, buy: 620000 },
+                    { year: "2025", rent: 2500, buy: 640000 }
                 ],
                 demographics: [
                     { label: "Average Age", value: "29" },
@@ -69,8 +70,8 @@ export const neighborhoodsData = {
             ],
             marketData: {
                 indicators: [
-                    { label: "Huurgroei (4 jaar)", value: "+12.8%", subtext: "Gemiddelde groei", trend: "up", color: "yellow" },
-                    { label: "Koopprijsgroei (4 jaar)", value: "+37.8%", subtext: "Hoge groei", trend: "up", color: "yellow" },
+                    { label: "Huurgroei (5 jaar)", value: "+15.0%", subtext: "Gemiddelde groei", trend: "up", color: "yellow" },
+                    { label: "Koopprijsgroei (5 jaar)", value: "+42.2%", subtext: "Hoge groei", trend: "up", color: "yellow" },
                     { label: "Vraag Index", value: "10/10", subtext: "Zeer hoge vraag", trend: "stable", color: "green" },
                     { label: "Beschikbaarheid", value: "1/10", subtext: "Zeer schaars", trend: "down", color: "red" }
                 ],
@@ -91,7 +92,8 @@ export const neighborhoodsData = {
                     { year: "2021", rent: 2100, buy: 500000 },
                     { year: "2022", rent: 2200, buy: 560000 },
                     { year: "2023", rent: 2300, buy: 590000 },
-                    { year: "2024", rent: 2400, buy: 620000 }
+                    { year: "2024", rent: 2400, buy: 620000 },
+                    { year: "2025", rent: 2500, buy: 640000 }
                 ],
                 demographics: [
                     { label: "Gemiddelde Leeftijd", value: "29" },
@@ -127,8 +129,8 @@ export const neighborhoodsData = {
             ],
             marketData: {
                 indicators: [
-                    { label: "Rental Growth (4 years)", value: "+12.1%", subtext: "Average growth", trend: "up", color: "yellow" },
-                    { label: "Purchase Price Growth (4 years)", value: "+36.8%", subtext: "High growth", trend: "up", color: "yellow" },
+                    { label: "Rental Growth (5 years)", value: "+14.7%", subtext: "Average growth", trend: "up", color: "yellow" },
+                    { label: "Purchase Price Growth (5 years)", value: "+42.1%", subtext: "High growth", trend: "up", color: "yellow" },
                     { label: "Demand Index", value: "9/10", subtext: "Very high demand", trend: "stable", color: "green" },
                     { label: "Availability", value: "3/10", subtext: "Scarce", trend: "down", color: "red" }
                 ],
@@ -149,7 +151,8 @@ export const neighborhoodsData = {
                     { year: "2021", rent: 1800, buy: 420000 },
                     { year: "2022", rent: 2000, buy: 480000 },
                     { year: "2023", rent: 2150, buy: 520000 },
-                    { year: "2024", rent: 2300, buy: 560000 }
+                    { year: "2024", rent: 2300, buy: 560000 },
+                    { year: "2025", rent: 2400, buy: 600000 }
                 ],
                 demographics: [
                     { label: "Average Age", value: "32" },
@@ -183,8 +186,8 @@ export const neighborhoodsData = {
             ],
             marketData: {
                 indicators: [
-                    { label: "Huurgroei (4 jaar)", value: "+12.1%", subtext: "Gemiddelde groei", trend: "up", color: "yellow" },
-                    { label: "Koopprijsgroei (4 jaar)", value: "+36.8%", subtext: "Hoge groei", trend: "up", color: "yellow" },
+                    { label: "Huurgroei (5 jaar)", value: "+14.7%", subtext: "Gemiddelde groei", trend: "up", color: "yellow" },
+                    { label: "Koopprijsgroei (5 jaar)", value: "+42.1%", subtext: "Hoge groei", trend: "up", color: "yellow" },
                     { label: "Vraag Index", value: "9/10", subtext: "Zeer hoge vraag", trend: "stable", color: "green" },
                     { label: "Beschikbaarheid", value: "3/10", subtext: "Schaars", trend: "down", color: "red" }
                 ],
@@ -205,7 +208,8 @@ export const neighborhoodsData = {
                     { year: "2021", rent: 1800, buy: 420000 },
                     { year: "2022", rent: 2000, buy: 480000 },
                     { year: "2023", rent: 2150, buy: 520000 },
-                    { year: "2024", rent: 2300, buy: 560000 }
+                    { year: "2024", rent: 2300, buy: 560000 },
+                    { year: "2025", rent: 2400, buy: 600000 }
                 ],
                 demographics: [
                     { label: "Gemiddelde Leeftijd", value: "32" },
@@ -241,8 +245,8 @@ export const neighborhoodsData = {
             ],
             marketData: {
                 indicators: [
-                    { label: "Rental Growth (4 years)", value: "+13.5%", subtext: "Average growth", trend: "up", color: "yellow" },
-                    { label: "Purchase Price Growth (4 years)", value: "+38.1%", subtext: "High growth", trend: "up", color: "yellow" },
+                    { label: "Rental Growth (5 years)", value: "+16.0%", subtext: "Average growth", trend: "up", color: "yellow" },
+                    { label: "Purchase Price Growth (5 years)", value: "+42.8%", subtext: "High growth", trend: "up", color: "yellow" },
                     { label: "Demand Index", value: "10/10", subtext: "Very high demand", trend: "stable", color: "green" },
                     { label: "Availability", value: "2/10", subtext: "Very scarce", trend: "down", color: "red" }
                 ],
@@ -263,7 +267,8 @@ export const neighborhoodsData = {
                     { year: "2021", rent: 1600, buy: 460000 },
                     { year: "2022", rent: 1800, buy: 510000 },
                     { year: "2023", rent: 2000, buy: 550000 },
-                    { year: "2024", rent: 2200, buy: 600000 }
+                    { year: "2024", rent: 2200, buy: 600000 },
+                    { year: "2025", rent: 2350, buy: 640000 }
                 ],
                 demographics: [
                     { label: "Average Age", value: "35" },
@@ -297,8 +302,8 @@ export const neighborhoodsData = {
             ],
             marketData: {
                 indicators: [
-                    { label: "Huurgroei (4 jaar)", value: "+13.5%", subtext: "Gemiddelde groei", trend: "up", color: "yellow" },
-                    { label: "Koopprijsgroei (4 jaar)", value: "+38.1%", subtext: "Hoge groei", trend: "up", color: "yellow" },
+                    { label: "Huurgroei (5 jaar)", value: "+16.0%", subtext: "Gemiddelde groei", trend: "up", color: "yellow" },
+                    { label: "Koopprijsgroei (5 jaar)", value: "+42.8%", subtext: "Hoge groei", trend: "up", color: "yellow" },
                     { label: "Vraag Index", value: "10/10", subtext: "Zeer hoge vraag", trend: "stable", color: "green" },
                     { label: "Beschikbaarheid", value: "2/10", subtext: "Zeer schaars", trend: "down", color: "red" }
                 ],
@@ -319,7 +324,8 @@ export const neighborhoodsData = {
                     { year: "2021", rent: 1600, buy: 460000 },
                     { year: "2022", rent: 1800, buy: 510000 },
                     { year: "2023", rent: 2000, buy: 550000 },
-                    { year: "2024", rent: 2200, buy: 600000 }
+                    { year: "2024", rent: 2200, buy: 600000 },
+                    { year: "2025", rent: 2350, buy: 640000 }
                 ],
                 demographics: [
                     { label: "Gemiddelde Leeftijd", value: "35" },
@@ -355,8 +361,8 @@ export const neighborhoodsData = {
             ],
             marketData: {
                 indicators: [
-                    { label: "Rental Growth (4 years)", value: "+16.2%", subtext: "High growth", trend: "up", color: "red" },
-                    { label: "Purchase Price Growth (4 years)", value: "+40.6%", subtext: "Very high growth", trend: "up", color: "red" },
+                    { label: "Rental Growth (5 years)", value: "+19.0%", subtext: "High growth", trend: "up", color: "red" },
+                    { label: "Purchase Price Growth (5 years)", value: "+46.9%", subtext: "Very high growth", trend: "up", color: "red" },
                     { label: "Demand Index", value: "7/10", subtext: "Average demand", trend: "stable", color: "green" },
                     { label: "Availability", value: "5/10", subtext: "Limited supply", trend: "stable", color: "yellow" }
                 ],
@@ -377,7 +383,8 @@ export const neighborhoodsData = {
                     { year: "2021", rent: 1480, buy: 350000 },
                     { year: "2022", rent: 1520, buy: 380000 },
                     { year: "2023", rent: 1580, buy: 410000 },
-                    { year: "2024", rent: 1650, buy: 450000 }
+                    { year: "2024", rent: 1650, buy: 450000 },
+                    { year: "2025", rent: 1750, buy: 470000 }
                 ],
                 demographics: [
                     { label: "Average Age", value: "31" },
@@ -411,8 +418,8 @@ export const neighborhoodsData = {
             ],
             marketData: {
                 indicators: [
-                    { label: "Huurgroei (4 jaar)", value: "+16.2%", subtext: "Hoge groei", trend: "up", color: "red" },
-                    { label: "Koopprijsgroei (4 jaar)", value: "+40.6%", subtext: "Zeer hoge groei", trend: "up", color: "red" },
+                    { label: "Huurgroei (5 jaar)", value: "+19.0%", subtext: "Hoge groei", trend: "up", color: "red" },
+                    { label: "Koopprijsgroei (5 jaar)", value: "+46.9%", subtext: "Zeer hoge groei", trend: "up", color: "red" },
                     { label: "Vraag Index", value: "7/10", subtext: "Gemiddelde vraag", trend: "stable", color: "green" },
                     { label: "Beschikbaarheid", value: "5/10", subtext: "Beperkt aanbod", trend: "stable", color: "yellow" }
                 ],
@@ -433,7 +440,8 @@ export const neighborhoodsData = {
                     { year: "2021", rent: 1480, buy: 350000 },
                     { year: "2022", rent: 1520, buy: 380000 },
                     { year: "2023", rent: 1580, buy: 410000 },
-                    { year: "2024", rent: 1650, buy: 450000 }
+                    { year: "2024", rent: 1650, buy: 450000 },
+                    { year: "2025", rent: 1750, buy: 470000 }
                 ],
                 demographics: [
                     { label: "Gemiddelde Leeftijd", value: "31" },
@@ -470,8 +478,8 @@ export const neighborhoodsData = {
             ],
             marketData: {
                 indicators: [
-                    { label: "Rental Growth (4 years)", value: "+17.9%", subtext: "High growth", trend: "up", color: "red" },
-                    { label: "Purchase Price Growth (4 years)", value: "+45.2%", subtext: "Very high growth", trend: "up", color: "red" },
+                    { label: "Rental Growth (5 years)", value: "+20.7%", subtext: "High growth", trend: "up", color: "red" },
+                    { label: "Purchase Price Growth (5 years)", value: "+50.0%", subtext: "Very high growth", trend: "up", color: "red" },
                     { label: "Demand Index", value: "7/10", subtext: "Average demand", trend: "stable", color: "green" },
                     { label: "Availability", value: "5/10", subtext: "Limited supply", trend: "stable", color: "yellow" }
                 ],
@@ -492,7 +500,8 @@ export const neighborhoodsData = {
                     { year: "2021", rent: 1520, buy: 350000 },
                     { year: "2022", rent: 1580, buy: 390000 },
                     { year: "2023", rent: 1640, buy: 420000 },
-                    { year: "2024", rent: 1720, buy: 450000 }
+                    { year: "2024", rent: 1720, buy: 450000 },
+                    { year: "2025", rent: 1800, buy: 480000 }
                 ],
                 demographics: [
                     { label: "Average Age", value: "30" },
@@ -527,8 +536,8 @@ export const neighborhoodsData = {
             ],
             marketData: {
                 indicators: [
-                    { label: "Huurgroei (4 jaar)", value: "+17.9%", subtext: "Hoge groei", trend: "up", color: "red" },
-                    { label: "Koopprijsgroei (4 jaar)", value: "+45.2%", subtext: "Zeer hoge groei", trend: "up", color: "red" },
+                    { label: "Huurgroei (5 jaar)", value: "+20.7%", subtext: "Hoge groei", trend: "up", color: "red" },
+                    { label: "Koopprijsgroei (5 jaar)", value: "+50.0%", subtext: "Zeer hoge groei", trend: "up", color: "red" },
                     { label: "Vraag Index", value: "7/10", subtext: "Gemiddelde vraag", trend: "stable", color: "green" },
                     { label: "Beschikbaarheid", value: "5/10", subtext: "Beperkt aanbod", trend: "stable", color: "yellow" }
                 ],
@@ -549,7 +558,8 @@ export const neighborhoodsData = {
                     { year: "2021", rent: 1520, buy: 350000 },
                     { year: "2022", rent: 1580, buy: 390000 },
                     { year: "2023", rent: 1640, buy: 420000 },
-                    { year: "2024", rent: 1720, buy: 450000 }
+                    { year: "2024", rent: 1720, buy: 450000 },
+                    { year: "2025", rent: 1800, buy: 480000 }
                 ],
                 demographics: [
                     { label: "Gemiddelde Leeftijd", value: "30" },
@@ -586,8 +596,8 @@ export const neighborhoodsData = {
             ],
             marketData: {
                 indicators: [
-                    { label: "Rental Growth (4 years)", value: "+15.8%", subtext: "High growth", trend: "up", color: "red" },
-                    { label: "Purchase Price Growth (4 years)", value: "+37.8%", subtext: "High growth", trend: "up", color: "yellow" },
+                    { label: "Rental Growth (5 years)", value: "+18.0%", subtext: "High growth", trend: "up", color: "red" },
+                    { label: "Purchase Price Growth (5 years)", value: "+42.2%", subtext: "High growth", trend: "up", color: "yellow" },
                     { label: "Demand Index", value: "9/10", subtext: "Very high demand", trend: "stable", color: "green" },
                     { label: "Availability", value: "3/10", subtext: "Very scarce", trend: "down", color: "red" }
                 ],
@@ -608,7 +618,8 @@ export const neighborhoodsData = {
                     { year: "2021", rent: 2100, buy: 480000 },
                     { year: "2022", rent: 2200, buy: 520000 },
                     { year: "2023", rent: 2300, buy: 580000 },
-                    { year: "2024", rent: 2400, buy: 620000 }
+                    { year: "2024", rent: 2400, buy: 620000 },
+                    { year: "2025", rent: 2500, buy: 660000 }
                 ],
                 demographics: [
                     { label: "Average Age", value: "34" },
@@ -643,8 +654,8 @@ export const neighborhoodsData = {
             ],
             marketData: {
                 indicators: [
-                    { label: "Huurgroei (4 jaar)", value: "+15.8%", subtext: "Hoge groei", trend: "up", color: "red" },
-                    { label: "Koopprijsgroei (4 jaar)", value: "+37.8%", subtext: "Hoge groei", trend: "up", color: "yellow" },
+                    { label: "Huurgroei (5 jaar)", value: "+18.0%", subtext: "Hoge groei", trend: "up", color: "red" },
+                    { label: "Koopprijsgroei (5 jaar)", value: "+42.2%", subtext: "Hoge groei", trend: "up", color: "yellow" },
                     { label: "Vraag Index", value: "9/10", subtext: "Zeer hoge vraag", trend: "stable", color: "green" },
                     { label: "Beschikbaarheid", value: "3/10", subtext: "Zeer schaars", trend: "down", color: "red" }
                 ],
@@ -665,7 +676,8 @@ export const neighborhoodsData = {
                     { year: "2021", rent: 2100, buy: 480000 },
                     { year: "2022", rent: 2200, buy: 520000 },
                     { year: "2023", rent: 2300, buy: 580000 },
-                    { year: "2024", rent: 2400, buy: 620000 }
+                    { year: "2024", rent: 2400, buy: 620000 },
+                    { year: "2025", rent: 2500, buy: 660000 }
                 ],
                 demographics: [
                     { label: "Gemiddelde Leeftijd", value: "34" },
