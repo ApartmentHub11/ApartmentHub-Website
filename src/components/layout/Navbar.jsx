@@ -24,8 +24,14 @@ const Navbar = () => {
         { name: t.contact, path: currentLang === 'nl' ? '/nl/contact' : '/en/contact' },
     ];
 
+    const mobileNavLinks = [
+        ...navLinks,
+        { name: currentLang === 'nl' ? 'Ontdek Meer' : 'Discover More', path: currentLang === 'nl' ? '/nl/discover-more' : '/en/discover-more' },
+    ];
+
     const handleLinkClick = () => {
         dispatch(closeMobileMenu());
+        window.scrollTo(0, 0);
     };
 
     const [isLangOpen, setIsLangOpen] = useState(false);
@@ -116,6 +122,7 @@ const Navbar = () => {
                                 key={link.name}
                                 to={link.path}
                                 className={`${styles.navLink} ${location.pathname === link.path ? styles.activeNavLink : ''}`}
+                                onClick={() => window.scrollTo(0, 0)}
                             >
                                 {link.name}
                             </Link>
@@ -139,7 +146,7 @@ const Navbar = () => {
             {/* Mobile Menu Overlay */}
             <div className={`${styles.mobileMenu} ${isMobileMenuOpen ? styles.open : ''}`}>
                 <div className={styles.mobileMenuContent}>
-                    {navLinks.map((link) => (
+                    {mobileNavLinks.map((link) => (
                         <Link
                             key={link.name}
                             to={link.path}

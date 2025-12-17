@@ -1,0 +1,633 @@
+/* Page Container */
+.pageContainer {
+    min-height: 100vh;
+    background-color: #ffffff;
+}
+
+/* ==================== HERO SECTION ==================== */
+.heroSection {
+    padding: 5rem 0;
+    background: linear-gradient(135deg, rgba(0, 155, 138, 0.05) 0%, rgba(243, 107, 25, 0.05) 100%);
+}
+
+.heroContainer {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+    text-align: center;
+}
+
+.heroBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(243, 107, 25, 0.1);
+    color: #F36B19;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.badgeIcon {
+    width: 1rem;
+    height: 1rem;
+    fill: #F36B19;
+}
+
+.heroTitle {
+    font-size: clamp(1.75rem, 4vw, 3rem);
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    max-width: 56rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.heroSubtitle {
+    font-size: 1.25rem;
+    color: #4b5563;
+    max-width: 48rem;
+    margin: 0 auto 1.5rem;
+    line-height: 1.5;
+}
+
+.heroButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (min-width: 640px) {
+    .heroButtons {
+        flex-direction: row;
+    }
+}
+
+.primaryBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: #009B8A;
+    color: white;
+    padding: 0.75rem 1.75rem;
+    border-radius: 0.5rem;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 25px -5px rgba(0, 155, 138, 0.3);
+}
+
+.primaryBtn:hover {
+    background: #F36B19;
+    transform: scale(1.05);
+}
+
+.secondaryBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: transparent;
+    color: #009B8A;
+    padding: 0.75rem 1.75rem;
+    border-radius: 0.5rem;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    border: 2px solid #009B8A;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.secondaryBtn:hover {
+    background: #009B8A;
+    color: white;
+    border-color: #F36B19;
+}
+
+.btnIcon {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+/* ==================== STATS SECTION ==================== */
+.statsSection {
+    padding: 3rem 0;
+    background: #ffffff;
+}
+
+.statsContainer {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .statsGrid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.statItem {
+    padding: 1.5rem;
+}
+
+.statValue {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #009B8A;
+    margin-bottom: 0.25rem;
+}
+
+.statLabel {
+    color: #4b5563;
+    font-size: 1rem;
+}
+
+/* ==================== WHY SECTION ==================== */
+.whySection {
+    padding: 4rem 0;
+    background: #f9fafb;
+}
+
+.container {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.sectionHeader {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.sectionTitle {
+    font-size: clamp(1.875rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 0.5rem;
+}
+
+.sectionSubtitle {
+    font-size: 1.1875rem;
+    color: #4b5563;
+    max-width: 42rem;
+    margin: 0 auto;
+}
+
+.benefitsGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+@media (min-width: 768px) {
+    .benefitsGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .benefitsGrid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.benefitCard {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.benefitCard:hover {
+    box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.15);
+    transform: translateY(-4px);
+}
+
+.benefitIconWrapper {
+    width: 4rem;
+    height: 4rem;
+    background: rgba(0, 155, 138, 0.1);
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    color: #009B8A;
+    transition: all 0.3s ease;
+}
+
+.benefitCard:hover .benefitIconWrapper {
+    background: #009B8A;
+    color: white;
+}
+
+.benefitIcon {
+    width: 2rem;
+    height: 2rem;
+}
+
+.benefitValue {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #F36B19;
+    margin-bottom: 0.25rem;
+}
+
+.benefitTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 0.5rem;
+}
+
+.benefitDesc {
+    color: #4b5563;
+    line-height: 1.5;
+    font-size: 1rem;
+}
+
+/* ==================== HOW SECTION ==================== */
+.howSection {
+    padding: 4rem 0;
+    background: white;
+}
+
+.stepsGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+@media (min-width: 768px) {
+    .stepsGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .stepsGrid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.stepItem {
+    position: relative;
+}
+
+.stepNum {
+    font-size: 3.75rem;
+    font-weight: 700;
+    color: rgba(0, 155, 138, 0.1);
+    margin-bottom: 0.5rem;
+    line-height: 1;
+}
+
+.stepTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 0.5rem;
+}
+
+.stepDesc {
+    color: #4b5563;
+    line-height: 1.5;
+    font-size: 1rem;
+}
+
+.stepConnector {
+    display: none;
+}
+
+@media (min-width: 1024px) {
+    .stepConnector {
+        display: block;
+        position: absolute;
+        top: 2rem;
+        right: 0;
+        width: 3rem;
+        height: 2px;
+        background: rgba(0, 155, 138, 0.2);
+    }
+}
+
+/* ==================== TESTIMONIAL SECTION ==================== */
+.testimonialSection {
+    padding: 5rem 0;
+    background: #009B8A;
+    color: white;
+}
+
+.testimonialContainer {
+    max-width: 56rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+    text-align: center;
+}
+
+@media (min-width: 640px) {
+    .testimonialContainer {
+        padding: 0 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .testimonialContainer {
+        padding: 0 2rem;
+    }
+}
+
+.testimonialStar {
+    width: 3rem;
+    height: 3rem;
+    fill: #F36B19;
+    color: #F36B19;
+    margin: 0 auto 0.75rem;
+}
+
+.testimonialQuote {
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.625;
+    margin: 0 0 0.25rem 0;
+    padding: 0;
+    font-style: normal;
+}
+
+@media (min-width: 768px) {
+    .testimonialQuote {
+        font-size: 1.875rem;
+    }
+}
+
+.testimonialAuthor {
+    font-size: 1.125rem;
+    opacity: 0.9;
+    font-style: normal;
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+
+/* ==================== COMPARISON SECTION ==================== */
+.comparisonSection {
+    padding: 4rem 0;
+    background: #f9fafb;
+}
+
+.comparisonGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+@media (min-width: 1024px) {
+    .comparisonGrid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.comparisonContent {
+    max-width: 40rem;
+}
+
+.comparisonTitle {
+    font-size: clamp(1.875rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 1rem;
+}
+
+.comparisonSubtitle {
+    font-size: 1.125rem;
+    color: #4b5563;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+.comparisonPoints {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.comparisonPoint {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    color: #374151;
+    font-size: 1rem;
+}
+
+.checkIcon {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: #22c55e;
+    flex-shrink: 0;
+    margin-top: 0.125rem;
+}
+
+.mathCard {
+    background: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.15);
+}
+
+.mathTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 1rem;
+}
+
+.mathItems {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.mathRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.mathLabel {
+    color: #4b5563;
+    font-size: 1rem;
+}
+
+.mathLabelBold {
+    color: #111827;
+    font-weight: 600;
+}
+
+.mathValue {
+    font-weight: 600;
+    color: #111827;
+}
+
+.mathValueGreen {
+    font-weight: 600;
+    color: #009B8A;
+}
+
+.mathRowHighlight {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background: rgba(243, 107, 25, 0.1);
+    border-radius: 0.5rem;
+}
+
+.mathValueOrange {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #F36B19;
+}
+
+.mathRowTotal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background: rgba(0, 155, 138, 0.1);
+    border-radius: 0.5rem;
+}
+
+.mathValueGreenBig {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #009B8A;
+}
+
+.mathDisclaimer {
+    font-size: 0.875rem;
+    color: #6b7280;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+/* ==================== CTA SECTION ==================== */
+.ctaSection {
+    padding: 4rem 0;
+    background: white;
+}
+
+.ctaCard {
+    background: linear-gradient(135deg, #009B8A 0%, #008B7B 100%);
+    border-radius: 1.5rem;
+    padding: 3rem 2rem;
+    text-align: center;
+    max-width: 56rem;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .ctaCard {
+        padding: 4rem 3rem;
+    }
+}
+
+.ctaIcon {
+    width: 4rem;
+    height: 4rem;
+    color: #F36B19;
+    margin-bottom: 1.5rem;
+}
+
+.ctaTitle {
+    font-size: clamp(1.875rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.ctaSubtitle {
+    font-size: 1.1875rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 1.5rem;
+    max-width: 36rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ctaButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (min-width: 640px) {
+    .ctaButtons {
+        flex-direction: row;
+    }
+}
+
+.ctaPrimaryBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: white;
+    color: #009B8A;
+    padding: 0.75rem 1.75rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+}
+
+.ctaPrimaryBtn:hover {
+    background: #F36B19;
+    color: white;
+}
+
+.ctaSecondaryBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: transparent;
+    color: white;
+    padding: 0.75rem 1.75rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border: 2px solid white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.ctaSecondaryBtn:hover {
+    background: white;
+    color: #009B8A;
+}

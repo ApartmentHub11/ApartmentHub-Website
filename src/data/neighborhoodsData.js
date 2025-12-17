@@ -698,7 +698,52 @@ export const neighborhoodsData = {
                 "Heineken Experience",
                 "Gerard Douplein for nightlife and dining",
                 "Diverse mix of cultures and cuisines"
-            ]
+            ],
+            marketData: {
+                indicators: [
+                    { label: "Rental Growth (5 years)", value: "+12.1%", subtext: "Average growth", trend: "up", color: "yellow" },
+                    { label: "Purchase Price Growth (5 years)", value: "+36.8%", subtext: "High growth", trend: "up", color: "yellow" },
+                    { label: "Demand Index", value: "9/10", subtext: "Very high demand", trend: "stable", color: "green" },
+                    { label: "Availability", value: "3/10", subtext: "Very scarce", trend: "down", color: "red" }
+                ],
+                rentalPrices: [
+                    { name: "Studio", price: 1850 },
+                    { name: "1 Bed", price: 2200 },
+                    { name: "2 Bed", price: 2800 },
+                    { name: "3+ Bed", price: 3500 }
+                ],
+                purchasePrices: [
+                    { name: "Studio", price: 425000 },
+                    { name: "1 Bed", price: 520000 },
+                    { name: "2 Bed", price: 680000 },
+                    { name: "3+ Bed", price: 850000 }
+                ],
+                priceTrend: [
+                    { year: "2020", rent: 1650, buy: 380000 },
+                    { year: "2021", rent: 1720, buy: 410000 },
+                    { year: "2022", rent: 1780, buy: 450000 },
+                    { year: "2023", rent: 1820, buy: 480000 },
+                    { year: "2024", rent: 1850, buy: 520000 },
+                    { year: "2025", rent: 1900, buy: 545000 }
+                ],
+                demographics: [
+                    { label: "Average Age", value: "32" },
+                    { label: "Students", value: "25%" },
+                    { label: "Families", value: "35%" },
+                    { label: "Professionals", value: "40%" }
+                ]
+            },
+            livability: {
+                scores: [
+                    { label: "Public Transport", value: "9/10", type: "transport" },
+                    { label: "Walkability", value: "10/10", type: "walkability" }
+                ],
+                amenities: [
+                    { label: "Restaurants", count: 85, type: "restaurants" },
+                    { label: "Cafés & Bars", count: 42, type: "cafes" },
+                    { label: "Schools", count: 8, type: "schools" }
+                ]
+            }
         },
         nl: {
             title: "De Pijp",
@@ -710,7 +755,52 @@ export const neighborhoodsData = {
                 "Heineken Experience",
                 "Gerard Douplein voor uitgaan en dineren",
                 "Diverse mix van culturen en keukens"
-            ]
+            ],
+            marketData: {
+                indicators: [
+                    { label: "Huurgroei (5 jaar)", value: "+12.1%", subtext: "Gemiddelde groei", trend: "up", color: "yellow" },
+                    { label: "Koopprijsgroei (5 jaar)", value: "+36.8%", subtext: "Hoge groei", trend: "up", color: "yellow" },
+                    { label: "Vraag Index", value: "9/10", subtext: "Zeer hoge vraag", trend: "stable", color: "green" },
+                    { label: "Beschikbaarheid", value: "3/10", subtext: "Zeer schaars", trend: "down", color: "red" }
+                ],
+                rentalPrices: [
+                    { name: "Studio", price: 1850 },
+                    { name: "1 Slaapkamer", price: 2200 },
+                    { name: "2 Slaapkamers", price: 2800 },
+                    { name: "3+ Slaapkamers", price: 3500 }
+                ],
+                purchasePrices: [
+                    { name: "Studio", price: 425000 },
+                    { name: "1 Slaapkamer", price: 520000 },
+                    { name: "2 Slaapkamers", price: 680000 },
+                    { name: "3+ Slaapkamers", price: 850000 }
+                ],
+                priceTrend: [
+                    { year: "2020", rent: 1650, buy: 380000 },
+                    { year: "2021", rent: 1720, buy: 410000 },
+                    { year: "2022", rent: 1780, buy: 450000 },
+                    { year: "2023", rent: 1820, buy: 480000 },
+                    { year: "2024", rent: 1850, buy: 520000 },
+                    { year: "2025", rent: 1900, buy: 545000 }
+                ],
+                demographics: [
+                    { label: "Gemiddelde Leeftijd", value: "32" },
+                    { label: "Studenten", value: "25%" },
+                    { label: "Gezinnen", value: "35%" },
+                    { label: "Professionals", value: "40%" }
+                ]
+            },
+            livability: {
+                scores: [
+                    { label: "Openbaar Vervoer", value: "9/10", type: "transport" },
+                    { label: "Loopvriendelijkheid", value: "10/10", type: "walkability" }
+                ],
+                amenities: [
+                    { label: "Restaurants", count: 85, type: "restaurants" },
+                    { label: "Cafés & Bars", count: 42, type: "cafes" },
+                    { label: "Scholen", count: 8, type: "schools" }
+                ]
+            }
         }
     },
     "oud-zuid": {
@@ -724,7 +814,52 @@ export const neighborhoodsData = {
                 "P.C. Hooftstraat luxury shopping",
                 "Concertgebouw",
                 "Elegant 19th-century architecture"
-            ]
+            ],
+            marketData: {
+                indicators: [
+                    { label: "Rental Growth (5 years)", value: "+14.3%", subtext: "High growth", trend: "up", color: "yellow" },
+                    { label: "Purchase Price Growth (5 years)", value: "+36.0%", subtext: "High growth", trend: "up", color: "yellow" },
+                    { label: "Demand Index", value: "9/10", subtext: "Very high demand", trend: "stable", color: "green" },
+                    { label: "Availability", value: "2/10", subtext: "Very scarce", trend: "down", color: "red" }
+                ],
+                rentalPrices: [
+                    { name: "Studio", price: 2400 },
+                    { name: "1 Bed", price: 2800 },
+                    { name: "2 Bed", price: 3600 },
+                    { name: "3+ Bed", price: 4800 }
+                ],
+                purchasePrices: [
+                    { name: "Studio", price: 580000 },
+                    { name: "1 Bed", price: 680000 },
+                    { name: "2 Bed", price: 920000 },
+                    { name: "3+ Bed", price: 1250000 }
+                ],
+                priceTrend: [
+                    { year: "2020", rent: 2100, buy: 500000 },
+                    { year: "2021", rent: 2200, buy: 560000 },
+                    { year: "2022", rent: 2280, buy: 620000 },
+                    { year: "2023", rent: 2360, buy: 650000 },
+                    { year: "2024", rent: 2400, buy: 680000 },
+                    { year: "2025", rent: 2480, buy: 720000 }
+                ],
+                demographics: [
+                    { label: "Average Age", value: "38" },
+                    { label: "Students", value: "10%" },
+                    { label: "Families", value: "55%" },
+                    { label: "Professionals", value: "35%" }
+                ]
+            },
+            livability: {
+                scores: [
+                    { label: "Public Transport", value: "9/10", type: "transport" },
+                    { label: "Walkability", value: "9/10", type: "walkability" }
+                ],
+                amenities: [
+                    { label: "Restaurants", count: 95, type: "restaurants" },
+                    { label: "Cafés & Bars", count: 38, type: "cafes" },
+                    { label: "Schools", count: 15, type: "schools" }
+                ]
+            }
         },
         nl: {
             title: "Oud-Zuid",
@@ -736,7 +871,52 @@ export const neighborhoodsData = {
                 "P.C. Hooftstraat luxe winkelen",
                 "Concertgebouw",
                 "Elegante 19e-eeuwse architectuur"
-            ]
+            ],
+            marketData: {
+                indicators: [
+                    { label: "Huurgroei (5 jaar)", value: "+14.3%", subtext: "Hoge groei", trend: "up", color: "yellow" },
+                    { label: "Koopprijsgroei (5 jaar)", value: "+36.0%", subtext: "Hoge groei", trend: "up", color: "yellow" },
+                    { label: "Vraag Index", value: "9/10", subtext: "Zeer hoge vraag", trend: "stable", color: "green" },
+                    { label: "Beschikbaarheid", value: "2/10", subtext: "Zeer schaars", trend: "down", color: "red" }
+                ],
+                rentalPrices: [
+                    { name: "Studio", price: 2400 },
+                    { name: "1 Slaapkamer", price: 2800 },
+                    { name: "2 Slaapkamers", price: 3600 },
+                    { name: "3+ Slaapkamers", price: 4800 }
+                ],
+                purchasePrices: [
+                    { name: "Studio", price: 580000 },
+                    { name: "1 Slaapkamer", price: 680000 },
+                    { name: "2 Slaapkamers", price: 920000 },
+                    { name: "3+ Slaapkamers", price: 1250000 }
+                ],
+                priceTrend: [
+                    { year: "2020", rent: 2100, buy: 500000 },
+                    { year: "2021", rent: 2200, buy: 560000 },
+                    { year: "2022", rent: 2280, buy: 620000 },
+                    { year: "2023", rent: 2360, buy: 650000 },
+                    { year: "2024", rent: 2400, buy: 680000 },
+                    { year: "2025", rent: 2480, buy: 720000 }
+                ],
+                demographics: [
+                    { label: "Gemiddelde Leeftijd", value: "38" },
+                    { label: "Studenten", value: "10%" },
+                    { label: "Gezinnen", value: "55%" },
+                    { label: "Professionals", value: "35%" }
+                ]
+            },
+            livability: {
+                scores: [
+                    { label: "Openbaar Vervoer", value: "9/10", type: "transport" },
+                    { label: "Loopvriendelijkheid", value: "9/10", type: "walkability" }
+                ],
+                amenities: [
+                    { label: "Restaurants", count: 95, type: "restaurants" },
+                    { label: "Cafés & Bars", count: 38, type: "cafes" },
+                    { label: "Scholen", count: 15, type: "schools" }
+                ]
+            }
         }
     },
     "nieuw-west": {
@@ -750,7 +930,52 @@ export const neighborhoodsData = {
                 "Diverse shopping centers (Osdorpplein)",
                 "Affordable housing options",
                 "Good public transport connections"
-            ]
+            ],
+            marketData: {
+                indicators: [
+                    { label: "Rental Growth (5 years)", value: "+20.8%", subtext: "Very high growth", trend: "up", color: "red" },
+                    { label: "Purchase Price Growth (5 years)", value: "+46.2%", subtext: "Very high growth", trend: "up", color: "red" },
+                    { label: "Demand Index", value: "7/10", subtext: "Average demand", trend: "stable", color: "green" },
+                    { label: "Availability", value: "6/10", subtext: "Limited supply", trend: "stable", color: "yellow" }
+                ],
+                rentalPrices: [
+                    { name: "Studio", price: 1450 },
+                    { name: "1 Bed", price: 1750 },
+                    { name: "2 Bed", price: 2200 },
+                    { name: "3+ Bed", price: 2800 }
+                ],
+                purchasePrices: [
+                    { name: "Studio", price: 320000 },
+                    { name: "1 Bed", price: 380000 },
+                    { name: "2 Bed", price: 480000 },
+                    { name: "3+ Bed", price: 620000 }
+                ],
+                priceTrend: [
+                    { year: "2020", rent: 1200, buy: 260000 },
+                    { year: "2021", rent: 1270, buy: 300000 },
+                    { year: "2022", rent: 1340, buy: 340000 },
+                    { year: "2023", rent: 1400, buy: 360000 },
+                    { year: "2024", rent: 1450, buy: 380000 },
+                    { year: "2025", rent: 1500, buy: 400000 }
+                ],
+                demographics: [
+                    { label: "Average Age", value: "29" },
+                    { label: "Students", value: "28%" },
+                    { label: "Families", value: "45%" },
+                    { label: "Professionals", value: "27%" }
+                ]
+            },
+            livability: {
+                scores: [
+                    { label: "Public Transport", value: "9/10", type: "transport" },
+                    { label: "Walkability", value: "7/10", type: "walkability" }
+                ],
+                amenities: [
+                    { label: "Restaurants", count: 42, type: "restaurants" },
+                    { label: "Cafés & Bars", count: 20, type: "cafes" },
+                    { label: "Schools", count: 12, type: "schools" }
+                ]
+            }
         },
         nl: {
             title: "Nieuw-West",
@@ -762,7 +987,52 @@ export const neighborhoodsData = {
                 "Diverse winkelcentra (Osdorpplein)",
                 "Betaalbare woonopties",
                 "Goede openbaar vervoer verbindingen"
-            ]
+            ],
+            marketData: {
+                indicators: [
+                    { label: "Huurgroei (5 jaar)", value: "+20.8%", subtext: "Zeer hoge groei", trend: "up", color: "red" },
+                    { label: "Koopprijsgroei (5 jaar)", value: "+46.2%", subtext: "Zeer hoge groei", trend: "up", color: "red" },
+                    { label: "Vraag Index", value: "7/10", subtext: "Gemiddelde vraag", trend: "stable", color: "green" },
+                    { label: "Beschikbaarheid", value: "6/10", subtext: "Beperkt aanbod", trend: "stable", color: "yellow" }
+                ],
+                rentalPrices: [
+                    { name: "Studio", price: 1450 },
+                    { name: "1 Slaapkamer", price: 1750 },
+                    { name: "2 Slaapkamers", price: 2200 },
+                    { name: "3+ Slaapkamers", price: 2800 }
+                ],
+                purchasePrices: [
+                    { name: "Studio", price: 320000 },
+                    { name: "1 Slaapkamer", price: 380000 },
+                    { name: "2 Slaapkamers", price: 480000 },
+                    { name: "3+ Slaapkamers", price: 620000 }
+                ],
+                priceTrend: [
+                    { year: "2020", rent: 1200, buy: 260000 },
+                    { year: "2021", rent: 1270, buy: 300000 },
+                    { year: "2022", rent: 1340, buy: 340000 },
+                    { year: "2023", rent: 1400, buy: 360000 },
+                    { year: "2024", rent: 1450, buy: 380000 },
+                    { year: "2025", rent: 1500, buy: 400000 }
+                ],
+                demographics: [
+                    { label: "Gemiddelde Leeftijd", value: "29" },
+                    { label: "Studenten", value: "28%" },
+                    { label: "Gezinnen", value: "45%" },
+                    { label: "Professionals", value: "27%" }
+                ]
+            },
+            livability: {
+                scores: [
+                    { label: "Openbaar Vervoer", value: "9/10", type: "transport" },
+                    { label: "Loopvriendelijkheid", value: "7/10", type: "walkability" }
+                ],
+                amenities: [
+                    { label: "Restaurants", count: 42, type: "restaurants" },
+                    { label: "Cafés & Bars", count: 20, type: "cafes" },
+                    { label: "Scholen", count: 12, type: "schools" }
+                ]
+            }
         }
     }
 };

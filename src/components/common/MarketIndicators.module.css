@@ -1,0 +1,95 @@
+.container {
+    width: 100%;
+    margin-top: 2rem;
+    padding: 0 1rem;
+}
+
+.title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+@media (min-width: 1024px) {
+    .grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.card {
+    padding: 1rem;
+    border-radius: 0.75rem;
+    border: 2px solid;
+    transition: all 0.2s ease;
+}
+
+.card:hover {
+    transform: scale(1.02);
+}
+
+.indicatorGreen {
+    background: rgba(34, 197, 94, 0.1);
+    border-color: rgba(34, 197, 94, 0.3);
+}
+
+.indicatorGreen .icon,
+.indicatorGreen .value {
+    color: #16a34a;
+}
+
+.indicatorYellow {
+    background: rgba(234, 179, 8, 0.1);
+    border-color: rgba(234, 179, 8, 0.3);
+}
+
+.indicatorYellow .icon,
+.indicatorYellow .value {
+    color: #ca8a04;
+}
+
+.indicatorRed {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+.indicatorRed .icon,
+.indicatorRed .value {
+    color: #dc2626;
+}
+
+.cardHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.icon {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.value {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.cardTitle {
+    font-weight: 500;
+    color: #111827;
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+}
+
+.cardDesc {
+    font-size: 0.75rem;
+    color: #4b5563;
+}

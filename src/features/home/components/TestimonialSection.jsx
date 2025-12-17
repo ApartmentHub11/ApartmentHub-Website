@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Users, Star, Clock, CircleCheck, MapPin, CheckCheck, MessageCircle, X } from 'lucide-react';
+import { Users, Star, Clock, CircleCheck, MapPin, CheckCheck, MessageCircle, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import styles from './TestimonialSection.module.css';
 import { translations } from '../../../data/translations';
 import chatLogoImage from '../../../assets/chatlogo.png';
@@ -15,6 +15,37 @@ const TestimonialSection = () => {
     const currentLang = useSelector((state) => state.ui.language);
     const t = translations.home[currentLang] || translations.home.en;
     const [selectedChat, setSelectedChat] = useState(null);
+    const [activeSlide, setActiveSlide] = useState(0);
+    const [isMobile, setIsMobile] = useState(false);
+    const carouselRef = useRef(null);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
+    // Auto-slide on mobile every 1 second
+    useEffect(() => {
+        if (!isMobile || !carouselRef.current) return;
+
+        const interval = setInterval(() => {
+            setActiveSlide(prev => {
+                const nextSlide = (prev + 1) % 3;
+                if (carouselRef.current) {
+                    const cardWidth = carouselRef.current.scrollWidth / 3;
+                    carouselRef.current.scrollTo({
+                        left: nextSlide * cardWidth,
+                        behavior: 'smooth'
+                    });
+                }
+                return nextSlide;
+            });
+        }, 4000);
+
+        return () => clearInterval(interval);
+    }, [isMobile]);
 
     const handleCardClick = (chatData) => {
         setSelectedChat(chatData);
@@ -182,205 +213,208 @@ const TestimonialSection = () => {
                     <p className={styles.helperText}>{t.testimonialsHelper}</p>
                 </div>
 
-                {/* Grid */}
-                <div className={styles.grid}>
-                    {/* Card 1: Robert van Dijk */}
-                    <div className={styles.card} onClick={() => handleCardClick(robertData)}>
-                        <div className={styles.cardHeader}>
-                            <div className={styles.userInfo}>
-                                <span className={styles.avatar}>
-                                    <img className={styles.avatarImg} alt={robertData.name} src={robertData.avatar} />
-                                </span>
-                                <div className={styles.userDetails}>
-                                    <div className={styles.userNameWrapper}>
-                                        <h3 className={styles.userName}>Robert van Dijk</h3>
-                                        <CircleCheck className={styles.verifiedIcon} />
+                {/* Carousel Wrapper for Mobile */}
+                <div className={styles.carouselWrapper} ref={carouselRef}>
+                    <div className={styles.grid}>
+                        {/* Card 1: Robert van Dijk */}
+                        <div className={styles.card} onClick={() => handleCardClick(robertData)}>
+                            <div className={styles.cardHeader}>
+                                <div className={styles.userInfo}>
+                                    <span className={styles.avatar}>
+                                        <img className={styles.avatarImg} alt={robertData.name} src={robertData.avatar} />
+                                    </span>
+                                    <div className={styles.userDetails}>
+                                        <div className={styles.userNameWrapper}>
+                                            <h3 className={styles.userName}>Robert van Dijk</h3>
+                                            <CircleCheck className={styles.verifiedIcon} />
+                                        </div>
+                                        <div className={styles.statusWrapper}>
+                                            <div className={styles.statusDot}></div>
+                                            <span className={styles.statusText}>Online</span>
+                                        </div>
+                                        <div className={styles.locationWrapper}>
+                                            <MapPin className={styles.locationIcon} />
+                                            <span className={styles.locationText}>Jordaan</span>
+                                        </div>
                                     </div>
-                                    <div className={styles.statusWrapper}>
-                                        <div className={styles.statusDot}></div>
-                                        <span className={styles.statusText}>Online</span>
+                                    <div className={styles.ratingWrapper}>
+                                        <Star className={styles.ratingIcon} />
+                                        <span className={styles.ratingText}>5</span>
                                     </div>
-                                    <div className={styles.locationWrapper}>
-                                        <MapPin className={styles.locationIcon} />
-                                        <span className={styles.locationText}>Jordaan</span>
-                                    </div>
-                                </div>
-                                <div className={styles.ratingWrapper}>
-                                    <Star className={styles.ratingIcon} />
-                                    <span className={styles.ratingText}>5</span>
                                 </div>
                             </div>
+                            <div className={styles.cardBody}>
+                                <div className={styles.messageReceived}>
+                                    <div className={styles.messageAvatar}>
+                                        <img src={chatLogoImage} alt="ApartmentHub" className={styles.messageAvatarImg} />
+                                    </div>
+                                    <div className={styles.messageBubbleReceived}>
+                                        <p className={styles.messageText}>{robertPreview[currentLang]?.received}</p>
+                                        <div className={styles.messageMeta}>
+                                            <span className={styles.messageTime}>{robertPreview[currentLang]?.time}</span>
+                                            <CheckCheck className={styles.readIcon} />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className={styles.messageSent}>
+                                    <div className={styles.messageBubbleSent}>
+                                        <p className={styles.messageTextWhite}>{robertPreview[currentLang]?.sent}</p>
+                                        <div className={styles.messageMetaEnd}>
+                                            <span className={styles.messageTimeWhite}>{robertPreview[currentLang]?.time}</span>
+                                            <CheckCheck className={styles.readIconWhite} />
+                                        </div>
+                                    </div>
+                                    <span className={styles.avatarSmall}>
+                                        <img className={styles.avatarImg} alt={robertData.name} src={robertData.avatar} />
+                                    </span>
+                                </div>
+                                <div className={styles.cardFooter}>
+                                    <div className={styles.footerItem}>
+                                        <MessageCircle className={styles.footerIcon} />
+                                        <span className={styles.footerText}>{robertPreview[currentLang]?.messageCount}</span>
+                                    </div>
+                                    <div className={styles.footerItem}>
+                                        <Clock className={styles.footerIcon} />
+                                        <span className={styles.footerText}>December 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={styles.hoverOverlay}></div>
                         </div>
-                        <div className={styles.cardBody}>
-                            <div className={styles.messageReceived}>
-                                <div className={styles.messageAvatar}>
-                                    <img src={chatLogoImage} alt="ApartmentHub" className={styles.messageAvatarImg} />
-                                </div>
-                                <div className={styles.messageBubbleReceived}>
-                                    <p className={styles.messageText}>{robertPreview[currentLang]?.received}</p>
-                                    <div className={styles.messageMeta}>
-                                        <span className={styles.messageTime}>{robertPreview[currentLang]?.time}</span>
-                                        <CheckCheck className={styles.readIcon} />
+
+                        {/* Card 2: Maria Santos */}
+                        <div className={styles.card} onClick={() => handleCardClick(mariaData)}>
+                            <div className={styles.cardHeader}>
+                                <div className={styles.userInfo}>
+                                    <span className={styles.avatar}>
+                                        <img className={styles.avatarImg} alt={mariaData.name} src={mariaData.avatar} />
+                                    </span>
+                                    <div className={styles.userDetails}>
+                                        <div className={styles.userNameWrapper}>
+                                            <h3 className={styles.userName}>Maria Santos</h3>
+                                            <CircleCheck className={styles.verifiedIcon} />
+                                        </div>
+                                        <div className={styles.statusWrapper}>
+                                            <div className={styles.statusDot}></div>
+                                            <span className={styles.statusText}>Online</span>
+                                        </div>
+                                        <div className={styles.locationWrapper}>
+                                            <MapPin className={styles.locationIcon} />
+                                            <span className={styles.locationText}>De Pijp</span>
+                                        </div>
+                                    </div>
+                                    <div className={styles.ratingWrapper}>
+                                        <Star className={styles.ratingIcon} />
+                                        <span className={styles.ratingText}>5</span>
                                     </div>
                                 </div>
                             </div>
-                            <div className={styles.messageSent}>
-                                <div className={styles.messageBubbleSent}>
-                                    <p className={styles.messageTextWhite}>{robertPreview[currentLang]?.sent}</p>
-                                    <div className={styles.messageMetaEnd}>
-                                        <span className={styles.messageTimeWhite}>{robertPreview[currentLang]?.time}</span>
-                                        <CheckCheck className={styles.readIconWhite} />
+                            <div className={styles.cardBody}>
+                                <div className={styles.messageReceived}>
+                                    <div className={styles.messageAvatar}>
+                                        <img src={chatLogoImage} alt="ApartmentHub" className={styles.messageAvatarImg} />
+                                    </div>
+                                    <div className={styles.messageBubbleReceived}>
+                                        <p className={styles.messageText}>{mariaPreview[currentLang]?.received}</p>
+                                        <div className={styles.messageMeta}>
+                                            <span className={styles.messageTime}>{mariaPreview[currentLang]?.time}</span>
+                                            <CheckCheck className={styles.readIcon} />
+                                        </div>
                                     </div>
                                 </div>
-                                <span className={styles.avatarSmall}>
-                                    <img className={styles.avatarImg} alt={robertData.name} src={robertData.avatar} />
-                                </span>
-                            </div>
-                            <div className={styles.cardFooter}>
-                                <div className={styles.footerItem}>
-                                    <MessageCircle className={styles.footerIcon} />
-                                    <span className={styles.footerText}>{robertPreview[currentLang]?.messageCount}</span>
+                                <div className={styles.messageSent}>
+                                    <div className={styles.messageBubbleSent}>
+                                        <p className={styles.messageTextWhite}>{mariaPreview[currentLang]?.sent}</p>
+                                        <div className={styles.messageMetaEnd}>
+                                            <span className={styles.messageTimeWhite}>{mariaPreview[currentLang]?.time}</span>
+                                            <CheckCheck className={styles.readIconWhite} />
+                                        </div>
+                                    </div>
+                                    <span className={styles.avatarSmall}>
+                                        <img className={styles.avatarImg} alt={mariaData.name} src={mariaData.avatar} />
+                                    </span>
                                 </div>
-                                <div className={styles.footerItem}>
-                                    <Clock className={styles.footerIcon} />
-                                    <span className={styles.footerText}>December 2024</span>
+                                <div className={styles.cardFooter}>
+                                    <div className={styles.footerItem}>
+                                        <MessageCircle className={styles.footerIcon} />
+                                        <span className={styles.footerText}>{mariaPreview[currentLang]?.messageCount}</span>
+                                    </div>
+                                    <div className={styles.footerItem}>
+                                        <Clock className={styles.footerIcon} />
+                                        <span className={styles.footerText}>November 2024</span>
+                                    </div>
                                 </div>
                             </div>
+                            <div className={styles.hoverOverlay}></div>
                         </div>
-                        <div className={styles.hoverOverlay}></div>
+
+                        {/* Card 3: Jan Willem Bakker */}
+                        <div className={styles.card} onClick={() => handleCardClick(janData)}>
+                            <div className={styles.cardHeader}>
+                                <div className={styles.userInfo}>
+                                    <span className={styles.avatar}>
+                                        <img className={styles.avatarImg} alt={janData.name} src={janData.avatar} />
+                                    </span>
+                                    <div className={styles.userDetails}>
+                                        <div className={styles.userNameWrapper}>
+                                            <h3 className={styles.userName}>Jan Willem Bakker</h3>
+                                            <CircleCheck className={styles.verifiedIcon} />
+                                        </div>
+                                        <div className={styles.statusWrapper}>
+                                            <div className={styles.statusDot}></div>
+                                            <span className={styles.statusText}>Online</span>
+                                        </div>
+                                        <div className={styles.locationWrapper}>
+                                            <MapPin className={styles.locationIcon} />
+                                            <span className={styles.locationText}>Noord</span>
+                                        </div>
+                                    </div>
+                                    <div className={styles.ratingWrapper}>
+                                        <Star className={styles.ratingIcon} />
+                                        <span className={styles.ratingText}>5</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={styles.cardBody}>
+                                <div className={styles.messageReceived}>
+                                    <div className={styles.messageAvatar}>
+                                        <img src={chatLogoImage} alt="ApartmentHub" className={styles.messageAvatarImg} />
+                                    </div>
+                                    <div className={styles.messageBubbleReceived}>
+                                        <p className={styles.messageText}>{janPreview[currentLang]?.received}</p>
+                                        <div className={styles.messageMeta}>
+                                            <span className={styles.messageTime}>{janPreview[currentLang]?.time}</span>
+                                            <CheckCheck className={styles.readIcon} />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className={styles.messageSent}>
+                                    <div className={styles.messageBubbleSent}>
+                                        <p className={styles.messageTextWhite}>{janPreview[currentLang]?.sent}</p>
+                                        <div className={styles.messageMetaEnd}>
+                                            <span className={styles.messageTimeWhite}>{janPreview[currentLang]?.time}</span>
+                                            <CheckCheck className={styles.readIconWhite} />
+                                        </div>
+                                    </div>
+                                    <span className={styles.avatarSmall}>
+                                        <img className={styles.avatarImg} alt={janData.name} src={janData.avatar} />
+                                    </span>
+                                </div>
+                                <div className={styles.cardFooter}>
+                                    <div className={styles.footerItem}>
+                                        <MessageCircle className={styles.footerIcon} />
+                                        <span className={styles.footerText}>{janPreview[currentLang]?.messageCount}</span>
+                                    </div>
+                                    <div className={styles.footerItem}>
+                                        <Clock className={styles.footerIcon} />
+                                        <span className={styles.footerText}>Oktober 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={styles.hoverOverlay}></div>
+                        </div>
                     </div>
 
-                    {/* Card 2: Maria Santos */}
-                    <div className={styles.card} onClick={() => handleCardClick(mariaData)}>
-                        <div className={styles.cardHeader}>
-                            <div className={styles.userInfo}>
-                                <span className={styles.avatar}>
-                                    <img className={styles.avatarImg} alt={mariaData.name} src={mariaData.avatar} />
-                                </span>
-                                <div className={styles.userDetails}>
-                                    <div className={styles.userNameWrapper}>
-                                        <h3 className={styles.userName}>Maria Santos</h3>
-                                        <CircleCheck className={styles.verifiedIcon} />
-                                    </div>
-                                    <div className={styles.statusWrapper}>
-                                        <div className={styles.statusDot}></div>
-                                        <span className={styles.statusText}>Online</span>
-                                    </div>
-                                    <div className={styles.locationWrapper}>
-                                        <MapPin className={styles.locationIcon} />
-                                        <span className={styles.locationText}>De Pijp</span>
-                                    </div>
-                                </div>
-                                <div className={styles.ratingWrapper}>
-                                    <Star className={styles.ratingIcon} />
-                                    <span className={styles.ratingText}>5</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className={styles.cardBody}>
-                            <div className={styles.messageReceived}>
-                                <div className={styles.messageAvatar}>
-                                    <img src={chatLogoImage} alt="ApartmentHub" className={styles.messageAvatarImg} />
-                                </div>
-                                <div className={styles.messageBubbleReceived}>
-                                    <p className={styles.messageText}>{mariaPreview[currentLang]?.received}</p>
-                                    <div className={styles.messageMeta}>
-                                        <span className={styles.messageTime}>{mariaPreview[currentLang]?.time}</span>
-                                        <CheckCheck className={styles.readIcon} />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className={styles.messageSent}>
-                                <div className={styles.messageBubbleSent}>
-                                    <p className={styles.messageTextWhite}>{mariaPreview[currentLang]?.sent}</p>
-                                    <div className={styles.messageMetaEnd}>
-                                        <span className={styles.messageTimeWhite}>{mariaPreview[currentLang]?.time}</span>
-                                        <CheckCheck className={styles.readIconWhite} />
-                                    </div>
-                                </div>
-                                <span className={styles.avatarSmall}>
-                                    <img className={styles.avatarImg} alt={mariaData.name} src={mariaData.avatar} />
-                                </span>
-                            </div>
-                            <div className={styles.cardFooter}>
-                                <div className={styles.footerItem}>
-                                    <MessageCircle className={styles.footerIcon} />
-                                    <span className={styles.footerText}>{mariaPreview[currentLang]?.messageCount}</span>
-                                </div>
-                                <div className={styles.footerItem}>
-                                    <Clock className={styles.footerIcon} />
-                                    <span className={styles.footerText}>November 2024</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className={styles.hoverOverlay}></div>
-                    </div>
-
-                    {/* Card 3: Jan Willem Bakker */}
-                    <div className={styles.card} onClick={() => handleCardClick(janData)}>
-                        <div className={styles.cardHeader}>
-                            <div className={styles.userInfo}>
-                                <span className={styles.avatar}>
-                                    <img className={styles.avatarImg} alt={janData.name} src={janData.avatar} />
-                                </span>
-                                <div className={styles.userDetails}>
-                                    <div className={styles.userNameWrapper}>
-                                        <h3 className={styles.userName}>Jan Willem Bakker</h3>
-                                        <CircleCheck className={styles.verifiedIcon} />
-                                    </div>
-                                    <div className={styles.statusWrapper}>
-                                        <div className={styles.statusDot}></div>
-                                        <span className={styles.statusText}>Online</span>
-                                    </div>
-                                    <div className={styles.locationWrapper}>
-                                        <MapPin className={styles.locationIcon} />
-                                        <span className={styles.locationText}>Noord</span>
-                                    </div>
-                                </div>
-                                <div className={styles.ratingWrapper}>
-                                    <Star className={styles.ratingIcon} />
-                                    <span className={styles.ratingText}>5</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className={styles.cardBody}>
-                            <div className={styles.messageReceived}>
-                                <div className={styles.messageAvatar}>
-                                    <img src={chatLogoImage} alt="ApartmentHub" className={styles.messageAvatarImg} />
-                                </div>
-                                <div className={styles.messageBubbleReceived}>
-                                    <p className={styles.messageText}>{janPreview[currentLang]?.received}</p>
-                                    <div className={styles.messageMeta}>
-                                        <span className={styles.messageTime}>{janPreview[currentLang]?.time}</span>
-                                        <CheckCheck className={styles.readIcon} />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className={styles.messageSent}>
-                                <div className={styles.messageBubbleSent}>
-                                    <p className={styles.messageTextWhite}>{janPreview[currentLang]?.sent}</p>
-                                    <div className={styles.messageMetaEnd}>
-                                        <span className={styles.messageTimeWhite}>{janPreview[currentLang]?.time}</span>
-                                        <CheckCheck className={styles.readIconWhite} />
-                                    </div>
-                                </div>
-                                <span className={styles.avatarSmall}>
-                                    <img className={styles.avatarImg} alt={janData.name} src={janData.avatar} />
-                                </span>
-                            </div>
-                            <div className={styles.cardFooter}>
-                                <div className={styles.footerItem}>
-                                    <MessageCircle className={styles.footerIcon} />
-                                    <span className={styles.footerText}>{janPreview[currentLang]?.messageCount}</span>
-                                </div>
-                                <div className={styles.footerItem}>
-                                    <Clock className={styles.footerIcon} />
-                                    <span className={styles.footerText}>Oktober 2024</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className={styles.hoverOverlay}></div>
-                    </div>
                 </div>
 
                 {/* CTA */}

@@ -1,0 +1,116 @@
+/* Match the exact Tailwind CSS styling from original PrivacyPolicy.tsx */
+.page {
+    min-height: 100vh;
+    background-color: hsl(var(--background));
+    padding: 4rem 1rem;
+}
+
+.container {
+    max-width: 56rem;
+    margin: 0 auto;
+}
+
+.title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: hsl(var(--foreground));
+}
+
+.version {
+    color: hsl(var(--muted-foreground));
+    margin-bottom: 1.5rem;
+}
+
+.intro {
+    margin-bottom: 2rem;
+    color: hsl(var(--foreground));
+}
+
+.section {
+    margin-bottom: 2rem;
+}
+
+.sectionTitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: hsl(var(--foreground));
+}
+
+.paragraph {
+    color: hsl(var(--foreground));
+}
+
+.paragraphSpaced {
+    margin-bottom: 1rem;
+    color: hsl(var(--foreground));
+}
+
+.paragraphMt {
+    margin-top: 1rem;
+    color: hsl(var(--foreground));
+}
+
+/* Contact list - no bullets */
+.contactList {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: hsl(var(--foreground));
+}
+
+/* Regular list with bullets */
+.list {
+    list-style-type: disc;
+    list-style-position: inside;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: hsl(var(--foreground));
+    margin-left: 1rem;
+}
+
+/* Table */
+.tableWrapper {
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid hsl(var(--border));
+}
+
+.tableHead {
+    background-color: hsl(var(--muted));
+}
+
+.tableHeader {
+    border: 1px solid hsl(var(--border));
+    padding: 0.75rem;
+    text-align: left;
+    color: hsl(var(--foreground));
+}
+
+.tableRow {}
+
+.tableRowAlt {
+    background-color: hsl(var(--muted) / 0.5);
+}
+
+.tableCell {
+    border: 1px solid hsl(var(--border));
+    padding: 0.75rem;
+    color: hsl(var(--foreground));
+}
+
+/* Link */
+.link {
+    color: hsl(var(--primary));
+}
+
+.link:hover {
+    text-decoration: underline;
+}

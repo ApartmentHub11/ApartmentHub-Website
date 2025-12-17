@@ -771,5 +771,373 @@ export const translations = {
             subscribe: "Abonneren",
             copyright: "© 2024 ApartmentHub. Alle rechten voorbehouden."
         }
+    },
+    login: {
+        en: {
+            title: "Login to Your Application",
+            subtitle: "Enter your phone number to receive a verification code via WhatsApp",
+            phoneLabel: "Phone Number",
+            phonePlaceholder: "+31 6 12345678",
+            codeLabel: "Verification Code",
+            codePlaceholder: "Enter 6-digit code",
+            sendCode: "Send Code",
+            sendingCode: "Sending...",
+            verify: "Verify & Login",
+            verifying: "Verifying...",
+            codesSent: "Code sent! Check your WhatsApp",
+            invalidPhone: "Please enter a valid phone number",
+            invalidCode: "Invalid verification code",
+            resendCode: "Resend code",
+            backToPhone: "Use different number",
+            whatsappNote: "You will receive a WhatsApp message with your verification code"
+        },
+        nl: {
+            title: "Login voor Uw Aanvraag",
+            subtitle: "Vul uw telefoonnummer in om een verificatiecode via WhatsApp te ontvangen",
+            phoneLabel: "Telefoonnummer",
+            phonePlaceholder: "+31 6 12345678",
+            codeLabel: "Verificatiecode",
+            codePlaceholder: "Vul 6-cijferige code in",
+            sendCode: "Verstuur Code",
+            sendingCode: "Versturen...",
+            verify: "Verifieer & Login",
+            verifying: "Verifiëren...",
+            codesSent: "Code verzonden! Controleer uw WhatsApp",
+            invalidPhone: "Vul een geldig telefoonnummer in",
+            invalidCode: "Ongeldige verificatiecode",
+            resendCode: "Code opnieuw versturen",
+            backToPhone: "Ander nummer gebruiken",
+            whatsappNote: "U ontvangt een WhatsApp bericht met uw verificatiecode"
+        }
+    },
+    apartments: {
+        en: {
+            title: "Select Your Apartment",
+            subtitle: "Choose the apartment you want to apply for",
+            selectLabel: "Select an Apartment",
+            selectPlaceholder: "Choose an apartment...",
+            continueBtn: "Continue to Login",
+            noApartments: "No apartments available",
+            price: "per month",
+            rooms: "rooms",
+            surface: "m²"
+        },
+        nl: {
+            title: "Selecteer Uw Appartement",
+            subtitle: "Kies het appartement waarvoor u wilt solliciteren",
+            selectLabel: "Selecteer een Appartement",
+            selectPlaceholder: "Kies een appartement...",
+            continueBtn: "Doorgaan naar Login",
+            noApartments: "Geen appartementen beschikbaar",
+            price: "per maand",
+            rooms: "kamers",
+            surface: "m²"
+        }
+    },
+    aanvraag: {
+        en: {
+            pageTitle: "Rental Application",
+            sidebarTitle: "Rental Conditions",
+            minRentPrice: "Minimum Rent",
+            perMonth: "per month",
+            deposit: "Deposit",
+            serviceCosts: "Service costs",
+            availableFrom: "Available from",
+            progressTitle: "Application Progress",
+            bidTitle: "Your Bid",
+            bidAmount: "Monthly Rent Bid",
+            bidDescription: "Enter the amount you want to pay monthly (minimum is the asking price)",
+            startDate: "Preferred Start Date",
+            startDateDesc: "Available from",
+            monthsAdvance: "Months in Advance",
+            motivation: "Motivation (optional)",
+            motivationPlaceholder: "Tell us why you are the ideal tenant...",
+            characters: "characters",
+            tenantTitle: "Tenant Information",
+            mainTenant: "Main Tenant",
+            coTenant: "Co-Tenant",
+            guarantor: "Guarantor",
+            addCoTenant: "Add Co-Tenant",
+            addGuarantor: "Add Guarantor",
+            documents: "Documents",
+            complete: "Complete",
+            incomplete: "Incomplete",
+            workStatus: "Employment Status",
+            grossIncome: "Gross Annual Income",
+            requiredDocs: "Required Documents",
+            selectWorkStatusFirst: "Select your employment status to see required documents",
+            uploadSelf: "Upload Documents Yourself",
+            uploadSelfDesc: "Upload documents directly from your device",
+            sendWhatsApp: "Send WhatsApp Link",
+            sendWhatsAppDesc: "Send a link to upload documents via WhatsApp",
+            submitApplication: "Submit Application",
+            submitting: "Submitting...",
+            logout: "Logout"
+        },
+        nl: {
+            pageTitle: "Huurverzoek",
+            sidebarTitle: "Huurvoorwaarden",
+            minRentPrice: "Minimale Huurprijs",
+            perMonth: "per maand",
+            deposit: "Borg",
+            serviceCosts: "Servicekosten",
+            availableFrom: "Beschikbaar vanaf",
+            progressTitle: "Voortgang Aanvraag",
+            bidTitle: "Uw Bod",
+            bidAmount: "Maandelijkse Huur Bod",
+            bidDescription: "Vul het bedrag in dat u maandelijks wilt betalen (minimum is de vraagprijs)",
+            startDate: "Gewenste Startdatum",
+            startDateDesc: "Beschikbaar vanaf",
+            monthsAdvance: "Maanden Vooruit",
+            motivation: "Motivatie (optioneel)",
+            motivationPlaceholder: "Vertel ons waarom u de ideale huurder bent...",
+            characters: "tekens",
+            tenantTitle: "Huurder Informatie",
+            mainTenant: "Hoofdhuurder",
+            coTenant: "Medehuurder",
+            guarantor: "Garantsteller",
+            addCoTenant: "Medehuurder Toevoegen",
+            addGuarantor: "Garantsteller Toevoegen",
+            documents: "Documenten",
+            complete: "Compleet",
+            incomplete: "Onvolledig",
+            workStatus: "Arbeidsstatus",
+            grossIncome: "Bruto Jaarinkomen",
+            requiredDocs: "Vereiste Documenten",
+            selectWorkStatusFirst: "Selecteer uw arbeidsstatus om de vereiste documenten te zien",
+            uploadSelf: "Zelf Documenten Uploaden",
+            uploadSelfDesc: "Upload documenten direct vanaf uw apparaat",
+            sendWhatsApp: "WhatsApp Link Versturen",
+            sendWhatsAppDesc: "Verstuur een link om documenten via WhatsApp te uploaden",
+            submitApplication: "Aanvraag Indienen",
+            submitting: "Indienen...",
+            logout: "Uitloggen"
+        }
+    },
+    letterOfIntent: {
+        en: {
+            title: "Letter of Intent",
+            subtitle: "Review and sign to confirm your rental application",
+            propertyDetails: "Property Details",
+            address: "Address",
+            rent: "Monthly Rent",
+            startDate: "Start Date",
+            tenantDetails: "Tenant Details",
+            name: "Name",
+            phone: "Phone",
+            conditions: "Conditions",
+            condition1: "I confirm that all provided information is accurate",
+            condition2: "I agree to the rental conditions",
+            condition3: "I understand and accept the broker fee terms",
+            signature: "Your Signature",
+            signHere: "Sign here",
+            clearSignature: "Clear",
+            submit: "Confirm & Submit",
+            submitting: "Submitting...",
+            successTitle: "Application Submitted!",
+            successMessage: "Your rental application has been submitted successfully. We will contact you within 24 hours.",
+            backToHome: "Back to Home"
+        },
+        nl: {
+            title: "Intentieverklaring",
+            subtitle: "Controleer en onderteken om uw huurverzoek te bevestigen",
+            propertyDetails: "Woning Details",
+            address: "Adres",
+            rent: "Maandelijkse Huur",
+            startDate: "Startdatum",
+            tenantDetails: "Huurder Details",
+            name: "Naam",
+            phone: "Telefoon",
+            conditions: "Voorwaarden",
+            condition1: "Ik bevestig dat alle verstrekte informatie juist is",
+            condition2: "Ik ga akkoord met de huurvoorwaarden",
+            condition3: "Ik begrijp en accepteer de makelaarskosten",
+            signature: "Uw Handtekening",
+            signHere: "Teken hier",
+            clearSignature: "Wissen",
+            submit: "Bevestigen & Indienen",
+            submitting: "Indienen...",
+            successTitle: "Aanvraag Ingediend!",
+            successMessage: "Uw huurverzoek is succesvol ingediend. Wij nemen binnen 24 uur contact met u op.",
+            backToHome: "Terug naar Home"
+        }
+    },
+    privacy: {
+        en: {
+            title: "Privacy Policy",
+            lastUpdated: "Last updated",
+            sections: {
+                intro: "ApartmentHub respects your privacy and is committed to protecting your personal data.",
+                dataCollected: "Data We Collect",
+                dataCollectedText: "We collect information you provide directly, including name, email, phone number, and property preferences.",
+                howWeUse: "How We Use Your Data",
+                howWeUseText: "We use your data to provide our services, communicate with you, and improve our platform.",
+                sharing: "Data Sharing",
+                sharingText: "We only share your data with third parties when necessary for our services or required by law.",
+                rights: "Your Rights",
+                rightsText: "You have the right to access, correct, or delete your personal data at any time.",
+                contact: "Contact Us",
+                contactText: "For privacy-related inquiries, please contact us at privacy@apartmenthub.com"
+            }
+        },
+        nl: {
+            title: "Privacyverklaring",
+            lastUpdated: "Laatst bijgewerkt",
+            sections: {
+                intro: "ApartmentHub respecteert uw privacy en is toegewijd aan het beschermen van uw persoonlijke gegevens.",
+                dataCollected: "Gegevens die We Verzamelen",
+                dataCollectedText: "We verzamelen informatie die u direct verstrekt, waaronder naam, e-mail, telefoonnummer en woningvoorkeuren.",
+                howWeUse: "Hoe We Uw Gegevens Gebruiken",
+                howWeUseText: "We gebruiken uw gegevens om onze diensten te leveren, met u te communiceren en ons platform te verbeteren.",
+                sharing: "Gegevens Delen",
+                sharingText: "We delen uw gegevens alleen met derden wanneer dit nodig is voor onze diensten of wettelijk verplicht is.",
+                rights: "Uw Rechten",
+                rightsText: "U heeft het recht om uw persoonlijke gegevens op elk moment in te zien, te corrigeren of te verwijderen.",
+                contact: "Contact",
+                contactText: "Voor privacy-gerelateerde vragen kunt u contact opnemen via privacy@apartmenthub.com"
+            }
+        }
+    },
+    terms: {
+        en: {
+            title: "Terms and Conditions",
+            lastUpdated: "Last updated",
+            sections: {
+                intro: "Welcome to ApartmentHub. By using our services, you agree to these terms.",
+                services: "Our Services",
+                servicesText: "ApartmentHub provides rental matching services connecting landlords with potential tenants.",
+                fees: "Fees and Payments",
+                feesText: "Our service fees are clearly communicated before any transaction. Broker fees apply as per Dutch regulations.",
+                liability: "Liability",
+                liabilityText: "ApartmentHub acts as an intermediary and is not liable for disputes between landlords and tenants.",
+                termination: "Termination",
+                terminationText: "Either party may terminate the service agreement with proper notice.",
+                law: "Applicable Law",
+                lawText: "These terms are governed by Dutch law. Disputes will be resolved in Amsterdam courts."
+            }
+        },
+        nl: {
+            title: "Algemene Voorwaarden",
+            lastUpdated: "Laatst bijgewerkt",
+            sections: {
+                intro: "Welkom bij ApartmentHub. Door gebruik te maken van onze diensten gaat u akkoord met deze voorwaarden.",
+                services: "Onze Diensten",
+                servicesText: "ApartmentHub biedt verhuur-matchingdiensten die verhuurders met potentiële huurders verbinden.",
+                fees: "Kosten en Betalingen",
+                feesText: "Onze servicekosten worden duidelijk gecommuniceerd voor elke transactie. Makelaarskosten zijn van toepassing volgens Nederlandse regelgeving.",
+                liability: "Aansprakelijkheid",
+                liabilityText: "ApartmentHub treedt op als bemiddelaar en is niet aansprakelijk voor geschillen tussen verhuurders en huurders.",
+                termination: "Beëindiging",
+                terminationText: "Beide partijen kunnen de serviceovereenkomst beëindigen met de juiste opzegtermijn.",
+                law: "Toepasselijk Recht",
+                lawText: "Deze voorwaarden worden beheerst door Nederlands recht. Geschillen worden beslecht door de rechtbank Amsterdam."
+            }
+        }
+    },
+    notFound: {
+        en: {
+            title: "Page Not Found",
+            message: "The page you're looking for doesn't exist or has been moved.",
+            backHome: "Back to Home"
+        },
+        nl: {
+            title: "Pagina Niet Gevonden",
+            message: "De pagina die u zoekt bestaat niet of is verplaatst.",
+            backHome: "Terug naar Home"
+        }
+    }
+};
+
+translations.documents = {
+    en: {
+        upload: {
+            invalidFileType: "Invalid file type. Only PDF and images are allowed.",
+            fileTooLarge: "File is too large (max 10MB).",
+            extracting: "Extracting data from document...",
+            extractionSuccess: "Data successfully extracted!",
+            extractionWarning: "Could not extract data automatically.",
+            replace: "Replace",
+            optional: "Optional",
+            uploading: "Uploading...",
+            dragOrClick: "Drag & drop or click to upload",
+            fileTypes: "Supported: PDF, JPG, PNG",
+            remove: "Remove"
+        },
+        types: {
+            "ID-bewijs": { name: "ID Document", description: "Passport or ID card" },
+            "Inschrijvingsbewijs": { name: "Proof of Enrollment", description: "Proof of enrollment at educational institution" },
+            "Arbeidscontract of Werkgeversverklaring": { name: "Employment Contract", description: "Current employment contract or employer statement" },
+            "Loonstroken": { name: "Payslips", description: "Last 1-3 months" },
+            "KvK uittreksel (Bewijs dat jij eigenaar bent)": { name: "CoC Extract", description: "Recent Chamber of Commerce extract" },
+            "Jaaropgaves": { name: "Annual Statements", description: "Last 1-2 years" },
+            "IB-aangifte laatste 1-2 jaar": { name: "Income Tax Return", description: "Optional: Tax return of last years" },
+            "Pensioenoverzicht": { name: "Pension Overview", description: "Annual pension overview" },
+            "Bankafschriften": { name: "Bank Statements", description: "Last 3 months showing income" },
+            "Goed verhuurderschap": { name: "Good Landlord Statement", description: "Optional: Statement from previous landlord" },
+            "UWV bestand": { name: "UWV Document", description: "Optional: UWV insurance document" },
+            "BRP-uittreksel": { name: "BRP Extract", description: "Optional: Extract from Municipal Personal Records Database" },
+            "Extra inkomen": { name: "Extra Income", description: "Optional: side income, alimony, etc." }
+        }
+    },
+    nl: {
+        upload: {
+            invalidFileType: "Ongeldig bestandstype. Alleen PDF en afbeeldingen zijn toegestaan.",
+            fileTooLarge: "Bestand is te groot (max 10MB).",
+            extracting: "Gegevens uit document halen...",
+            extractionSuccess: "Gegevens succesvol opgehaald!",
+            extractionWarning: "Kon gegevens niet automatisch ophalen.",
+            replace: "Vervangen",
+            optional: "Optioneel",
+            uploading: "Uploaden...",
+            dragOrClick: "Sleep of klik om te uploaden",
+            fileTypes: "Ondersteund: PDF, JPG, PNG",
+            remove: "Verwijderen"
+        },
+        types: {
+            "ID-bewijs": { name: "ID-bewijs", description: "Paspoort of ID-kaart" },
+            "Inschrijvingsbewijs": { name: "Inschrijvingsbewijs", description: "Bewijs van inschrijving onderwijsinstelling" },
+            "Arbeidscontract of Werkgeversverklaring": { name: "Arbeidscontract", description: "Huidig arbeidscontract of werkgeversverklaring" },
+            "Loonstroken": { name: "Loonstroken", description: "Laatste 1-3 maanden" },
+            "KvK uittreksel (Bewijs dat jij eigenaar bent)": { name: "KvK Uittreksel", description: "Recent uittreksel Kamer van Koophandel" },
+            "Jaaropgaves": { name: "Jaaropgaves", description: "Laatste 1-2 jaar" },
+            "IB-aangifte laatste 1-2 jaar": { name: "IB-aangifte", description: "Optioneel: Belastingaangifte laatste jaren" },
+            "Pensioenoverzicht": { name: "Pensioenoverzicht", description: "Jaarlijks pensioenoverzicht van pensioenfonds of AOW" },
+            "Bankafschriften": { name: "Bankafschriften", description: "Laatste 3 maanden met inkomsten" },
+            "Goed verhuurderschap": { name: "Verklaring goed huurderschap", description: "Optioneel: Verklaring van vorige verhuurder" },
+            "UWV bestand": { name: "UWV bestand", description: "Optioneel: UWV-document" },
+            "BRP-uittreksel": { name: "BRP-uittreksel", description: "Optioneel: Uittreksel Basisregistratie Personen" },
+            "Extra inkomen": { name: "Extra inkomen", description: "Optioneel: bijverdiensten, alimentatie, etc." }
+        }
+    }
+};
+
+translations.multiFileUpload = {
+    en: {
+        maxFilesError: "You can upload a maximum of {{max}} files.",
+        invalidFileType: "Invalid file type: {{fileName}}",
+        fileTooLarge: "File too large: {{fileName}}",
+        filesUploaded: "{{count}} files uploaded",
+        filesCount: "{{uploaded}} of {{max}} files",
+        complete: "Complete",
+        uploadMore: "Upload more",
+        canAddMore: "You can add {{count}} more files",
+        optional: "Optional",
+        uploading: "Uploading...",
+        uploadMinMax: "Upload between {{min}} and {{max}} files",
+        fileTypesPerFile: "PDF, JPG, PNG per file"
+    },
+    nl: {
+        maxFilesError: "Je kunt maximaal {{max}} bestanden uploaden.",
+        invalidFileType: "Ongeldig bestandstype: {{fileName}}",
+        fileTooLarge: "Bestand te groot: {{fileName}}",
+        filesUploaded: "{{count}} bestanden geüpload",
+        filesCount: "{{uploaded}} van {{max}} bestanden",
+        complete: "Compleet",
+        uploadMore: "Meer uploaden",
+        canAddMore: "Je kunt nog {{count}} bestanden toevoegen",
+        optional: "Optioneel",
+        uploading: "Uploaden...",
+        uploadMinMax: "Upload tussen {{min}} en {{max}} bestanden",
+        fileTypesPerFile: "PDF, JPG, PNG per bestand"
     }
 };

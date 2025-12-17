@@ -420,7 +420,7 @@ const RentOut = () => {
                                 <div className={styles.impactBoxGreen}>
                                     <Calendar className={styles.impactIconGreen} />
                                     <div className={styles.impactValueGreen}>
-                                        <AnimatedCounter end={180} duration={2500} shouldStart={impactInView} />
+                                        <AnimatedCounter end={80} duration={2500} shouldStart={impactInView} />
                                     </div>
                                     <div className={styles.impactLabel}>{t.impactHours}</div>
                                 </div>

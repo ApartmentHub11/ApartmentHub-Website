@@ -117,6 +117,27 @@
     /* text-gray-500 */
 }
 
+/* Carousel Wrapper (Mobile) */
+.carouselWrapper {
+    position: relative;
+    max-width: 72rem;
+    margin: 0 auto;
+}
+
+@media (max-width: 767px) {
+    .carouselWrapper {
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .carouselWrapper::-webkit-scrollbar {
+        display: none;
+    }
+}
+
 /* Grid */
 .grid {
     max-width: 72rem;
@@ -128,6 +149,22 @@
     /* gap-6 */
     margin-bottom: 2rem;
     /* mb-8 */
+}
+
+@media (max-width: 767px) {
+    .grid {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 1rem;
+        padding: 0 1rem;
+        margin-bottom: 0;
+    }
+
+    .grid>* {
+        flex: 0 0 85%;
+        min-width: 0;
+        scroll-snap-align: start;
+    }
 }
 
 @media (min-width: 768px) {

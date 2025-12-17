@@ -18,7 +18,7 @@ const WhyChooseUsSection = () => {
                             <h2 className={styles.title}>{t.whyChooseUsTitle}</h2>
                             <p className={styles.text}>{t.whyChooseUsText}</p>
                             <div className={styles.actionWrapper}>
-                                <Link to={currentLang === 'nl' ? "/nl/rent-out" : "/en/rent-out"} className={styles.btn}>{t.whyChooseUsBtn}</Link>
+                                <Link to={currentLang === 'nl' ? "/nl/discover-more" : "/en/discover-more"} className={styles.btn}>{t.whyChooseUsBtn}</Link>
                             </div>
                         </div>
                     </div>

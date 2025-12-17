@@ -133,10 +133,16 @@
 }
 
 .text {
-    font-size: 1rem;
+    font-size: 0.875rem;
     color: var(--color-text-gray);
     margin-bottom: 1.5rem;
     line-height: 1.6;
+}
+
+@media (min-width: 768px) {
+    .text {
+        font-size: 1rem;
+    }
 }
 
 .btnWrapper {

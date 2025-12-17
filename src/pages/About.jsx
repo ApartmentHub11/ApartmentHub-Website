@@ -5,7 +5,7 @@ import { Shield, Users, Award, CheckCircle } from 'lucide-react';
 import styles from './About.module.css';
 import { translations } from '../data/translations';
 
-import aboutImg from '../assets/about.jpg';
+import aboutMissionImg from '../assets/about-mission.jpg';
 import about2Img from '../assets/about2.jpg';
 
 const About = () => {
@@ -47,7 +47,7 @@ const About = () => {
                         <div className={styles.imageContainer}>
                             <div className={styles.imageWrapper}>
                                 <img
-                                    src={aboutImg}
+                                    src={aboutMissionImg}
                                     alt="Amsterdam cityscape overview"
                                     className={styles.image}
                                 />

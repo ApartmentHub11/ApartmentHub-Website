@@ -2,6 +2,7 @@
 .pageContainer {
     min-height: 100vh;
     background-color: white;
+    overflow-x: hidden;
 }
 
 /* Hero Section */
@@ -55,9 +56,9 @@
 }
 
 .heroTitle {
-    font-size: 2.25rem;
+    font-size: 1.75rem;
     font-weight: 700;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     line-height: 0.9;
     letter-spacing: -0.025em;
 }
@@ -84,9 +85,9 @@
 }
 
 .heroSubtitle {
-    font-size: 1.125rem;
+    font-size: 0.9375rem;
     color: #4b5563;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     max-width: 48rem;
     margin-left: auto;
     margin-right: auto;
@@ -209,20 +210,22 @@
 
 /* Price Check Section */
 .priceCheckSection {
-    padding: 2rem 0;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
     background-color: #f9fafb;
 }
 
 @media (min-width: 768px) {
     .priceCheckSection {
-        padding: 4rem 0;
+        padding-top: 4rem;
+        padding-bottom: 4rem;
     }
 }
 
 .container {
     max-width: 72rem;
     margin: 0 auto;
-    padding: 0 1rem;
+    padding: 0 0.5rem 0 0.5rem;
 }
 
 @media (min-width: 640px) {
@@ -258,7 +261,7 @@
 .priceCheckGrid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: 2rem;
 }
 
 @media (min-width: 1024px) {
@@ -312,6 +315,7 @@
 
 .formCol {
     order: 1;
+    width: 100%;
 }
 
 @media (min-width: 1024px) {
@@ -327,6 +331,7 @@
     flex-direction: column;
     /* Card styling removed as per user request */
     position: relative;
+    width: 100%;
 }
 
 @media (min-width: 768px) {
@@ -360,6 +365,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: 100%;
 }
 
 
@@ -536,10 +542,10 @@
 }
 
 .sectionTitle {
-    font-size: 2.25rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: var(--color-primary-green);
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 @media (min-width: 768px) {
@@ -549,11 +555,17 @@
 }
 
 .sectionSubtitle {
-    font-size: 1.25rem;
+    font-size: 0.9375rem;
     color: #4b5563;
     max-width: 56rem;
     margin: 0 auto;
     line-height: 1.625;
+}
+
+@media (min-width: 768px) {
+    .sectionSubtitle {
+        font-size: 1.25rem;
+    }
 }
 
 .stepRow {
@@ -633,16 +645,29 @@
 }
 
 .stepTitle {
-    font-size: 1.25rem;
+    font-size: 1rem;
     font-weight: 700;
     color: #111827;
 }
 
+@media (min-width: 768px) {
+    .stepTitle {
+        font-size: 1.25rem;
+    }
+}
+
 .stepDesc {
     color: #4b5563;
-    font-size: 1.125rem;
+    font-size: 0.9375rem;
     line-height: 1.625;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+    .stepDesc {
+        font-size: 1.125rem;
+        margin-bottom: 1.5rem;
+    }
 }
 
 .stepListOrange {
@@ -706,6 +731,13 @@
 
 .stepImageWrapper {
     position: relative;
+    overflow: hidden;
+}
+
+@media (min-width: 768px) {
+    .stepImageWrapper {
+        overflow: visible;
+    }
 }
 
 .stepImage {
@@ -724,12 +756,18 @@
     height: 6rem;
     background-color: var(--color-primary-orange);
     border-radius: 1rem;
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     color: white;
+}
+
+@media (min-width: 768px) {
+    .floatBadgeTopRight {
+        display: flex;
+    }
 }
 
 .floatBadgeBottomLeft {
@@ -740,12 +778,18 @@
     height: 6rem;
     background-color: var(--color-primary-green);
     border-radius: 1rem;
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     color: white;
+}
+
+@media (min-width: 768px) {
+    .floatBadgeBottomLeft {
+        display: flex;
+    }
 }
 
 .floatBadgeTopRightGreen {
@@ -756,12 +800,18 @@
     height: 6rem;
     background-color: var(--color-primary-green);
     border-radius: 1rem;
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     color: white;
+}
+
+@media (min-width: 768px) {
+    .floatBadgeTopRightGreen {
+        display: flex;
+    }
 }
 
 .floatBadgeText {
