@@ -23,3 +23,5 @@ dist-ssr
 *.sln
 *.sw?
 apartmenthub-rentals-oasis-main
+# Temporary folder
+tobecreated/
