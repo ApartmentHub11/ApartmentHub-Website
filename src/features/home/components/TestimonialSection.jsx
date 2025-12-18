@@ -208,7 +208,10 @@ const TestimonialSection = () => {
 
                 {/* Header */}
                 <div className={styles.header}>
-                    <h2 className={styles.title}>{t.testimonialsTitle}</h2>
+                    <h2 className={styles.title}>
+                        <span className={styles.titlePrefix}>{t.testimonialsTitlePrefix}</span>
+                        <span>{t.testimonialsTitleRest}</span>
+                    </h2>
                     <p className={styles.subtitle}>{t.testimonialsSubtitle}</p>
                     <p className={styles.helperText}>{t.testimonialsHelper}</p>
                 </div>

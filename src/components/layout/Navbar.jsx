@@ -26,7 +26,6 @@ const Navbar = () => {
 
     const mobileNavLinks = [
         ...navLinks,
-        { name: currentLang === 'nl' ? 'Ontdek Meer' : 'Discover More', path: currentLang === 'nl' ? '/nl/discover-more' : '/en/discover-more' },
     ];
 
     const handleLinkClick = () => {

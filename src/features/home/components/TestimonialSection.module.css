@@ -101,6 +101,16 @@
     /* mb-4 */
 }
 
+.titlePrefix {
+    display: inline;
+}
+
+@media (max-width: 767px) {
+    .titlePrefix {
+        display: none;
+    }
+}
+
 .subtitle {
     font-size: 1.25rem;
     /* text-xl */
