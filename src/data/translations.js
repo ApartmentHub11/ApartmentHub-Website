@@ -56,7 +56,7 @@ export const translations = {
             testimonialsStatsTime: "5 days average rental time",
             testimonialsTitle: "Conversations we've had with our rental clients",
             testimonialsTitlePrefix: "",
-            testimonialsTitleRest: "conversations we've had with our rental clients",
+            testimonialsTitleRest: "Conversations we've had with our rental clients",
             testimonialsSubtitle: "Read how we help our landlords via WhatsApp",
             testimonialsHelper: "Click on a conversation to read the full review",
             testimonialsCtaText: "Become our next satisfied customer",
