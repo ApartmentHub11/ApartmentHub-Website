@@ -118,6 +118,24 @@ const LetterOfIntent = () => {
 
     const canSubmit = acceptedAllConditions && acceptedBrokerFee && signature;
 
+    const getSignatureBlob = () => {
+        return new Promise((resolve) => {
+            const canvas = canvasRef.current;
+            if (!canvas || !signature) {
+                resolve(null);
+                return;
+            }
+            canvas.toBlob((blob) => {
+                if (blob) {
+                    const file = new File([blob], 'signature.png', { type: 'image/png' });
+                    resolve(file);
+                } else {
+                    resolve(null);
+                }
+            }, 'image/png');
+        });
+    };
+
     const handleSubmit = async () => {
         if (!canSubmit) return;
 
@@ -125,6 +143,8 @@ const LetterOfIntent = () => {
 
         try {
             await new Promise(resolve => setTimeout(resolve, 1500));
+
+            const signatureImage = await getSignatureBlob();
 
             await sendLetterOfIntentEvent({
                 bidAmount: bidData.amount,
@@ -135,7 +155,8 @@ const LetterOfIntent = () => {
                 property: propertyInfo,
                 conditionsAccepted: acceptedAllConditions,
                 brokerFeeAccepted: acceptedBrokerFee,
-                phoneNumber
+                phoneNumber,
+                signatureImage
             });
 
             setIsConfirmed(true);

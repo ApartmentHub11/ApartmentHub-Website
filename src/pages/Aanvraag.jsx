@@ -101,6 +101,23 @@ const Aanvraag = () => {
             ...prev,
             [persoonId]: formDataUpdate
         }));
+
+        setData(prevData => {
+            if (!prevData) return prevData;
+            const updatedPersonen = prevData.personen.map(p => {
+                if (p.persoonId === persoonId) {
+                    return {
+                        ...p,
+                        naam: formDataUpdate.naam || p.naam,
+                        email: formDataUpdate.email || p.email,
+                        werkstatus: formDataUpdate.workStatus || p.werkstatus,
+                        inkomen: formDataUpdate.inkomen || p.inkomen
+                    };
+                }
+                return p;
+            });
+            return { ...prevData, personen: updatedPersonen };
+        });
     };
 
     const progress = calculateProgress();

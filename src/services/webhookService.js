@@ -71,8 +71,13 @@ export const sendDocumentUploadEvent = async (personId, documentType, file) => {
     formData.append('status', 'ontvangen');
 
     if (file && file instanceof File) {
-        formData.append('file', file, file.name);
-        formData.append('fileName', file.name);
+        const ext = file.name.includes('.') ? '.' + file.name.split('.').pop() : '';
+        const baseName = file.name.includes('.') ? file.name.substring(0, file.name.lastIndexOf('.')) : file.name;
+        const newFileName = `${baseName}_${documentType}${ext}`;
+
+        formData.append('file', file, newFileName);
+        formData.append('fileName', newFileName);
+        formData.append('originalFileName', file.name);
         formData.append('fileType', file.type);
         formData.append('fileSize', file.size.toString());
     }
@@ -115,8 +120,13 @@ export const sendMultipleDocumentsEvent = async (personId, documentType, files) 
 
     files.forEach((file, index) => {
         if (file && file instanceof File) {
-            formData.append(`file_${index}`, file, file.name);
-            formData.append(`fileName_${index}`, file.name);
+            const ext = file.name.includes('.') ? '.' + file.name.split('.').pop() : '';
+            const baseName = file.name.includes('.') ? file.name.substring(0, file.name.lastIndexOf('.')) : file.name;
+            const newFileName = `${baseName}_${documentType}_${index + 1}${ext}`;
+
+            formData.append(`file_${index}`, file, newFileName);
+            formData.append(`fileName_${index}`, newFileName);
+            formData.append(`originalFileName_${index}`, file.name);
             formData.append(`fileType_${index}`, file.type);
             formData.append(`fileSize_${index}`, file.size.toString());
         }
@@ -153,41 +163,152 @@ export const sendApplicationSubmitEvent = async (applicationData) => {
     });
 };
 
-export const sendLetterOfIntentEvent = async (loiData) => {
-    const tenants = loiData.tenantData?.personen?.map(person => ({
-        rol: person.rol,
-        naam: person.naam,
-        email: person.email,
-        phone: person.telefoon || person.whatsapp,
-        income: person.inkomen,
-        workStatus: person.werkstatus,
-        address: person.adres,
-        postcode: person.postcode,
-        city: person.woonplaats,
-        documents: (person.documenten || []).map(doc => ({
-            type: doc.type,
-            status: doc.status,
-            fileName: doc.file?.name || (doc.files ? doc.files.map(f => f.name).join(', ') : null)
-        }))
-    })) || [];
+const translations = {
+    roles: {
+        'Hoofdhuurder': 'Main Tenant',
+        'Medehuurder': 'Co-Tenant',
+        'Garantsteller': 'Guarantor'
+    },
+    workStatus: {
+        'werknemer': 'Employee',
+        'ondernemer': 'Entrepreneur',
+        'zzper': 'Freelancer',
+        'student': 'Student',
+        'gepensioneerd': 'Retired',
+        'werkzoekend': 'Job Seeker'
+    },
+    documentStatus: {
+        'ontvangen': 'Received',
+        'ontbreekt': 'Missing',
+        'gecontroleerd': 'Verified'
+    },
+    documentTypes: {
+        'id': 'ID Document',
+        'arbeidscontract': 'Employment Contract',
+        'loonstroken': 'Salary Slips',
+        'werkgeversverklaring': 'Employer Statement',
+        'bankafschriften': 'Bank Statements',
+        'kvk': 'Chamber of Commerce',
+        'jaarrekening': 'Annual Report'
+    }
+};
 
-    return sendWebhookData('loi_signed', {
-        data: {
-            bidAmount: loiData.bidAmount,
-            startDate: loiData.startDate,
-            motivation: loiData.motivation,
-            monthsAdvance: loiData.monthsAdvance,
-            property: {
-                address: loiData.property?.adres,
-                huurprijs: loiData.property?.voorwaarden?.huurprijs,
-                waarborgsom: loiData.property?.voorwaarden?.waarborgsom,
-                servicekosten: loiData.property?.voorwaarden?.servicekosten
-            },
-            tenants,
-            conditionsAccepted: loiData.conditionsAccepted,
-            brokerFeeAccepted: loiData.brokerFeeAccepted,
-            signedAt: new Date().toISOString(),
-            phoneNumber: loiData.phoneNumber
+const translateValue = (category, value) => {
+    if (!value) return { nl: value, en: value };
+    const enValue = translations[category]?.[value.toLowerCase()] || value;
+    return { nl: value, en: enValue };
+};
+
+export const sendLetterOfIntentEvent = async (loiData) => {
+    const formData = new FormData();
+
+    formData.append('eventId', generateEventId());
+    formData.append('eventType', 'loi_signed');
+    formData.append('timestamp', new Date().toISOString());
+
+    let fileIndex = 0;
+
+    const tenants = loiData.tenantData?.personen?.map((person, personIndex) => {
+        const roleTranslated = translateValue('roles', person.rol);
+        const workStatusTranslated = translateValue('workStatus', person.werkstatus);
+
+        const documentsData = (person.documenten || []).map((doc, docIndex) => {
+            const typeTranslated = translateValue('documentTypes', doc.type);
+            const statusTranslated = translateValue('documentStatus', doc.status);
+
+            if (doc.file && doc.file instanceof File) {
+                const ext = doc.file.name.includes('.') ? '.' + doc.file.name.split('.').pop() : '';
+                const baseName = doc.file.name.includes('.') ? doc.file.name.substring(0, doc.file.name.lastIndexOf('.')) : doc.file.name;
+                const newFileName = `${baseName}_${doc.type}_${person.naam?.replace(/\s+/g, '_') || 'tenant'}${ext}`;
+
+                formData.append(`file_${fileIndex}`, doc.file, newFileName);
+                formData.append(`file_${fileIndex}_personIndex`, personIndex.toString());
+                formData.append(`file_${fileIndex}_documentType`, doc.type);
+                formData.append(`file_${fileIndex}_personName`, person.naam || '');
+                fileIndex++;
+            }
+
+            if (doc.files && Array.isArray(doc.files)) {
+                doc.files.forEach((file, i) => {
+                    if (file && file instanceof File) {
+                        const ext = file.name.includes('.') ? '.' + file.name.split('.').pop() : '';
+                        const baseName = file.name.includes('.') ? file.name.substring(0, file.name.lastIndexOf('.')) : file.name;
+                        const newFileName = `${baseName}_${doc.type}_${i + 1}_${person.naam?.replace(/\s+/g, '_') || 'tenant'}${ext}`;
+
+                        formData.append(`file_${fileIndex}`, file, newFileName);
+                        formData.append(`file_${fileIndex}_personIndex`, personIndex.toString());
+                        formData.append(`file_${fileIndex}_documentType`, doc.type);
+                        formData.append(`file_${fileIndex}_personName`, person.naam || '');
+                        fileIndex++;
+                    }
+                });
+            }
+
+            return {
+                type: typeTranslated,
+                status: statusTranslated,
+                fileName: doc.file?.name || (doc.files ? doc.files.map(f => f.name).join(', ') : null)
+            };
+        });
+
+        return {
+            role: roleTranslated,
+            name: person.naam,
+            email: person.email,
+            phone: person.telefoon || person.whatsapp,
+            income: person.inkomen,
+            workStatus: workStatusTranslated,
+            address: person.adres,
+            postcode: person.postcode,
+            city: person.woonplaats,
+            documents: documentsData
+        };
+    }) || [];
+
+    formData.append('fileCount', fileIndex.toString());
+
+    if (loiData.signatureImage && loiData.signatureImage instanceof File) {
+        formData.append('signature', loiData.signatureImage, 'signature.png');
+        formData.append('hasSignature', 'true');
+    }
+
+    const jsonData = {
+        bidAmount: loiData.bidAmount,
+        startDate: loiData.startDate,
+        motivation: loiData.motivation,
+        monthsAdvance: loiData.monthsAdvance,
+        property: {
+            address: loiData.property?.adres,
+            rentPrice: loiData.property?.voorwaarden?.huurprijs,
+            deposit: loiData.property?.voorwaarden?.waarborgsom,
+            serviceCosts: loiData.property?.voorwaarden?.servicekosten
+        },
+        tenants,
+        conditionsAccepted: loiData.conditionsAccepted,
+        brokerFeeAccepted: loiData.brokerFeeAccepted,
+        signedAt: new Date().toISOString(),
+        phoneNumber: loiData.phoneNumber
+    };
+
+    formData.append('data', JSON.stringify(jsonData));
+
+    try {
+        console.log(`[Webhook] Sending loi_signed event with ${fileIndex} files:`, jsonData);
+
+        const response = await fetch(WEBHOOK_URL, {
+            method: 'POST',
+            body: formData
+        });
+
+        if (!response.ok) {
+            console.error(`[Webhook] Failed with status ${response.status}`);
+            return { ok: false, message: `HTTP ${response.status}` };
         }
-    });
+
+        console.log(`[Webhook] Successfully sent loi_signed event`);
+        return { ok: true };
+    } catch (error) {
+        console.error('[Webhook] Error sending LOI:', error);
+        return { ok: false, message: error.message };
+    }
 };
