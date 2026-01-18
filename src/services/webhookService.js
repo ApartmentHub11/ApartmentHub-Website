@@ -1,7 +1,42 @@
 const WEBHOOK_URL = 'https://davidvanwachem.app.n8n.cloud/webhook/get-agenda-page-details';
 
+const MAX_RETRIES = 3;
+const INITIAL_RETRY_DELAY = 5000;
+
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
 const generateEventId = () => {
     return 'evt_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+};
+
+const fetchWithRetry = async (url, options, retries = MAX_RETRIES) => {
+    for (let attempt = 0; attempt <= retries; attempt++) {
+        try {
+            const response = await fetch(url, options);
+
+            if (response.ok) {
+                return { ok: true, response };
+            }
+
+            if (response.status >= 500 && attempt < retries) {
+                const delay = INITIAL_RETRY_DELAY * Math.pow(2, attempt);
+                console.log(`[Webhook] Server error ${response.status}, retrying in ${delay / 1000}s (attempt ${attempt + 1}/${retries})`);
+                await sleep(delay);
+                continue;
+            }
+
+            return { ok: false, message: `HTTP ${response.status}`, response };
+        } catch (error) {
+            if (attempt < retries) {
+                const delay = INITIAL_RETRY_DELAY * Math.pow(2, attempt);
+                console.log(`[Webhook] Network error, retrying in ${delay / 1000}s (attempt ${attempt + 1}/${retries}):`, error.message);
+                await sleep(delay);
+                continue;
+            }
+            return { ok: false, message: error.message, error };
+        }
+    }
+    return { ok: false, message: 'Max retries exceeded' };
 };
 
 export const sendWebhookData = async (eventType, data) => {
@@ -12,28 +47,23 @@ export const sendWebhookData = async (eventType, data) => {
         ...data
     };
 
-    try {
-        console.log(`[Webhook] Sending ${eventType} event:`, payload);
+    console.log(`[Webhook] Sending ${eventType} event:`, payload);
 
-        const response = await fetch(WEBHOOK_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(payload)
-        });
+    const result = await fetchWithRetry(WEBHOOK_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload)
+    });
 
-        if (!response.ok) {
-            console.error(`[Webhook] Failed with status ${response.status}`);
-            return { ok: false, message: `HTTP ${response.status}` };
-        }
-
+    if (result.ok) {
         console.log(`[Webhook] Successfully sent ${eventType} event`);
-        return { ok: true };
-    } catch (error) {
-        console.error('[Webhook] Error sending data:', error);
-        return { ok: false, message: error.message };
+    } else {
+        console.error(`[Webhook] Failed to send ${eventType} event:`, result.message);
     }
+
+    return result;
 };
 
 export const sendLoginEvent = async (phoneNumber, dossierId) => {
@@ -82,29 +112,24 @@ export const sendDocumentUploadEvent = async (personId, documentType, file) => {
         formData.append('fileSize', file.size.toString());
     }
 
-    try {
-        console.log(`[Webhook] Sending document_upload event via multipart:`, {
-            personId,
-            documentType,
-            fileName: file?.name
-        });
+    console.log(`[Webhook] Sending document_upload event via multipart:`, {
+        personId,
+        documentType,
+        fileName: file?.name
+    });
 
-        const response = await fetch(WEBHOOK_URL, {
-            method: 'POST',
-            body: formData
-        });
+    const result = await fetchWithRetry(WEBHOOK_URL, {
+        method: 'POST',
+        body: formData
+    });
 
-        if (!response.ok) {
-            console.error(`[Webhook] Failed with status ${response.status}`);
-            return { ok: false, message: `HTTP ${response.status}` };
-        }
-
+    if (result.ok) {
         console.log(`[Webhook] Successfully sent document_upload event`);
-        return { ok: true };
-    } catch (error) {
-        console.error('[Webhook] Error sending document:', error);
-        return { ok: false, message: error.message };
+    } else {
+        console.error(`[Webhook] Failed to send document_upload event:`, result.message);
     }
+
+    return result;
 };
 
 export const sendMultipleDocumentsEvent = async (personId, documentType, files) => {
@@ -132,29 +157,24 @@ export const sendMultipleDocumentsEvent = async (personId, documentType, files) 
         }
     });
 
-    try {
-        console.log(`[Webhook] Sending multi-file document_upload event:`, {
-            personId,
-            documentType,
-            fileCount: files.length
-        });
+    console.log(`[Webhook] Sending multi-file document_upload event:`, {
+        personId,
+        documentType,
+        fileCount: files.length
+    });
 
-        const response = await fetch(WEBHOOK_URL, {
-            method: 'POST',
-            body: formData
-        });
+    const result = await fetchWithRetry(WEBHOOK_URL, {
+        method: 'POST',
+        body: formData
+    });
 
-        if (!response.ok) {
-            console.error(`[Webhook] Failed with status ${response.status}`);
-            return { ok: false, message: `HTTP ${response.status}` };
-        }
-
+    if (result.ok) {
         console.log(`[Webhook] Successfully sent multi-file document_upload event`);
-        return { ok: true };
-    } catch (error) {
-        console.error('[Webhook] Error sending documents:', error);
-        return { ok: false, message: error.message };
+    } else {
+        console.error(`[Webhook] Failed to send multi-file document_upload event:`, result.message);
     }
+
+    return result;
 };
 
 export const sendApplicationSubmitEvent = async (applicationData) => {
@@ -272,43 +292,57 @@ export const sendLetterOfIntentEvent = async (loiData) => {
         formData.append('hasSignature', 'true');
     }
 
-    const jsonData = {
-        bidAmount: loiData.bidAmount,
-        startDate: loiData.startDate,
-        motivation: loiData.motivation,
-        monthsAdvance: loiData.monthsAdvance,
-        property: {
-            address: loiData.property?.adres,
-            rentPrice: loiData.property?.voorwaarden?.huurprijs,
-            deposit: loiData.property?.voorwaarden?.waarborgsom,
-            serviceCosts: loiData.property?.voorwaarden?.servicekosten
-        },
-        tenants,
-        conditionsAccepted: loiData.conditionsAccepted,
-        brokerFeeAccepted: loiData.brokerFeeAccepted,
-        signedAt: new Date().toISOString(),
-        phoneNumber: loiData.phoneNumber
-    };
+    formData.append('bidAmount', loiData.bidAmount?.toString() || '');
+    formData.append('startDate', loiData.startDate || '');
+    formData.append('motivation', loiData.motivation || '');
+    formData.append('monthsAdvance', loiData.monthsAdvance?.toString() || '');
 
-    formData.append('data', JSON.stringify(jsonData));
+    formData.append('propertyAddress', loiData.property?.adres || '');
+    formData.append('rentPrice', loiData.property?.voorwaarden?.huurprijs?.toString() || '');
+    formData.append('deposit', loiData.property?.voorwaarden?.waarborgsom?.toString() || '');
+    formData.append('serviceCosts', loiData.property?.voorwaarden?.servicekosten?.toString() || '');
 
-    try {
-        console.log(`[Webhook] Sending loi_signed event with ${fileIndex} files:`, jsonData);
+    formData.append('tenantCount', tenants.length.toString());
+    tenants.forEach((tenant, idx) => {
+        formData.append(`tenant_${idx}_role_nl`, tenant.role?.nl || '');
+        formData.append(`tenant_${idx}_role_en`, tenant.role?.en || '');
+        formData.append(`tenant_${idx}_name`, tenant.name || '');
+        formData.append(`tenant_${idx}_email`, tenant.email || '');
+        formData.append(`tenant_${idx}_phone`, tenant.phone || '');
+        formData.append(`tenant_${idx}_income`, tenant.income?.toString() || '');
+        formData.append(`tenant_${idx}_workStatus_nl`, tenant.workStatus?.nl || '');
+        formData.append(`tenant_${idx}_workStatus_en`, tenant.workStatus?.en || '');
+        formData.append(`tenant_${idx}_address`, tenant.address || '');
+        formData.append(`tenant_${idx}_postcode`, tenant.postcode || '');
+        formData.append(`tenant_${idx}_city`, tenant.city || '');
+        formData.append(`tenant_${idx}_documentCount`, (tenant.documents?.length || 0).toString());
 
-        const response = await fetch(WEBHOOK_URL, {
-            method: 'POST',
-            body: formData
+        tenant.documents?.forEach((doc, docIdx) => {
+            formData.append(`tenant_${idx}_doc_${docIdx}_type_nl`, doc.type?.nl || '');
+            formData.append(`tenant_${idx}_doc_${docIdx}_type_en`, doc.type?.en || '');
+            formData.append(`tenant_${idx}_doc_${docIdx}_status_nl`, doc.status?.nl || '');
+            formData.append(`tenant_${idx}_doc_${docIdx}_status_en`, doc.status?.en || '');
+            formData.append(`tenant_${idx}_doc_${docIdx}_fileName`, doc.fileName || '');
         });
+    });
 
-        if (!response.ok) {
-            console.error(`[Webhook] Failed with status ${response.status}`);
-            return { ok: false, message: `HTTP ${response.status}` };
-        }
+    formData.append('conditionsAccepted', loiData.conditionsAccepted?.toString() || 'false');
+    formData.append('brokerFeeAccepted', loiData.brokerFeeAccepted?.toString() || 'false');
+    formData.append('signedAt', new Date().toISOString());
+    formData.append('phoneNumber', loiData.phoneNumber || '');
 
+    console.log(`[Webhook] Sending loi_signed event with ${fileIndex} files`);
+
+    const result = await fetchWithRetry(WEBHOOK_URL, {
+        method: 'POST',
+        body: formData
+    });
+
+    if (result.ok) {
         console.log(`[Webhook] Successfully sent loi_signed event`);
-        return { ok: true };
-    } catch (error) {
-        console.error('[Webhook] Error sending LOI:', error);
-        return { ok: false, message: error.message };
+    } else {
+        console.error(`[Webhook] Failed to send loi_signed event:`, result.message);
     }
+
+    return result;
 };
