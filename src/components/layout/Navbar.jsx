@@ -1,18 +1,20 @@
+'use client';
+
 import React, { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 import { useSelector, useDispatch } from 'react-redux';
 import { Menu, X } from 'lucide-react';
-import { toggleMobileMenu, closeMobileMenu, setLanguage } from '../../features/ui/uiSlice';
+import { toggleMobileMenu, closeMobileMenu, setLanguage } from '@/features/ui/uiSlice';
 import styles from './Navbar.module.css';
-import logoImage from '../../assets/5a9afd14-27a5-40d8-a185-fac727f64fdf.png';
-import { translations } from '../../data/translations';
+import { translations } from '@/data/translations';
 
 const Navbar = () => {
     const dispatch = useDispatch();
     const isMobileMenuOpen = useSelector((state) => state.ui.isMobileMenuOpen);
     const currentLang = useSelector((state) => state.ui.language);
-    const location = useLocation();
-    const navigate = useNavigate();
+    const pathname = usePathname();
+    const router = useRouter();
 
     const t = translations.nav[currentLang] || translations.nav.en;
 
@@ -42,7 +44,7 @@ const Navbar = () => {
         setIsLangOpen(false);
 
         // Handle URL update
-        const currentPath = location.pathname;
+        const currentPath = pathname;
         let newPath = currentPath;
 
         if (lang === 'nl') {
@@ -51,7 +53,6 @@ const Navbar = () => {
             } else if (currentPath.startsWith('/en/')) {
                 newPath = currentPath.replace('/en/', '/nl/');
             } else if (!currentPath.startsWith('/nl/')) {
-                // Handle generic paths or aliases
                 if (currentPath === '/contact') newPath = '/nl/contact';
                 else if (currentPath === '/tenants') newPath = '/nl/rent-in';
                 else if (currentPath === '/landlords') newPath = '/nl/rent-out';
@@ -64,7 +65,6 @@ const Navbar = () => {
             if (currentPath === '/nl') {
                 newPath = '/';
             } else if (currentPath.startsWith('/nl/')) {
-                // Specific check for aanvraag -> application
                 if (currentPath.includes('/aanvraag')) {
                     newPath = '/en/application';
                 } else {
@@ -76,7 +76,7 @@ const Navbar = () => {
         }
 
         if (newPath !== currentPath) {
-            navigate(newPath);
+            router.push(newPath);
         }
     };
 
@@ -112,10 +112,10 @@ const Navbar = () => {
         <nav className={styles.navbar}>
             <div className={styles.container}>
                 <div className={styles.navContent}>
-                    <Link to={currentLang === 'nl' ? "/nl" : "/"} className={styles.logoWrapper}>
+                    <Link href={currentLang === 'nl' ? "/nl" : "/"} className={styles.logoWrapper}>
                         <div className={styles.logoIconWrapper}>
                             <img
-                                src={logoImage}
+                                src="/images/5a9afd14-27a5-40d8-a185-fac727f64fdf.png"
                                 alt="ApartmentHub Logo"
                                 className={styles.logoIcon}
                             />
@@ -127,8 +127,8 @@ const Navbar = () => {
                         {navLinks.map((link) => (
                             <Link
                                 key={link.name}
-                                to={link.path}
-                                className={`${styles.navLink} ${location.pathname === link.path ? styles.activeNavLink : ''}`}
+                                href={link.path}
+                                className={`${styles.navLink} ${pathname === link.path ? styles.activeNavLink : ''}`}
                                 onClick={() => window.scrollTo(0, 0)}
                             >
                                 {link.name}
@@ -156,8 +156,8 @@ const Navbar = () => {
                     {mobileNavLinks.map((link) => (
                         <Link
                             key={link.name}
-                            to={link.path}
-                            className={`${styles.mobileNavLink} ${location.pathname === link.path ? styles.active : ''}`}
+                            href={link.path}
+                            className={`${styles.mobileNavLink} ${pathname === link.path ? styles.active : ''}`}
                             onClick={handleLinkClick}
                         >
                             {link.name}

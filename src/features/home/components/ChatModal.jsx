@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { CircleCheck, X, CheckCheck, Star, MapPin, Clock } from 'lucide-react';
 import styles from './ChatModal.module.css';
-import chatLogoImage from '../../../assets/chatlogo.png';
 
 const ChatModal = ({ isOpen, onClose, data }) => {
     const [isLoading, setIsLoading] = useState(true);
@@ -66,7 +65,7 @@ const ChatModal = ({ isOpen, onClose, data }) => {
                     {isLoading && (
                         <div className={styles.messageRow}>
                             <div className={styles.messageAvatar}>
-                                <img src={chatLogoImage} alt="ApartmentHub" />
+                                <img src="/images/chatlogo.png" alt="ApartmentHub" />
                             </div>
                             <div className={`${styles.messageBubble} ${styles.left}`}>
                                 <div className={styles.typingIndicator}>
@@ -84,7 +83,7 @@ const ChatModal = ({ isOpen, onClose, data }) => {
                         >
                             {msg.type === 'received' && (
                                 <div className={styles.messageAvatar}>
-                                    <img src={chatLogoImage} alt="ApartmentHub" />
+                                    <img src="/images/chatlogo.png" alt="ApartmentHub" />
                                 </div>
                             )}
                             <div className={`${styles.messageBubble} ${msg.type === 'received' ? styles.left : styles.right}`}>

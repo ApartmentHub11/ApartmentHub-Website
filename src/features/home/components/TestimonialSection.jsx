@@ -1,15 +1,12 @@
+'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import { Users, Star, Clock, CircleCheck, MapPin, CheckCheck, MessageCircle, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import styles from './TestimonialSection.module.css';
 import { translations } from '../../../data/translations';
-import chatLogoImage from '../../../assets/chatlogo.png';
 import ChatModal from './ChatModal';
-
-import img32 from '../../../assets/32.jpg';
-import img44 from '../../../assets/44.jpg';
-import img67 from '../../../assets/67.jpg';
 
 const TestimonialSection = () => {
     const currentLang = useSelector((state) => state.ui.language);
@@ -73,7 +70,7 @@ const TestimonialSection = () => {
 
     const robertData = {
         name: "Robert van Dijk",
-        avatar: img32,
+        avatar: '/images/32.jpg',
         location: "Jordaan",
         date: "December 2024",
         rating: 5,
@@ -134,7 +131,7 @@ const TestimonialSection = () => {
 
     const mariaData = {
         name: "Maria Santos",
-        avatar: img44,
+        avatar: '/images/44.jpg',
         location: "De Pijp",
         date: "November 2024",
         rating: 5,
@@ -180,7 +177,7 @@ const TestimonialSection = () => {
 
     const janData = {
         name: "Jan Willem Bakker",
-        avatar: img67,
+        avatar: '/images/67.jpg',
         location: "Noord",
         date: "Oktober 2024",
         rating: 5,
@@ -249,7 +246,7 @@ const TestimonialSection = () => {
                             <div className={styles.cardBody}>
                                 <div className={styles.messageReceived}>
                                     <div className={styles.messageAvatar}>
-                                        <img src={chatLogoImage} alt="ApartmentHub" className={styles.messageAvatarImg} />
+                                        <img src="/images/chatlogo.png" alt="ApartmentHub" className={styles.messageAvatarImg} />
                                     </div>
                                     <div className={styles.messageBubbleReceived}>
                                         <p className={styles.messageText}>{robertPreview[currentLang]?.received}</p>
@@ -315,7 +312,7 @@ const TestimonialSection = () => {
                             <div className={styles.cardBody}>
                                 <div className={styles.messageReceived}>
                                     <div className={styles.messageAvatar}>
-                                        <img src={chatLogoImage} alt="ApartmentHub" className={styles.messageAvatarImg} />
+                                        <img src="/images/chatlogo.png" alt="ApartmentHub" className={styles.messageAvatarImg} />
                                     </div>
                                     <div className={styles.messageBubbleReceived}>
                                         <p className={styles.messageText}>{mariaPreview[currentLang]?.received}</p>
@@ -381,7 +378,7 @@ const TestimonialSection = () => {
                             <div className={styles.cardBody}>
                                 <div className={styles.messageReceived}>
                                     <div className={styles.messageAvatar}>
-                                        <img src={chatLogoImage} alt="ApartmentHub" className={styles.messageAvatarImg} />
+                                        <img src="/images/chatlogo.png" alt="ApartmentHub" className={styles.messageAvatarImg} />
                                     </div>
                                     <div className={styles.messageBubbleReceived}>
                                         <p className={styles.messageText}>{janPreview[currentLang]?.received}</p>
@@ -424,8 +421,8 @@ const TestimonialSection = () => {
                 <div className={styles.ctaContainer}>
                     <p className={styles.ctaText}>{t.testimonialsCtaText}</p>
                     <div className={styles.ctaButtons}>
-                        <Link to={currentLang === 'nl' ? "/nl/rent-out" : "/en/rent-out"} className={styles.ctaBtn}>{t.testimonialsCtaLandlord}</Link>
-                        <Link to={currentLang === 'nl' ? "/nl/rent-in" : "/en/rent-in"} className={styles.ctaBtn}>{t.testimonialsCtaTenant}</Link>
+                        <Link href={currentLang === 'nl' ? "/nl/rent-out" : "/en/rent-out"} className={styles.ctaBtn}>{t.testimonialsCtaLandlord}</Link>
+                        <Link href={currentLang === 'nl' ? "/nl/rent-in" : "/en/rent-in"} className={styles.ctaBtn}>{t.testimonialsCtaTenant}</Link>
                     </div>
                 </div>
             </div>

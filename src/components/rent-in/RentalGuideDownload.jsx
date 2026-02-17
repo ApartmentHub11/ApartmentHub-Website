@@ -1,8 +1,6 @@
 import React from 'react';
 import { FileText, Home, Shield, Users, CheckCircle, Download } from 'lucide-react';
-import styles from '../../pages/RentIn.module.css';
-import rentalGuide from '../../assets/amsterdam-rental-guide-2024.pdf';
-import rentInVideo from '../../assets/Apartmenthub rent in.mp4';
+import styles from '../../_pages/RentIn.module.css';
 import { trackLeadMagnetDownload } from '../../utils/analytics';
 
 const RentalGuideDownload = ({ translations }) => {
@@ -75,7 +73,7 @@ const RentalGuideDownload = ({ translations }) => {
                         </div>
 
                         <a
-                            href={rentalGuide}
+                            href="/images/amsterdam-rental-guide-2024.pdf"
                             download="Amsterdam_Rental_Guide_2024.pdf"
                             className={styles.downloadBtn}
                             onClick={() => trackLeadMagnetDownload('Amsterdam_Rental_Guide_2024')}
@@ -89,7 +87,7 @@ const RentalGuideDownload = ({ translations }) => {
 
                     <div className={styles.guideVisual}>
                         <video
-                            src={rentInVideo}
+                            src="/images/Apartmenthub rent in.mp4"
                             className={styles.guideVideo}
                             controls
                             muted

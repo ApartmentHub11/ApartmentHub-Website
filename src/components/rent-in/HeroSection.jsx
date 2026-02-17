@@ -1,6 +1,6 @@
 import React from 'react';
 import { Clock } from 'lucide-react';
-import styles from '../../pages/RentIn.module.css';
+import styles from '../../_pages/RentIn.module.css';
 import { trackWhatsAppClick } from '../../utils/analytics';
 
 const WhatsAppIcon = ({ className }) => (

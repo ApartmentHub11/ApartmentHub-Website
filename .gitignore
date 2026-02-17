@@ -12,6 +12,13 @@ dist
 dist-ssr
 *.local
 
+# Next.js
+.next/
+out/
+build/
+.vercel
+tmp/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -25,3 +32,5 @@ dist-ssr
 apartmenthub-rentals-oasis-main
 # Temporary folder
 tobecreated/
+
+.cursor/

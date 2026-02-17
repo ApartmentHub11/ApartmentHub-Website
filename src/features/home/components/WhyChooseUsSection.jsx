@@ -1,8 +1,9 @@
+'use client';
+
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import styles from './WhyChooseUsSection.module.css';
-import videoSource from '../../../assets/homepage-video-oTK_tJ-O.mp4';
 import { translations } from '../../../data/translations';
 
 const WhyChooseUsSection = () => {
@@ -18,14 +19,14 @@ const WhyChooseUsSection = () => {
                             <h2 className={styles.title}>{t.whyChooseUsTitle}</h2>
                             <p className={styles.text}>{t.whyChooseUsText}</p>
                             <div className={styles.actionWrapper}>
-                                <Link to={currentLang === 'nl' ? "/nl/discover-more" : "/en/discover-more"} className={styles.btn}>{t.whyChooseUsBtn}</Link>
+                                <Link href={currentLang === 'nl' ? "/nl/discover-more" : "/en/discover-more"} className={styles.btn}>{t.whyChooseUsBtn}</Link>
                             </div>
                         </div>
                     </div>
                     <div className={styles.videoColumn}>
                         <div className={styles.videoWrapper}>
                             <video className={styles.video} autoPlay loop playsInline muted>
-                                <source src={videoSource} type="video/mp4" />
+                                <source src="/images/homepage-video-oTK_tJ-O.mp4" type="video/mp4" />
                                 Your browser does not support the video tag.
                             </video>
                         </div>

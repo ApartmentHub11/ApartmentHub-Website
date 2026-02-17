@@ -1,6 +1,8 @@
+'use client';
+
 import React from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
+import { usePathname, useRouter } from 'next/navigation';
+import { useAuth } from '@/contexts/AuthContext';
 
 /**
  * Protected Route component
@@ -8,7 +10,8 @@ import { useAuth } from '../../contexts/AuthContext';
  */
 const ProtectedRoute = ({ children }) => {
     const { isAuthenticated, isLoading } = useAuth();
-    const location = useLocation();
+    const router = useRouter();
+    const pathname = usePathname();
 
     // Show nothing while checking auth status
     if (isLoading) {
@@ -27,7 +30,10 @@ const ProtectedRoute = ({ children }) => {
 
     if (!isAuthenticated) {
         // Redirect to login, preserving the intended destination
-        return <Navigate to="/login" state={{ from: location }} replace />;
+        if (typeof window !== 'undefined') {
+            router.push(`/login?from=${encodeURIComponent(pathname)}`);
+        }
+        return null;
     }
 
     return children;

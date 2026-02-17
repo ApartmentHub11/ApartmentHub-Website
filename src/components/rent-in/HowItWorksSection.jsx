@@ -1,6 +1,6 @@
 import React from 'react';
 import { House } from 'lucide-react';
-import styles from '../../pages/RentIn.module.css';
+import styles from '../../_pages/RentIn.module.css';
 
 const WhatsAppIcon = ({ className }) => (
     <svg className={className} fill="currentColor" viewBox="0 0 24 24">

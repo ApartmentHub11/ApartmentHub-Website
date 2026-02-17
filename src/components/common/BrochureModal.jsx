@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { X, FileText, Lock } from 'lucide-react';
 import styles from './BrochureModal.module.css';
-import logoImage from '../../assets/5a9afd14-27a5-40d8-a185-fac727f64fdf.png';
 
 const BrochureModal = ({ isOpen, onClose }) => {
     const [formData, setFormData] = useState({
@@ -15,7 +14,7 @@ const BrochureModal = ({ isOpen, onClose }) => {
         // Brochure data would be sent to backend here
 
         // Open the PDF in a new tab
-        window.open('/src/assets/amsterdam-rental-guide-2024.pdf', '_blank');
+        window.open('/images/amsterdam-rental-guide-2024.pdf', '_blank');
 
         setIsSubmitted(true);
 
@@ -46,7 +45,7 @@ const BrochureModal = ({ isOpen, onClose }) => {
 
                 <div className={styles.modalContent}>
                     <div className={styles.logoWrapper}>
-                        <img src={logoImage} alt="ApartmentHub" className={styles.logo} />
+                        <img src="/images/5a9afd14-27a5-40d8-a185-fac727f64fdf.png" alt="ApartmentHub" className={styles.logo} />
                     </div>
 
                     <h2 className={styles.title}>Request Free Brochure</h2>

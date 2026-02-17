@@ -1,8 +1,10 @@
+'use client';
+
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import styles from './Footer.module.css';
-import { translations } from '../../data/translations';
+import { translations } from '@/data/translations';
 
 const Footer = () => {
     const currentLang = useSelector((state) => state.ui.language);
@@ -31,12 +33,12 @@ const Footer = () => {
                     <div>
                         <h3 className={styles.heading}>{t.quickLinks}</h3>
                         <ul className={styles.linkList}>
-                            <li><Link to={`${langPrefix}/rent-out`} className={styles.link}>{t.linkRentOut}</Link></li>
-                            <li><Link to={`${langPrefix}/rent-in`} className={styles.link}>{t.linkRentIn}</Link></li>
-                            <li><Link to={`${langPrefix}/about-us`} className={styles.link}>{t.linkAbout}</Link></li>
-                            <li><Link to={`${langPrefix}/faq`} className={styles.link}>{t.linkFaq}</Link></li>
-                            <li><Link to={`${langPrefix}/terms-and-conditions`} className={styles.link}>{t.linkTerms}</Link></li>
-                            <li><Link to={`${langPrefix}/privacy-policy`} className={styles.link}>{t.linkPrivacy}</Link></li>
+                            <li><Link href={`${langPrefix}/rent-out`} className={styles.link}>{t.linkRentOut}</Link></li>
+                            <li><Link href={`${langPrefix}/rent-in`} className={styles.link}>{t.linkRentIn}</Link></li>
+                            <li><Link href={`${langPrefix}/about-us`} className={styles.link}>{t.linkAbout}</Link></li>
+                            <li><Link href={`${langPrefix}/faq`} className={styles.link}>{t.linkFaq}</Link></li>
+                            <li><Link href={`${langPrefix}/terms-and-conditions`} className={styles.link}>{t.linkTerms}</Link></li>
+                            <li><Link href={`${langPrefix}/privacy-policy`} className={styles.link}>{t.linkPrivacy}</Link></li>
                         </ul>
                     </div>
 

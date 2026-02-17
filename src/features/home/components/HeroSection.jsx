@@ -1,9 +1,10 @@
+'use client';
+
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import { House, ArrowRight, Heart, Users, Clock, TrendingUp } from 'lucide-react';
 import styles from './HeroSection.module.css';
-import logoImage from '../../../assets/5a9afd14-27a5-40d8-a185-fac727f64fdf.png';
 import { translations } from '../../../data/translations';
 
 import ChatWidget from './ChatWidget';
@@ -22,7 +23,7 @@ const HeroSection = () => {
                 <div className={styles.logoContainer}>
                     <div className={styles.logoWrapper}>
                         <img
-                            src={logoImage}
+                            src="/images/5a9afd14-27a5-40d8-a185-fac727f64fdf.png"
                             alt="ApartmentHub Logo"
                             className={styles.logoIcon}
                         />
@@ -40,12 +41,12 @@ const HeroSection = () => {
                 <p className={styles.subtext2}>{t.heroSubtext2}</p>
 
                 <div className={styles.actionButtons}>
-                    <Link to={currentLang === 'nl' ? "/nl/rent-out" : "/en/rent-out"} className={`${styles.btn} ${styles.btnPrimary}`}>
+                    <Link href={currentLang === 'nl' ? "/nl/rent-out" : "/en/rent-out"} className={`${styles.btn} ${styles.btnPrimary}`}>
                         <House className={styles.btnIcon} />
                         <span>{t.ctaRentOut}</span>
                         <ArrowRight className={styles.arrowIcon} />
                     </Link>
-                    <Link to={currentLang === 'nl' ? "/nl/rent-in" : "/en/rent-in"} className={`${styles.btn} ${styles.btnSecondary}`}>
+                    <Link href={currentLang === 'nl' ? "/nl/rent-in" : "/en/rent-in"} className={`${styles.btn} ${styles.btnSecondary}`}>
                         <Heart className={styles.btnIcon} />
                         <span>{t.ctaRentIn}</span>
                         <ArrowRight className={styles.arrowIcon} />

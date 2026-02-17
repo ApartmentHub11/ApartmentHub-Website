@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { CircleCheck, X, CheckCheck, Star, MapPin, Clock } from 'lucide-react';
 import styles from './ChatWidget.module.css';
-import logoImage from '../../../assets/5a9afd14-27a5-40d8-a185-fac727f64fdf.png';
-import chatLogoImage from '../../../assets/chatlogo.png';
 
 const ChatWidget = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -20,7 +18,7 @@ const ChatWidget = () => {
                     <div className={styles.triggerAvatar}>
                         <img src={robertImage} alt="Robert van Dijk" />
                         <div className={styles.logoBadge}>
-                            <img src={chatLogoImage} alt="ApartmentHub" />
+                            <img src="/images/chatlogo.png" alt="ApartmentHub" />
                         </div>
                     </div>
                     <div className={styles.triggerContent}>
@@ -68,7 +66,7 @@ const ChatWidget = () => {
                     {/* Message 1: Agent */}
                     <div className={`${styles.messageRow} ${styles.left}`} style={{ animationDelay: '0s' }}>
                         <div className={styles.messageAvatar}>
-                            <img src={logoImage} alt="ApartmentHub" />
+                            <img src="/images/5a9afd14-27a5-40d8-a185-fac727f64fdf.png" alt="ApartmentHub" />
                         </div>
                         <div className={`${styles.messageBubble} ${styles.left}`}>
                             <p className={styles.messageText}>Robert, good news! Your apartment is rented 🎉</p>
@@ -109,7 +107,7 @@ const ChatWidget = () => {
                     {/* Message 4: Agent */}
                     <div className={`${styles.messageRow} ${styles.left}`} style={{ animationDelay: '0.3s' }}>
                         <div className={styles.messageAvatar}>
-                            <img src={logoImage} alt="ApartmentHub" />
+                            <img src="/images/5a9afd14-27a5-40d8-a185-fac727f64fdf.png" alt="ApartmentHub" />
                         </div>
                         <div className={`${styles.messageBubble} ${styles.left}`}>
                             <p className={styles.messageText}>Yes within 3 days! They even offered €50 above asking price. Contract will be signed tomorrow 👍</p>
@@ -136,7 +134,7 @@ const ChatWidget = () => {
                     {/* Message 6: Agent */}
                     <div className={`${styles.messageRow} ${styles.left}`} style={{ animationDelay: '0.5s' }}>
                         <div className={styles.messageAvatar}>
-                            <img src={logoImage} alt="ApartmentHub" />
+                            <img src="/images/5a9afd14-27a5-40d8-a185-fac727f64fdf.png" alt="ApartmentHub" />
                         </div>
                         <div className={`${styles.messageBubble} ${styles.left}`}>
                             <p className={styles.messageText}>Screening is also good - permanent job, good references</p>
@@ -163,7 +161,7 @@ const ChatWidget = () => {
                     {/* Message 8: Agent */}
                     <div className={`${styles.messageRow} ${styles.left}`} style={{ animationDelay: '0.7s' }}>
                         <div className={styles.messageAvatar}>
-                            <img src={logoImage} alt="ApartmentHub" />
+                            <img src="/images/5a9afd14-27a5-40d8-a185-fac727f64fdf.png" alt="ApartmentHub" />
                         </div>
                         <div className={`${styles.messageBubble} ${styles.left}`}>
                             <p className={styles.messageText}>We hear that a lot... glad we could help!</p>

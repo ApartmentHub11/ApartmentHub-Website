@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { usePathname } from 'next/navigation';
 import { useSelector } from 'react-redux';
 import { translations } from '../data/translations';
 
@@ -92,11 +92,11 @@ const getCanonicalPath = (normalizedPath) => {
 };
 
 const usePageTitle = () => {
-    const location = useLocation();
+    const pathname = usePathname();
     const { language } = useSelector((state) => state.ui);
 
     useEffect(() => {
-        const path = location.pathname;
+        const path = pathname;
         let titleKey = 'home'; // Default to home
 
         // Normalize path to ignore language prefix and leading/trailing slashes for matching
@@ -152,7 +152,7 @@ const usePageTitle = () => {
         }
         canonicalLink.setAttribute('href', canonicalUrl);
 
-    }, [location, language]);
+    }, [pathname, language]);
 };
 
 export default usePageTitle;

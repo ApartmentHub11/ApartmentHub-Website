@@ -1,21 +1,11 @@
+'use client';
+
 import React, { useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import { ArrowRight } from 'lucide-react';
 import styles from './NeighborhoodSection.module.css';
 import { translations } from '../../../data/translations';
-
-
-// Import images
-import centrumImg from '../../../assets/centrum-neighborhood-8xGBhlo4.jpg';
-import jordaanImg from '../../../assets/jordaan-neighborhood-D10TAM1c.jpg';
-import dePijpImg from '../../../assets/de-pijp-neighborhood-CerLEEUD.jpg';
-import oostImg from '../../../assets/oost-neighborhood-D0P6YpX3.jpg';
-import noordImg from '../../../assets/noord-neighborhood-C3afdJ-w.jpg';
-import oudZuidImg from '../../../assets/oud-zuid-neighborhood-B-g-rFNe.jpg';
-import zuidasImg from '../../../assets/zuidas-neighborhood-BS6cve9Y.jpg';
-import zeeburgImg from '../../../assets/zeeburg-neighborhood-BtRlc8ql.jpg';
-import nieuwWestImg from '../../../assets/nieuw-west-neighborhood-DhzrAv7H.jpg';
 
 const NeighborhoodSection = () => {
     const scrollWrapperRef = useRef(null);
@@ -32,63 +22,63 @@ const NeighborhoodSection = () => {
             name: 'Centrum',
             desc: t.descCentrum,
             link: `/${currentLang}/neighborhood/centrum`,
-            img: centrumImg
+            img: '/images/centrum-neighborhood-8xGBhlo4.jpg'
         },
         {
             id: '02',
             name: 'Jordaan',
             desc: t.descJordaan,
             link: `/${currentLang}/neighborhood/jordaan`,
-            img: jordaanImg
+            img: '/images/jordaan-neighborhood-D10TAM1c.jpg'
         },
         {
             id: '03',
             name: 'De Pijp',
             desc: t.descDePijp,
             link: `/${currentLang}/neighborhood/de-pijp`,
-            img: dePijpImg
+            img: '/images/de-pijp-neighborhood-CerLEEUD.jpg'
         },
         {
             id: '04',
             name: 'Oost',
             desc: t.descOost,
             link: `/${currentLang}/neighborhood/oost`,
-            img: oostImg
+            img: '/images/oost-neighborhood-D0P6YpX3.jpg'
         },
         {
             id: '05',
             name: 'Noord',
             desc: t.descNoord,
             link: `/${currentLang}/neighborhood/noord`,
-            img: noordImg
+            img: '/images/noord-neighborhood-C3afdJ-w.jpg'
         },
         {
             id: '06',
             name: 'Oud-Zuid',
             desc: t.descOudZuid,
             link: `/${currentLang}/neighborhood/oud-zuid`,
-            img: oudZuidImg
+            img: '/images/oud-zuid-neighborhood-B-g-rFNe.jpg'
         },
         {
             id: '07',
             name: 'Zuidas',
             desc: t.descZuidas,
             link: `/${currentLang}/neighborhood/zuidas`,
-            img: zuidasImg
+            img: '/images/zuidas-neighborhood-BS6cve9Y.jpg'
         },
         {
             id: '08',
             name: 'Zeeburg',
             desc: t.descZeeburg,
             link: `/${currentLang}/neighborhood/zeeburg`,
-            img: zeeburgImg
+            img: '/images/zeeburg-neighborhood-BtRlc8ql.jpg'
         },
         {
             id: '09',
             name: 'Nieuw-West',
             desc: t.descNieuwWest,
             link: `/${currentLang}/neighborhood/nieuw-west`,
-            img: nieuwWestImg
+            img: '/images/nieuw-west-neighborhood-DhzrAv7H.jpg'
         }
     ];
 
@@ -161,7 +151,7 @@ const NeighborhoodSection = () => {
                         {/* First set of items */}
                         {neighborhoods.map((item) => (
                             <div key={`set1-${item.id}`} className={styles.cardWrapper}>
-                                <Link to={item.link} className={styles.card}>
+                                <Link href={item.link} className={styles.card}>
                                     <div className={styles.cardInner}>
                                         <div className={styles.imageContainer}>
                                             <div className={styles.imageWrapper}>
@@ -192,7 +182,7 @@ const NeighborhoodSection = () => {
                         {/* Duplicate set for infinite scroll */}
                         {neighborhoods.map((item) => (
                             <div key={`set2-${item.id}`} className={styles.cardWrapper}>
-                                <Link to={item.link} className={styles.card}>
+                                <Link href={item.link} className={styles.card}>
                                     <div className={styles.cardInner}>
                                         <div className={styles.imageContainer}>
                                             <div className={styles.imageWrapper}>

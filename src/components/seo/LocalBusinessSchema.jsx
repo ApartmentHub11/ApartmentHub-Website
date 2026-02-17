@@ -8,11 +8,11 @@ const localBusinessSchema = {
     "url": "https://www.apartmenthub.nl",
     "logo": {
         "@type": "ImageObject",
-        "url": "https://www.apartmenthub.nl/src/assets/site-logo.png",
+        "url": "https://www.apartmenthub.nl/images/site-logo.png",
         "width": 512,
         "height": 512
     },
-    "image": "https://www.apartmenthub.nl/src/assets/site-logo.png",
+    "image": "https://www.apartmenthub.nl/images/site-logo.png",
     "telephone": "+31 6 58 97 54 49",
     "email": "info@apartmenthub.nl",
     "address": {

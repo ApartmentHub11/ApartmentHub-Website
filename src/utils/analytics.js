@@ -9,19 +9,26 @@
  * 2. GTM dataLayer via push() - allowing GTM tags to fire on these events
  */
 
-// Initialize dataLayer
-window.dataLayer = window.dataLayer || [];
+const isBrowser = () => typeof window !== 'undefined';
+
+// Ensure dataLayer exists (browser-only)
+const ensureDataLayer = () => {
+    if (!isBrowser()) return null;
+    window.dataLayer = window.dataLayer || [];
+    return window.dataLayer;
+};
 
 /**
  * Safe wrapper around gtag
  */
 const safeGtag = (...args) => {
+    if (!isBrowser()) return;
     if (typeof window.gtag === 'function') {
         window.gtag(...args);
     } else {
         // Fallback if gtag didn't load, push arguments to dataLayer manually
         // which effectively does the same thing for gtag.js
-        window.dataLayer.push(arguments);
+        ensureDataLayer()?.push(args);
     }
 };
 
@@ -30,11 +37,12 @@ const safeGtag = (...args) => {
  * Sends to both GA4 (direct) and GTM (dataLayer)
  */
 export const trackEvent = (eventName, eventParams = {}) => {
+    if (!isBrowser()) return;
     // 1. Send to GA4 directly
     safeGtag('event', eventName, eventParams);
 
     // 2. Push to GTM dataLayer for external tags (ads, pixels, etc.)
-    window.dataLayer.push({
+    ensureDataLayer()?.push({
         event: eventName,
         ...eventParams
     });
