@@ -9,10 +9,7 @@ const nextConfig = {
         // Temporary: unblock `next build` while ESLint 9 + legacy config is stabilized
         ignoreDuringBuilds: true,
     },
-    experimental: {
-        // Work around current Next DevTools RSC manifest bug in dev
-        nextDevtools: false,
-    },
+
     webpack(config) {
         // Allow importing videos/other binary assets from src/ (Vite-style)
         config.module.rules.push({
