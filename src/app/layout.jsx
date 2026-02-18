@@ -21,6 +21,9 @@ export const viewport = {
     themeColor: '#009B8A',
 };
 
+// Force dynamic SSR for all routes in the app router
+export const dynamic = 'force-dynamic';
+
 // JSON-LD Structured Data (LocalBusiness + RealEstateAgent)
 const jsonLd = {
     '@context': 'https://schema.org',
