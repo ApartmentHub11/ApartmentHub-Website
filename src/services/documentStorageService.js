@@ -54,7 +54,7 @@ export const uploadDocument = async (persoonId, dossierId, docType, file, accoun
                 type: docType,
                 bestandsnaam: file.name,
                 bestandspad: fileName,
-                status: 'pending',
+                status: 'ontvangen',
                 uploaded_at: new Date().toISOString()
             })
             .select()

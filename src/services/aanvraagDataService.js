@@ -14,7 +14,11 @@ export const saveAanvraagData = async (dossierId, formData) => {
             return { ok: true };
         }
 
-        // Save bid data to dossiers table
+        // Extract main tenant email for the dossier
+        const mainTenant = formData.personen?.find(p => p.rol === 'Hoofdhuurder');
+        const mainTenantEmail = mainTenant?.email || null;
+
+        // Save bid data and main tenant email to dossiers table
         const { error: dossierError } = await supabase
             .from('dossiers')
             .update({
@@ -23,6 +27,7 @@ export const saveAanvraagData = async (dossierId, formData) => {
                 motivation: formData.motivation,
                 months_advance: formData.monthsAdvance,
                 property_address: formData.propertyAddress,
+                email: mainTenantEmail,
                 updated_at: new Date().toISOString()
             })
             .eq('id', dossierId);
