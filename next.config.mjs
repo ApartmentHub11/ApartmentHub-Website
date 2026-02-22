@@ -19,9 +19,22 @@ const nextConfig = {
 
         return config;
     },
-    // Redirect non-www to www
+    // Redirect non-www to www and strip BOM characters
     async redirects() {
-        return [];
+        return [
+            // Strip %EF%BB%BF (Zero Width No-Break Space / BOM) from the end of URLs
+            // Crawlers sometimes append this invisible character causing 404s
+            {
+                source: '/:path*%EF%BB%BF',
+                destination: '/:path*',
+                permanent: true,
+            },
+            {
+                source: '/:path*%E2%80%8B', // Also strip standard zero-width space if present
+                destination: '/:path*',
+                permanent: true,
+            }
+        ];
     },
     // Headers for robots.txt, sitemap.xml etc.
     async headers() {

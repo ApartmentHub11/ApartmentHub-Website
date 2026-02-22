@@ -11,16 +11,21 @@ import { neighborhoodsData } from '../data/neighborhoodsData';
 import { useSelector } from 'react-redux';
 
 const NeighborhoodDetail = () => {
-    const { id } = useParams();
+    const { id: rawId } = useParams();
     const currentLang = useSelector((state) => state.ui.language);
     const [activeTab, setActiveTab] = useState('overview');
     const [priceType, setPriceType] = useState('rent');
+
+    // Decode URI component to fix encoded characters (%20, %EF etc), and strip out BOM/Zero-width spaces and whitespace
+    // We replace the literal string "%EF%BB%BF" first because it might be double-encoded or otherwise cause decodeURIComponent to fail
+    const cleanedRawId = typeof rawId === 'string' ? rawId.replace(/(%EF%BB%BF|%E2%80%8B)+/gi, '') : '';
+    const id = cleanedRawId ? decodeURIComponent(cleanedRawId).replace(/[\u200B-\u200D\uFEFF]/g, '').trim() : '';
 
     const neighborhood = neighborhoodsData[id]?.[currentLang] || neighborhoodsData[id]?.['en'];
 
     if (!neighborhood) {
         if (typeof window !== 'undefined') {
-            window.location.href = '/en/neighborhoods';
+            window.location.href = `/${currentLang}/neighborhoods`;
         }
         return null;
     }

@@ -18,24 +18,29 @@ import AddPersonModal from '../components/aanvraag/AddPersonModal';
 import UploadChoiceModal from '../components/aanvraag/UploadChoiceModal';
 import styles from './Aanvraag.module.css';
 
-const mockPand = {
-    adres: "Ceintuurbaan 123, Amsterdam",
+/**
+ * Build a `pand` object from a raw Supabase apartment row.
+ * Falls back to sensible defaults when fields are missing.
+ */
+const buildPandFromApartment = (apt) => ({
+    adres: apt.full_address || [apt.street, apt.area].filter(Boolean).join(', ') || apt.name || '',
+    apartmentId: apt.id,
     voorwaarden: {
-        huurprijs: 2100,
-        waarborgsom: 4200,
-        servicekosten: "G/W/E exclusief",
-        beschikbaar: "01-03-2025",
-        minBod: 2100,
-        maxBod: 4200
-    }
-};
+        huurprijs: apt.rental_price || 0,
+        waarborgsom: apt.rental_price ? apt.rental_price * 2 : 0,
+        servicekosten: apt.additional_notes || 'G/W/E exclusief',
+        beschikbaar: apt.available_from || '-',
+        minBod: apt.rental_price || 0,
+        maxBod: apt.rental_price ? apt.rental_price * 2 : 0,
+    },
+});
 
 const Aanvraag = () => {
     const router = useRouter();
     const pathname = usePathname();
     const dispatch = useDispatch();
     const currentLang = useSelector((state) => state.ui.language);
-    const { logout, dossierId } = useAuth();
+    const { logout, dossierId, phoneNumber, accountId } = useAuth();
     const [saveStatus, setSaveStatus] = useState('idle'); // 'idle', 'saving', 'saved', 'error'
 
     useEffect(() => {
@@ -50,6 +55,7 @@ const Aanvraag = () => {
     const tNav = translations.nav[currentLang] || translations.nav.en;
 
     const [loading, setLoading] = useState(true);
+    const [selectedPand, setSelectedPand] = useState(null); // loaded from localStorage
     const [data, setData] = useState(null);
     const [bidAmount, setBidAmount] = useState(0);
     const [startDate, setStartDate] = useState("");
@@ -63,6 +69,20 @@ const Aanvraag = () => {
     const [selectedUploadMethod, setSelectedUploadMethod] = useState(null);
     const [selectedTenantForGuarantor, setSelectedTenantForGuarantor] = useState(null);
 
+    // Load apartment from localStorage (set by AppartementenSelectie)
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+        const raw = localStorage.getItem('selected_apartment_data');
+        if (raw) {
+            try {
+                const apt = JSON.parse(raw);
+                setSelectedPand(buildPandFromApartment(apt));
+            } catch (e) {
+                console.warn('[Aanvraag] Could not parse selected_apartment_data', e);
+            }
+        }
+    }, []);
+
     // Load saved data on mount
     useEffect(() => {
         const loadData = async () => {
@@ -72,10 +92,48 @@ const Aanvraag = () => {
             }
 
             const result = await loadAanvraagData(dossierId);
+            let pand = selectedPand || {
+                adres: '',
+                voorwaarden: { huurprijs: 0, waarborgsom: 0, servicekosten: '-', beschikbaar: '-', minBod: 0, maxBod: 0 }
+            };
+
+            // Attempt to load apartment from accounts current_bookings
+            if (accountId) {
+                try {
+                    const { supabase: sb } = await import('../integrations/supabase/client');
+                    const { data: accData, error: accError } = await sb
+                        .from('accounts')
+                        .select('current_bookings, documentation_status')
+                        .eq('id', accountId)
+                        .single();
+
+                    if (!accError && accData?.current_bookings?.length > 0) {
+                        const booking = accData.current_bookings[0];
+                        if (booking.apartment_id) {
+                            const { data: aptData } = await sb
+                                .from('apartments')
+                                .select('*')
+                                .eq('id', booking.apartment_id)
+                                .single();
+
+                            if (aptData) {
+                                pand = buildPandFromApartment(aptData);
+                                setSelectedPand(pand);
+                            }
+                        }
+                    }
+
+                    // Set initial 'Not filled' status if empty
+                    if (!accError && !accData?.documentation_status) {
+                        await sb.from('accounts').update({ documentation_status: 'Not filled' }).eq('id', accountId);
+                    }
+                } catch (e) {
+                    console.warn('[Aanvraag] Could not load apartment from current_bookings', e);
+                }
+            }
 
             if (result.ok && result.data) {
-                // Load saved data
-                setBidAmount(result.data.bidAmount || mockPand.voorwaarden.huurprijs);
+                setBidAmount(result.data.bidAmount || pand.voorwaarden.huurprijs);
                 setStartDate(result.data.startDate || '');
                 setMotivation(result.data.motivation || '');
                 setMonthsAdvance(result.data.monthsAdvance || 0);
@@ -92,13 +150,8 @@ const Aanvraag = () => {
                         docsCompleet: false
                     }];
 
-                setData({
-                    pand: mockPand,
-                    personen,
-                    dossierCompleet: false
-                });
+                setData({ pand, personen, dossierCompleet: false });
             } else {
-                // No saved data, use defaults
                 const initialPerson = {
                     persoonId: "p1",
                     naam: "",
@@ -108,20 +161,27 @@ const Aanvraag = () => {
                     documenten: [],
                     docsCompleet: false
                 };
-
-                setData({
-                    pand: mockPand,
-                    personen: [initialPerson],
-                    dossierCompleet: false
-                });
-                setBidAmount(mockPand.voorwaarden.huurprijs);
+                setData({ pand, personen: [initialPerson], dossierCompleet: false });
+                setBidAmount(pand.voorwaarden.huurprijs);
             }
 
             setLoading(false);
         };
 
         loadData();
-    }, [dossierId]);
+        // Re-run when selectedPand resolves (it's loaded async from localStorage)
+    }, [dossierId, selectedPand]);
+
+    // Keep data.pand in sync when selectedPand loads after data is already set
+    useEffect(() => {
+        if (!selectedPand || !data) return;
+        setData(prev => {
+            if (!prev) return prev;
+            return { ...prev, pand: selectedPand };
+        });
+        // We only want to run this when selectedPand actually changes
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedPand]);
 
     // Auto-save with debouncing
     const saveTimeoutRef = useRef(null);
@@ -164,6 +224,24 @@ const Aanvraag = () => {
         }
 
         if (result.ok) {
+            // Check progress of page 1 to set 'Partial'
+            // If they have filled some core details but haven't uploaded docs yet
+            const hasData = !!(
+                bidAmount > 0 ||
+                startDate !== '' ||
+                (data.personen && data.personen[0] && data.personen[0].naam?.trim() !== '')
+            );
+
+            // We shouldn't override if docs are complete (Complete).
+            // This is just a best-effort set to Partial on autosave.
+            if (hasData) {
+                // Approximate completion check (avoids stale state dependency loop)
+                const someDocs = data.personen?.some(p => p.documenten?.length > 0);
+                if (!someDocs && accountId) {
+                    updateAccountDocumentationStatus('Partial').catch(console.error);
+                }
+            }
+
             setSaveStatus('saved');
             setTimeout(() => setSaveStatus('idle'), 2000);
         } else {
@@ -246,6 +324,77 @@ const Aanvraag = () => {
         if (tenantIds.length === 0) return false;
         return tenantIds.every(id => tenantProgress[id]?.isDocsComplete === true);
     };
+
+    /**
+     * Upsert all personen with their latest form data into Supabase.
+     * Called after all documents are uploaded so we store the final state.
+     */
+    const saveAllPersonsToSupabase = useCallback(async (personen) => {
+        const { supabase: sb } = await import('../integrations/supabase/client');
+        if (!sb || !dossierId) return;
+
+        for (const p of personen) {
+            if (!p.supabaseId) continue; // Skip persons not yet in DB
+            const nameParts = (p.naam || '').trim().split(' ');
+            const voornaam = nameParts[0] || '';
+            const achternaam = nameParts.slice(1).join(' ') || '';
+
+            const updates = {
+                voornaam,
+                achternaam,
+                email: p.email || null,
+                telefoon: p.telefoon || null,
+                werk_status: p.werkstatus || null,
+                bruto_maandinkomen: p.inkomen ? parseFloat(p.inkomen) : null,
+                huidige_adres: p.adres || null,
+                postcode: p.postcode || null,
+                woonplaats: p.woonplaats || null,
+                updated_at: new Date().toISOString(),
+            };
+
+            const { error } = await sb
+                .from('personen')
+                .update(updates)
+                .eq('id', p.supabaseId);
+
+            if (error) {
+                console.error('[Aanvraag] Error updating persoon:', p.supabaseId, error);
+            } else {
+                console.log('[Aanvraag] ✓ Saved persoon:', p.supabaseId);
+            }
+        }
+    }, [dossierId]);
+
+    /**
+     * Update accounts.documentation_status for the logged-in user.
+     * Matches account by whatsapp_number (phone) or directly via accountId.
+     */
+    const updateAccountDocumentationStatus = useCallback(async (status) => {
+        const accId = accountId || (typeof window !== 'undefined' ? localStorage.getItem('account_id') : null);
+        const phone = phoneNumber || (typeof window !== 'undefined' ? localStorage.getItem('auth_phone') : null);
+
+        if (!accId && !phone) return;
+
+        const { supabase: sb } = await import('../integrations/supabase/client');
+        if (!sb) return;
+
+        let query = sb.from('accounts').update({ documentation_status: status });
+
+        if (accId) {
+            query = query.eq('id', accId);
+        } else {
+            const normalised = phone.replace(/\s+/g, '');
+            query = query.or(`whatsapp_number.eq.${normalised},whatsapp_number.eq.${phone}`);
+        }
+
+        const { error } = await query;
+
+        if (error) {
+            console.warn('[Aanvraag] Could not update accounts.documentation_status:', error.message);
+        } else {
+            console.log('[Aanvraag] ✓ accounts.documentation_status →', status);
+        }
+    }, [accountId, phoneNumber]);
 
     const canSubmit = bidAmount > 0 && startDate !== '' && isAllDocsComplete();
 
@@ -340,7 +489,8 @@ const Aanvraag = () => {
         if (filesToUpload.length > 0) {
             for (const file of filesToUpload) {
                 setSaveStatus('saving');
-                const result = await uploadDocument(persoonSupabaseId, dossierId, type, file);
+                const targetAccountId = persoon.accountId || (persoon.rol === 'Hoofdhuurder' ? accountId : null);
+                const result = await uploadDocument(persoonSupabaseId, dossierId, type, file, targetAccountId, persoon.telefoon);
 
                 if (result.ok) {
                     uploadedDocs.push(result.document);
@@ -427,6 +577,18 @@ const Aanvraag = () => {
         setData({ ...data, personen: updatedPersonen });
         setSaveStatus('saved');
         setTimeout(() => setSaveStatus('idle'), 2000);
+
+        // After updating local state, check if all docs are now complete.
+        // If so, persist final form data to Supabase and update documentation_status.
+        const allNowComplete = Object.keys(tenantProgress).length > 0 &&
+            Object.values(tenantProgress).every(tp => tp?.isDocsComplete === true);
+
+        if (allNowComplete && filesToUpload.length > 0) {
+            console.log('[Aanvraag] All docs complete – saving persons to Supabase...');
+            // Use updatedPersonen which has the persoon that just uploaded too
+            saveAllPersonsToSupabase(updatedPersonen).catch(console.error);
+            updateAccountDocumentationStatus('Complete').catch(console.error);
+        }
     };
 
     const handleAddCoTenant = () => {
@@ -456,8 +618,63 @@ const Aanvraag = () => {
     };
 
     const handleAddPersonSubmit = async (name, whatsapp) => {
+        let newAccountId = null;
+
+        try {
+            const { supabase: sb } = await import('../integrations/supabase/client');
+            const normalizedPhone = whatsapp.replace(/\s+/g, '');
+
+            // 1. Check if account already exists
+            const { data: existingAccount } = await sb
+                .from('accounts')
+                .select('id')
+                .or(`whatsapp_number.eq.${normalizedPhone},whatsapp_number.eq.${whatsapp}`)
+                .maybeSingle();
+
+            if (existingAccount) {
+                newAccountId = existingAccount.id;
+            } else {
+                // 2. Create new account
+                const { data: createdAccount } = await sb
+                    .from('accounts')
+                    .insert({
+                        tenant_name: name,
+                        whatsapp_number: whatsapp,
+                        status: 'Deal In Progress',
+                        documentation_status: 'Not filled'
+                    })
+                    .select('id')
+                    .maybeSingle();
+
+                if (createdAccount) {
+                    newAccountId = createdAccount.id;
+                }
+            }
+
+            // 3. Link them to the main tenant's account
+            if (newAccountId && accountId) {
+                const { data: mainAcc } = await sb.from('accounts').select('co_tenants').eq('id', accountId).single();
+                const existingCoTenants = mainAcc?.co_tenants || [];
+
+                const linkObject = {
+                    account_id: newAccountId,
+                    role: addPersonRole,
+                    name: name
+                };
+
+                if (!existingCoTenants.some(ct => ct.account_id === newAccountId)) {
+                    await sb.from('accounts').update({
+                        co_tenants: [...existingCoTenants, linkObject]
+                    }).eq('id', accountId);
+                }
+            }
+        } catch (err) {
+            console.error('[Aanvraag] Error linking co-tenant to CRM account:', err);
+        }
+
         const newPerson = {
             persoonId: `p${Date.now()}`,
+            accountId: newAccountId,
             naam: name,
             rol: addPersonRole,
             email: "",
@@ -484,11 +701,60 @@ const Aanvraag = () => {
         await logout();
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!bidAmount || !startDate) {
             alert(currentLang === 'en' ? 'Please complete the bid section' : 'Vul de biedingsectie in');
             return;
         }
+
+        setSaveStatus('saving');
+        await updateAccountDocumentationStatus('Offered');
+
+        // Link offer to apartment and account
+        if (data.pand?.apartmentId && accountId) {
+            try {
+                const { supabase: sb } = await import('../integrations/supabase/client');
+
+                // 1. Account: push to offered_apartments array
+                const { data: accData } = await sb.from('accounts').select('offered_apartments').eq('id', accountId).single();
+                const offeredApts = accData?.offered_apartments || [];
+                if (!offeredApts.includes(data.pand.apartmentId)) {
+                    await sb.from('accounts').update({
+                        offered_apartments: [...offeredApts, data.pand.apartmentId]
+                    }).eq('id', accountId);
+                }
+
+                // 2. Apartment: push to offers_in JSONB array
+                const { data: aptData } = await sb.from('apartments').select('offers_in').eq('id', data.pand.apartmentId).single();
+                const offersIn = aptData?.offers_in || [];
+                const mainTenant = data.personen.find(p => p.rol === 'Hoofdhuurder');
+
+                // Check if we already have an offer for this account to avoid duplicates
+                const existingOfferIdx = offersIn.findIndex(o => o.account_id === accountId);
+                const offerObj = {
+                    account_id: accountId,
+                    tenant_name: mainTenant?.naam || '',
+                    bid_amount: bidAmount,
+                    start_date: startDate,
+                    motivation: motivation,
+                    status: 'Pending', // New offer is pending review
+                    submitted_at: new Date().toISOString()
+                };
+
+                if (existingOfferIdx >= 0) {
+                    offersIn[existingOfferIdx] = offerObj;
+                } else {
+                    offersIn.push(offerObj);
+                }
+
+                await sb.from('apartments').update({ offers_in: offersIn }).eq('id', data.pand.apartmentId);
+            } catch (err) {
+                console.error('[Aanvraag] Failed to submit offer to CRM:', err);
+            }
+        }
+
+        setSaveStatus('saved');
+        setTimeout(() => setSaveStatus('idle'), 2000);
 
         console.log("Submitting", { bidAmount, startDate, data });
         const letterPath = currentLang === 'en' ? '/en/letter-of-intent' : '/letter-of-intent';

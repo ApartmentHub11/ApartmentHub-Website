@@ -1,47 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSelector } from 'react-redux';
 import { translations } from '../data/translations';
 import Button from '../components/ui/Button';
+import { supabase } from '../integrations/supabase/client';
 import styles from './AppartementenSelectie.module.css';
-
-// Mock apartments data
-const apartments = [
-    {
-        id: 'apt-1',
-        address: 'Prinsengracht 123',
-        city: 'Amsterdam',
-        price: 1850,
-        rooms: 2,
-        surface: 65,
-    },
-    {
-        id: 'apt-2',
-        address: 'Herengracht 456',
-        city: 'Amsterdam',
-        price: 2200,
-        rooms: 3,
-        surface: 85,
-    },
-    {
-        id: 'apt-3',
-        address: 'Keizersgracht 789',
-        city: 'Amsterdam',
-        price: 1650,
-        rooms: 2,
-        surface: 55,
-    },
-    {
-        id: 'apt-4',
-        address: 'Vondelstraat 12',
-        city: 'Amsterdam',
-        price: 2500,
-        rooms: 4,
-        surface: 110,
-    },
-];
 
 const AppartementenSelectie = () => {
     const router = useRouter();
@@ -49,15 +14,53 @@ const AppartementenSelectie = () => {
     const t = translations.apartments[currentLang] || translations.apartments.nl;
 
     const [selectedApartment, setSelectedApartment] = useState('');
+    const [apartments, setApartments] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [fetchError, setFetchError] = useState(null);
+
+    useEffect(() => {
+        const fetchApartments = async () => {
+            setLoading(true);
+            setFetchError(null);
+            try {
+                const { data, error } = await supabase
+                    .from('apartments')
+                    .select('id, name, full_address, street, area, zip_code, rental_price, bedrooms, square_meters, status')
+                    .in('status', ['Active', 'CreateLink'])
+                    .order('name', { ascending: true });
+
+                if (error) {
+                    console.error('[AppartementenSelectie] Error fetching apartments:', error);
+                    setFetchError(error.message);
+                } else {
+                    setApartments(data || []);
+                }
+            } catch (err) {
+                console.error('[AppartementenSelectie] Unexpected error:', err);
+                setFetchError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchApartments();
+    }, []);
 
     const selectedApt = apartments.find(apt => apt.id === selectedApartment);
 
     const handleContinue = () => {
-        if (selectedApartment) {
-            // Store selected apartment and navigate to login
+        if (selectedApartment && selectedApt) {
+            // Store selected apartment ID and full data for Aanvraag page
             localStorage.setItem('selected_apartment', selectedApartment);
+            localStorage.setItem('selected_apartment_data', JSON.stringify(selectedApt));
             router.push('/login');
         }
+    };
+
+    const displayAddress = (apt) => {
+        const parts = [apt.full_address || apt.street || apt.name];
+        if (apt.area && !apt.full_address) parts.push(apt.area);
+        return parts.filter(Boolean).join(', ');
     };
 
     return (
@@ -73,45 +76,63 @@ const AppartementenSelectie = () => {
                         <div className={styles.form}>
                             <div className={styles.selectWrapper}>
                                 <label className={styles.selectLabel}>{t.selectLabel}</label>
-                                <select
-                                    className={styles.select}
-                                    value={selectedApartment}
-                                    onChange={(e) => setSelectedApartment(e.target.value)}
-                                >
-                                    <option value="">{t.selectPlaceholder}</option>
-                                    {apartments.map((apt) => (
-                                        <option key={apt.id} value={apt.id}>
-                                            {apt.address}, {apt.city} - €{apt.price} {t.price}
-                                        </option>
-                                    ))}
-                                </select>
+                                {loading ? (
+                                    <div className={styles.select} style={{ display: 'flex', alignItems: 'center', color: '#888' }}>
+                                        {currentLang === 'en' ? 'Loading apartments...' : 'Appartementen laden...'}
+                                    </div>
+                                ) : fetchError ? (
+                                    <div style={{ color: 'red', fontSize: '0.875rem', padding: '0.5rem 0' }}>
+                                        {currentLang === 'en' ? 'Failed to load apartments.' : 'Kon appartementen niet laden.'} ({fetchError})
+                                    </div>
+                                ) : (
+                                    <select
+                                        className={styles.select}
+                                        value={selectedApartment}
+                                        onChange={(e) => setSelectedApartment(e.target.value)}
+                                    >
+                                        <option value="">{t.selectPlaceholder}</option>
+                                        {apartments.map((apt) => (
+                                            <option key={apt.id} value={apt.id}>
+                                                {displayAddress(apt)}
+                                                {apt.rental_price ? ` - €${apt.rental_price}` : ''}
+                                                {t.price ? ` ${t.price}` : ''}
+                                            </option>
+                                        ))}
+                                    </select>
+                                )}
                             </div>
 
                             {selectedApt && (
                                 <div className={styles.previewCard}>
                                     <h3 className={styles.previewTitle}>
-                                        {selectedApt.address}
+                                        {displayAddress(selectedApt)}
                                     </h3>
                                     <div className={styles.previewDetails}>
-                                        <div className={styles.previewItem}>
-                                            <span className={styles.previewValue}>€{selectedApt.price}</span>
-                                            <span className={styles.previewLabel}>{t.price}</span>
-                                        </div>
-                                        <div className={styles.previewItem}>
-                                            <span className={styles.previewValue}>{selectedApt.rooms}</span>
-                                            <span className={styles.previewLabel}>{t.rooms}</span>
-                                        </div>
-                                        <div className={styles.previewItem}>
-                                            <span className={styles.previewValue}>{selectedApt.surface}</span>
-                                            <span className={styles.previewLabel}>{t.surface}</span>
-                                        </div>
+                                        {selectedApt.rental_price && (
+                                            <div className={styles.previewItem}>
+                                                <span className={styles.previewValue}>€{selectedApt.rental_price}</span>
+                                                <span className={styles.previewLabel}>{t.price}</span>
+                                            </div>
+                                        )}
+                                        {selectedApt.bedrooms && (
+                                            <div className={styles.previewItem}>
+                                                <span className={styles.previewValue}>{selectedApt.bedrooms}</span>
+                                                <span className={styles.previewLabel}>{t.rooms}</span>
+                                            </div>
+                                        )}
+                                        {selectedApt.square_meters && (
+                                            <div className={styles.previewItem}>
+                                                <span className={styles.previewValue}>{selectedApt.square_meters}m²</span>
+                                                <span className={styles.previewLabel}>{t.surface}</span>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             )}
 
                             <Button
                                 onClick={handleContinue}
-                                disabled={!selectedApartment}
+                                disabled={!selectedApartment || loading}
                                 fullWidth
                                 size="lg"
                             >

@@ -6,9 +6,11 @@ import { supabase } from '../integrations/supabase/client';
  * @param {string} dossierId - The dossier ID
  * @param {string} docType - Document type (e.g., 'id_document', 'salary_slip')
  * @param {File} file - The file to upload
+ * @param {string} [accountId] - The CRM account ID (optional)
+ * @param {string} [phone] - The person's phone number for looking up account if accountId is missing (optional)
  * @returns {Promise<{ok: boolean, document?: Object, error?: string}>}
  */
-export const uploadDocument = async (persoonId, dossierId, docType, file) => {
+export const uploadDocument = async (persoonId, dossierId, docType, file, accountId = null, phone = null) => {
     try {
         if (!supabase) {
             console.log('[Mock] uploadDocument:', { persoonId, docType, fileName: file.name });
@@ -63,6 +65,53 @@ export const uploadDocument = async (persoonId, dossierId, docType, file) => {
             await supabase.storage.from('dossier-documents').remove([fileName]);
             console.error('Error saving document metadata:', dbError);
             return { ok: false, error: dbError.message };
+        }
+
+        // --- NEW: Add document to accounts.documents JSONB array ---
+        try {
+            let targetAccountId = accountId;
+
+            // If no accountId provided, try to find it via phone
+            if (!targetAccountId && phone) {
+                const normalizedPhone = phone.replace(/\s+/g, '');
+                const { data: accLookup } = await supabase
+                    .from('accounts')
+                    .select('id')
+                    .or(`whatsapp_number.eq.${normalizedPhone},whatsapp_number.eq.${phone}`)
+                    .limit(1)
+                    .single();
+
+                if (accLookup) {
+                    targetAccountId = accLookup.id;
+                }
+            }
+
+            if (targetAccountId) {
+                const { data: accData } = await supabase
+                    .from('accounts')
+                    .select('documents')
+                    .eq('id', targetAccountId)
+                    .single();
+
+                const existingDocs = accData?.documents || [];
+                const newDocItem = {
+                    type: docType,
+                    file_path: fileName,
+                    public_url: urlData.publicUrl,
+                    uploaded_at: new Date().toISOString()
+                };
+
+                // Remove existing doc of same type to avoid duplicates
+                const updatedDocs = existingDocs.filter(d => d.type !== docType);
+                updatedDocs.push(newDocItem);
+
+                await supabase
+                    .from('accounts')
+                    .update({ documents: updatedDocs })
+                    .eq('id', targetAccountId);
+            }
+        } catch (accErr) {
+            console.warn('[StorageService] Error updating accounts.documents:', accErr);
         }
 
         return {
@@ -146,7 +195,7 @@ export const deleteDocument = async (documentId) => {
  * @param {File} newFile - The new file to upload
  * @returns {Promise<{ok: boolean, document?: Object, error?: string}>}
  */
-export const replaceDocument = async (oldDocumentId, persoonId, dossierId, docType, newFile) => {
+export const replaceDocument = async (oldDocumentId, persoonId, dossierId, docType, newFile, accountId = null, phone = null) => {
     try {
         // Delete the old document
         const deleteResult = await deleteDocument(oldDocumentId);
@@ -155,7 +204,7 @@ export const replaceDocument = async (oldDocumentId, persoonId, dossierId, docTy
         }
 
         // Upload the new document
-        return await uploadDocument(persoonId, dossierId, docType, newFile);
+        return await uploadDocument(persoonId, dossierId, docType, newFile, accountId, phone);
     } catch (error) {
         console.error('Error in replaceDocument:', error);
         return { ok: false, error: 'Failed to replace document' };

@@ -30,6 +30,7 @@ export const AuthProvider = ({ children }) => {
         token: null,
         phoneNumber: null,
         dossierId: null,
+        accountId: null,
         firstName: null,
         lastName: null,
     });
@@ -42,6 +43,7 @@ export const AuthProvider = ({ children }) => {
                 const storedToken = localStorage.getItem('auth_token');
                 const storedPhone = localStorage.getItem('auth_phone');
                 const storedDossierId = localStorage.getItem('dossier_id');
+                const storedAccountId = localStorage.getItem('account_id');
                 const storedFirstName = localStorage.getItem('auth_first_name');
                 const storedLastName = localStorage.getItem('auth_last_name');
 
@@ -51,6 +53,7 @@ export const AuthProvider = ({ children }) => {
                         token: storedToken,
                         phoneNumber: storedPhone,
                         dossierId: storedDossierId,
+                        accountId: storedAccountId,
                         firstName: storedFirstName,
                         lastName: storedLastName,
                     });
@@ -60,6 +63,7 @@ export const AuthProvider = ({ children }) => {
                     localStorage.removeItem('auth_token');
                     localStorage.removeItem('auth_phone');
                     localStorage.removeItem('dossier_id');
+                    localStorage.removeItem('account_id');
                     localStorage.removeItem('auth_first_name');
                     localStorage.removeItem('auth_last_name');
                 }
@@ -76,13 +80,14 @@ export const AuthProvider = ({ children }) => {
     /**
      * Login - store auth data after successful verification
      */
-    const login = useCallback((token, phoneNumber, dossierId, firstName = null, lastName = null) => {
-        console.log('[Auth] Logging in:', phoneNumber, 'Dossier:', dossierId);
+    const login = useCallback((token, phoneNumber, dossierId, firstName = null, lastName = null, accountId = null) => {
+        console.log('[Auth] Logging in:', phoneNumber, 'Dossier:', dossierId, 'Account:', accountId);
 
         // Store in localStorage
         localStorage.setItem('auth_token', token);
         localStorage.setItem('auth_phone', phoneNumber);
         localStorage.setItem('dossier_id', dossierId);
+        if (accountId) localStorage.setItem('account_id', accountId);
         if (firstName) localStorage.setItem('auth_first_name', firstName);
         if (lastName) localStorage.setItem('auth_last_name', lastName);
 
@@ -91,6 +96,7 @@ export const AuthProvider = ({ children }) => {
             token,
             phoneNumber,
             dossierId,
+            accountId,
             firstName,
             lastName,
         });
@@ -112,6 +118,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('auth_token');
         localStorage.removeItem('auth_phone');
         localStorage.removeItem('dossier_id');
+        localStorage.removeItem('account_id');
         localStorage.removeItem('auth_first_name');
         localStorage.removeItem('auth_last_name');
 
@@ -120,6 +127,7 @@ export const AuthProvider = ({ children }) => {
             token: null,
             phoneNumber: null,
             dossierId: null,
+            accountId: null,
             firstName: null,
             lastName: null,
         });
@@ -137,6 +145,7 @@ export const AuthProvider = ({ children }) => {
                 token: authState.token,
                 phoneNumber: authState.phoneNumber,
                 dossierId: authState.dossierId,
+                accountId: authState.accountId,
                 firstName: authState.firstName,
                 lastName: authState.lastName,
                 userName,

@@ -140,7 +140,26 @@ const Login = () => {
             }
 
             // Login successful - store auth data
-            login(data.token, data.phone_number, data.dossier_id);
+            // Fetch accountId from accounts table
+            let accountId = null;
+            try {
+                const normalizedPhone = data.phone_number.replace(/\s+/g, '');
+                const { data: accountData, error: accountError } = await supabase
+                    .from('accounts')
+                    .select('id')
+                    .or(`whatsapp_number.eq.${normalizedPhone},whatsapp_number.eq.${data.phone_number}`)
+                    .limit(1)
+                    .single();
+
+                if (!accountError && accountData) {
+                    accountId = accountData.id;
+                }
+            } catch (err) {
+                // Non-fatal if account not found yet (Zoko might create it later)
+                console.warn('Could not fetch account ID during login:', err);
+            }
+
+            login(data.token, data.phone_number, data.dossier_id, null, null, accountId);
 
             // Navigate to target page
             const from = searchParams.get('from') || '/aanvraag';
