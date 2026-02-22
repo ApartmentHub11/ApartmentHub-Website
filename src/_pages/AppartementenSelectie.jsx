@@ -25,9 +25,9 @@ const AppartementenSelectie = () => {
             try {
                 const { data, error } = await supabase
                     .from('apartments')
-                    .select('id, name, full_address, street, area, zip_code, rental_price, bedrooms, square_meters, status')
+                    .select('id, "Full Address", street, area, zip_code, rental_price, bedrooms, square_meters, status')
                     .in('status', ['Active', 'CreateLink'])
-                    .order('name', { ascending: true });
+                    .order('Full Address', { ascending: true });
 
                 if (error) {
                     console.error('[AppartementenSelectie] Error fetching apartments:', error);
@@ -58,8 +58,8 @@ const AppartementenSelectie = () => {
     };
 
     const displayAddress = (apt) => {
-        const parts = [apt.full_address || apt.street || apt.name];
-        if (apt.area && !apt.full_address) parts.push(apt.area);
+        const parts = [apt["Full Address"] || apt.street || apt.name];
+        if (apt.area && !apt["Full Address"]) parts.push(apt.area);
         return parts.filter(Boolean).join(', ');
     };
 

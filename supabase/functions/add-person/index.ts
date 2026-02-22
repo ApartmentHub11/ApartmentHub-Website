@@ -29,7 +29,7 @@ serve(async (req) => {
 
   try {
     console.log('[add-person] Request received');
-    
+
     const token = req.headers.get('x-auth-token');
     if (!token) {
       console.error('[add-person] No auth token in x-auth-token header');
@@ -54,7 +54,7 @@ serve(async (req) => {
     console.log('[add-person] Token verified for phone:', phone_number);
 
     const { rol, naam, whatsapp, workStatus, linkedToPersoonId } = await req.json();
-    
+
     console.log('[add-person] Request data:', { rol, naam, whatsapp, workStatus, linkedToPersoonId });
 
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -122,7 +122,6 @@ serve(async (req) => {
         naam,
         whatsapp,
         linked_to_persoon_id: rol === 'Garantsteller' ? linkedToPersoonId : null,
-        is_required: true,
         docs_complete: false,
       })
       .select()
@@ -140,7 +139,7 @@ serve(async (req) => {
 
     // Determine required documents based on role and work status
     let requiredDocs: string[] = [];
-    
+
     if (rol === 'Garantsteller') {
       if (workStatus && GUARANTOR_DOCUMENTS_BY_STATUS[workStatus]) {
         requiredDocs = GUARANTOR_DOCUMENTS_BY_STATUS[workStatus];
@@ -159,7 +158,6 @@ serve(async (req) => {
     const documentInserts = requiredDocs.map(docType => ({
       persoon_id: newPersoon.id,
       type: docType,
-      is_required: docType !== 'Extra inkomen', // Extra inkomen is optional
       status: 'ontbreekt',
     }));
 

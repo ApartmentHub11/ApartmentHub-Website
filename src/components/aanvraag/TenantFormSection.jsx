@@ -39,11 +39,14 @@ const TenantFormSection = ({
     const [uploadMethod, setUploadMethod] = useState(null);
     const [workStatus, setWorkStatus] = useState(persoon.werkstatus || null);
 
-    // Sync formData and workStatus when persoon prop changes (e.g., when data loads from DB)
+    // Sync formData and workStatus only when data is loaded from DB (supabaseId changes)
+    // Do NOT depend on individual fields to avoid infinite update loops:
+    //   formData change → onFormDataChange → parent setState → new persoon prop → setFormData → repeat
+    const prevSupabaseIdRef = React.useRef(persoon.supabaseId);
     useEffect(() => {
-        // Only update if persoon has meaningful data (has supabaseId or has name/email filled)
-        // This prevents overwriting user input during initial render
-        if (persoon.supabaseId || persoon.naam || persoon.email) {
+        // Only sync when supabaseId is newly set (data loaded from DB)
+        if (persoon.supabaseId && persoon.supabaseId !== prevSupabaseIdRef.current) {
+            prevSupabaseIdRef.current = persoon.supabaseId;
             setFormData({
                 naam: persoon.naam || '',
                 email: persoon.email || '',
@@ -57,7 +60,7 @@ const TenantFormSection = ({
                 setWorkStatus(persoon.werkstatus);
             }
         }
-    }, [persoon.persoonId, persoon.supabaseId, persoon.naam, persoon.email, persoon.telefoon, persoon.adres, persoon.postcode, persoon.woonplaats, persoon.inkomen, persoon.werkstatus]);
+    }, [persoon.supabaseId]); // eslint-disable-line react-hooks/exhaustive-deps
 
     // Derived
     const requiredDocuments = getRequiredDocuments(workStatus, 'tenant');
@@ -99,7 +102,7 @@ const TenantFormSection = ({
     const onFormDataChangeRef = React.useRef(onFormDataChange);
     onFormDataChangeRef.current = onFormDataChange;
 
-    // Notify parent of changes - only when progress values change
+    // Notify parent of changes
     useEffect(() => {
         if (onFormDataChangeRef.current) {
             onFormDataChangeRef.current(persoon.persoonId, {
@@ -118,7 +121,7 @@ const TenantFormSection = ({
                 isDocsComplete: docProgress === 100
             });
         }
-    }, [formProgress, docProgress, overallProgress, persoon.persoonId, formData.naam, formData.email, formData.telefoon, formData.adres, formData.postcode, formData.woonplaats, formData.inkomen, workStatus]);
+    }, [formProgress, docProgress, overallProgress, persoon.persoonId, formData.naam, formData.email, formData.telefoon, formData.adres, formData.postcode, formData.woonplaats, formData.inkomen, workStatus]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const handleInputChange = (field, value) => {
         setFormData(prev => ({ ...prev, [field]: value }));

@@ -19,7 +19,7 @@ export const saveAanvraagData = async (dossierId, formData) => {
             .from('dossiers')
             .update({
                 bid_amount: formData.bidAmount,
-                start_date: formData.startDate,
+                start_date: formData.startDate || null,
                 motivation: formData.motivation,
                 months_advance: formData.monthsAdvance,
                 property_address: formData.propertyAddress,

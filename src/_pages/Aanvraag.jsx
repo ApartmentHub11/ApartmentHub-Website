@@ -23,7 +23,7 @@ import styles from './Aanvraag.module.css';
  * Falls back to sensible defaults when fields are missing.
  */
 const buildPandFromApartment = (apt) => ({
-    adres: apt.full_address || [apt.street, apt.area].filter(Boolean).join(', ') || apt.name || '',
+    adres: apt["Full Address"] || [apt.street, apt.area].filter(Boolean).join(', ') || apt.name || '',
     apartmentId: apt.id,
     voorwaarden: {
         huurprijs: apt.rental_price || 0,
@@ -125,7 +125,7 @@ const Aanvraag = () => {
 
                     // Set initial 'Not filled' status if empty
                     if (!accError && !accData?.documentation_status) {
-                        await sb.from('accounts').update({ documentation_status: 'Not filled' }).eq('id', accountId);
+                        await sb.from('accounts').update({ documentation_status: 'Pending' }).eq('id', accountId);
                     }
                 } catch (e) {
                     console.warn('[Aanvraag] Could not load apartment from current_bookings', e);
@@ -238,7 +238,7 @@ const Aanvraag = () => {
                 // Approximate completion check (avoids stale state dependency loop)
                 const someDocs = data.personen?.some(p => p.documenten?.length > 0);
                 if (!someDocs && accountId) {
-                    updateAccountDocumentationStatus('Partial').catch(console.error);
+                    updateAccountDocumentationStatus('Pending').catch(console.error);
                 }
             }
 
@@ -578,16 +578,17 @@ const Aanvraag = () => {
         setSaveStatus('saved');
         setTimeout(() => setSaveStatus('idle'), 2000);
 
-        // After updating local state, check if all docs are now complete.
-        // If so, persist final form data to Supabase and update documentation_status.
+        // After updating local state, check document completion and update accounts.documentation_status
         const allNowComplete = Object.keys(tenantProgress).length > 0 &&
             Object.values(tenantProgress).every(tp => tp?.isDocsComplete === true);
 
-        if (allNowComplete && filesToUpload.length > 0) {
+        if (allNowComplete) {
             console.log('[Aanvraag] All docs complete – saving persons to Supabase...');
-            // Use updatedPersonen which has the persoon that just uploaded too
             saveAllPersonsToSupabase(updatedPersonen).catch(console.error);
             updateAccountDocumentationStatus('Complete').catch(console.error);
+        } else {
+            // Not all docs uploaded yet – set status to Pending
+            updateAccountDocumentationStatus('Pending').catch(console.error);
         }
     };
 
@@ -625,11 +626,13 @@ const Aanvraag = () => {
             const normalizedPhone = whatsapp.replace(/\s+/g, '');
 
             // 1. Check if account already exists
-            const { data: existingAccount } = await sb
+            const { data: existingAccounts } = await sb
                 .from('accounts')
                 .select('id')
                 .or(`whatsapp_number.eq.${normalizedPhone},whatsapp_number.eq.${whatsapp}`)
-                .maybeSingle();
+                .limit(1);
+
+            const existingAccount = existingAccounts?.[0] || null;
 
             if (existingAccount) {
                 newAccountId = existingAccount.id;
@@ -641,7 +644,7 @@ const Aanvraag = () => {
                         tenant_name: name,
                         whatsapp_number: whatsapp,
                         status: 'Deal In Progress',
-                        documentation_status: 'Not filled'
+                        documentation_status: 'Pending'
                     })
                     .select('id')
                     .maybeSingle();
@@ -708,7 +711,7 @@ const Aanvraag = () => {
         }
 
         setSaveStatus('saving');
-        await updateAccountDocumentationStatus('Offered');
+        await updateAccountDocumentationStatus('Complete');
 
         // Link offer to apartment and account
         if (data.pand?.apartmentId && accountId) {
