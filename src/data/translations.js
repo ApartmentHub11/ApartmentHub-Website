@@ -418,8 +418,8 @@ export const translations = {
             feature4Title: "Documentation Checklist",
             feature4Desc: "Complete list of required documents for rental applications",
 
-            statDownloads: "312,247 downloads",
-            statUpdated: "Updated for 2025",
+            statDownloads: "32,247 downloads",
+            statUpdated: "Updated for 2026",
             statFree: "100% Free",
             btnDownload: "Download Free Guide (PDF)",
 
@@ -487,8 +487,8 @@ export const translations = {
             feature4Title: "Documentatie Checklist",
             feature4Desc: "Volledige lijst van vereiste documenten voor huurverzoeken",
 
-            statDownloads: "312.247 downloads",
-            statUpdated: "Bijgewerkt voor 2025",
+            statDownloads: "32.247 downloads",
+            statUpdated: "Bijgewerkt voor 2026",
             statFree: "100% Gratis",
             btnDownload: "Download Gratis Gids (PDF)",
 
