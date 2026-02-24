@@ -487,10 +487,16 @@ const Aanvraag = () => {
         // Upload new files to Supabase
         const uploadedDocs = [];
         if (filesToUpload.length > 0) {
-            for (const file of filesToUpload) {
+            // Resolve the phone number: prefer persoon.telefoon, fall back to dossier phoneNumber
+            const docPhoneNumber = persoon.telefoon || phoneNumber;
+            const targetAccountId = persoon.accountId || (persoon.rol === 'Hoofdhuurder' ? accountId : null);
+
+            for (let fi = 0; fi < filesToUpload.length; fi++) {
+                const file = filesToUpload[fi];
                 setSaveStatus('saving');
-                const targetAccountId = persoon.accountId || (persoon.rol === 'Hoofdhuurder' ? accountId : null);
-                const result = await uploadDocument(persoonSupabaseId, dossierId, type, file, targetAccountId, persoon.telefoon);
+                // For multi-file uploads pass file index; for single file pass null
+                const fileIndex = filesToUpload.length > 1 ? (existingDocs.length + fi) : null;
+                const result = await uploadDocument(persoonSupabaseId, dossierId, type, file, docPhoneNumber, targetAccountId, fileIndex);
 
                 if (result.ok) {
                     uploadedDocs.push(result.document);

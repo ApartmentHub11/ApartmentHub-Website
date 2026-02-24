@@ -155,8 +155,11 @@ serve(async (req) => {
     }
 
     // Create required documents for this persoon
+    // Use the person's whatsapp number, falling back to the dossier phone_number
+    const docPhoneNumber = whatsapp || phone_number;
     const documentInserts = requiredDocs.map(docType => ({
       persoon_id: newPersoon.id,
+      phone_number: docPhoneNumber,
       type: docType,
       status: 'ontbreekt',
     }));

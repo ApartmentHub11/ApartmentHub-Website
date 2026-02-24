@@ -1,16 +1,30 @@
 import { supabase } from '../integrations/supabase/client';
 
 /**
- * Upload a document to Supabase Storage and save metadata
+ * Sanitize a phone number for use as a storage folder name.
+ * Removes +, spaces, and special characters, keeping only digits.
+ * @param {string} phone
+ * @returns {string}
+ */
+const sanitizePhoneForPath = (phone) => {
+    return phone.replace(/[^0-9]/g, '');
+};
+
+/**
+ * Upload a document to Supabase Storage and save metadata.
+ * Documents are stored at: {phoneNumber}/{docType}.{ext}
+ * For multi-file types, a file index is appended: {phoneNumber}/{docType}_{index}.{ext}
+ *
  * @param {string} persoonId - The person (supabase ID) to associate the document with
  * @param {string} dossierId - The dossier ID
- * @param {string} docType - Document type (e.g., 'id_document', 'salary_slip')
+ * @param {string} docType - Document type (e.g., 'id_bewijs', 'loonstroken')
  * @param {File} file - The file to upload
+ * @param {string} phoneNumber - The person's phone number (required for storage path)
  * @param {string} [accountId] - The CRM account ID (optional)
- * @param {string} [phone] - The person's phone number for looking up account if accountId is missing (optional)
+ * @param {number} [fileIndex] - Index for multi-file uploads (0-based), omit for single-file
  * @returns {Promise<{ok: boolean, document?: Object, error?: string}>}
  */
-export const uploadDocument = async (persoonId, dossierId, docType, file, accountId = null, phone = null) => {
+export const uploadDocument = async (persoonId, dossierId, docType, file, phoneNumber, accountId = null, fileIndex = null) => {
     try {
         if (!supabase) {
             console.log('[Mock] uploadDocument:', { persoonId, docType, fileName: file.name });
@@ -24,16 +38,27 @@ export const uploadDocument = async (persoonId, dossierId, docType, file, accoun
             };
         }
 
-        // Create unique file path
-        const fileExt = file.name.split('.').pop();
-        const fileName = `${dossierId}/${persoonId}/${docType}_${Date.now()}.${fileExt}`;
+        if (!phoneNumber) {
+            console.error('[StorageService] Phone number is required for document storage');
+            return { ok: false, error: 'Phone number is required for document storage' };
+        }
 
-        // Upload file to Storage
+        // Create phone-based file path: {sanitizedPhone}/{docType}.{ext}
+        const sanitizedPhone = sanitizePhoneForPath(phoneNumber);
+        const fileExt = file.name.split('.').pop();
+
+        // For multi-file types, append index; otherwise use docType directly
+        const fileBaseName = fileIndex !== null && fileIndex !== undefined
+            ? `${docType}_${fileIndex + 1}`
+            : docType;
+        const storagePath = `${sanitizedPhone}/${fileBaseName}.${fileExt}`;
+
+        // Upload file to Storage (upsert: true to allow replacing existing files)
         const { data: uploadData, error: uploadError } = await supabase.storage
             .from('dossier-documents')
-            .upload(fileName, file, {
+            .upload(storagePath, file, {
                 cacheControl: '3600',
-                upsert: false
+                upsert: true
             });
 
         if (uploadError) {
@@ -44,16 +69,17 @@ export const uploadDocument = async (persoonId, dossierId, docType, file, accoun
         // Get public URL
         const { data: urlData } = supabase.storage
             .from('dossier-documents')
-            .getPublicUrl(fileName);
+            .getPublicUrl(storagePath);
 
-        // Save metadata to documenten table
+        // Save metadata to documenten table (includes phone_number)
         const { data: docData, error: dbError } = await supabase
             .from('documenten')
             .insert({
                 persoon_id: persoonId,
+                phone_number: phoneNumber,
                 type: docType,
-                bestandsnaam: file.name,
-                bestandspad: fileName,
+                bestandsnaam: `${fileBaseName}.${fileExt}`,
+                bestandspad: storagePath,
                 status: 'ontvangen',
                 uploaded_at: new Date().toISOString()
             })
@@ -62,57 +88,13 @@ export const uploadDocument = async (persoonId, dossierId, docType, file, accoun
 
         if (dbError) {
             // If DB insert fails, delete the uploaded file
-            await supabase.storage.from('dossier-documents').remove([fileName]);
+            await supabase.storage.from('dossier-documents').remove([storagePath]);
             console.error('Error saving document metadata:', dbError);
             return { ok: false, error: dbError.message };
         }
 
-        // --- NEW: Add document to accounts.documents JSONB array ---
-        try {
-            let targetAccountId = accountId;
-
-            // If no accountId provided, try to find it via phone
-            if (!targetAccountId && phone) {
-                const normalizedPhone = phone.replace(/\s+/g, '');
-                const { data: accLookup } = await supabase
-                    .from('accounts')
-                    .select('id')
-                    .or(`whatsapp_number.eq.${normalizedPhone},whatsapp_number.eq.${phone}`)
-                    .limit(1)
-                    .single();
-
-                if (accLookup) {
-                    targetAccountId = accLookup.id;
-                }
-            }
-
-            if (targetAccountId) {
-                const { data: accData } = await supabase
-                    .from('accounts')
-                    .select('documents')
-                    .eq('id', targetAccountId)
-                    .single();
-
-                const existingDocs = accData?.documents || [];
-                const newDocItem = {
-                    type: docType,
-                    file_path: fileName,
-                    public_url: urlData.publicUrl,
-                    uploaded_at: new Date().toISOString()
-                };
-
-                // Remove existing doc of same type to avoid duplicates
-                const updatedDocs = existingDocs.filter(d => d.type !== docType);
-                updatedDocs.push(newDocItem);
-
-                await supabase
-                    .from('accounts')
-                    .update({ documents: updatedDocs })
-                    .eq('id', targetAccountId);
-            }
-        } catch (accErr) {
-            console.warn('[StorageService] Error updating accounts.documents:', accErr);
-        }
+        // Note: accounts.documents and documentation_status are now synced
+        // automatically via the DB trigger sync_accounts_from_dossier_data()
 
         return {
             ok: true,
@@ -193,9 +175,12 @@ export const deleteDocument = async (documentId) => {
  * @param {string} dossierId - The dossier ID
  * @param {string} docType - Document type
  * @param {File} newFile - The new file to upload
+ * @param {string} phoneNumber - The person's phone number
+ * @param {string} [accountId] - The CRM account ID (optional)
+ * @param {number} [fileIndex] - Index for multi-file uploads (optional)
  * @returns {Promise<{ok: boolean, document?: Object, error?: string}>}
  */
-export const replaceDocument = async (oldDocumentId, persoonId, dossierId, docType, newFile, accountId = null, phone = null) => {
+export const replaceDocument = async (oldDocumentId, persoonId, dossierId, docType, newFile, phoneNumber, accountId = null, fileIndex = null) => {
     try {
         // Delete the old document
         const deleteResult = await deleteDocument(oldDocumentId);
@@ -204,7 +189,7 @@ export const replaceDocument = async (oldDocumentId, persoonId, dossierId, docTy
         }
 
         // Upload the new document
-        return await uploadDocument(persoonId, dossierId, docType, newFile, accountId, phone);
+        return await uploadDocument(persoonId, dossierId, docType, newFile, phoneNumber, accountId, fileIndex);
     } catch (error) {
         console.error('Error in replaceDocument:', error);
         return { ok: false, error: 'Failed to replace document' };
