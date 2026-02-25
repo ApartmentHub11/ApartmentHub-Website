@@ -1,16 +1,28 @@
 /**
  * Reminder Service
- * Sends a single webhook POST to n8n immediately after login/signup.
- * n8n handles the timing (5min, 1hr, 24hr) and checks document status
- * before sending each WhatsApp reminder.
+ * Sends an initial webhook POST to n8n on login/signup to register the user.
+ *
+ * The actual timed reminders (15min, 4hrs, 17hrs, 40hrs) are handled
+ * server-side by pg_cron in Supabase, so they persist even if the user
+ * logs out or closes the browser. The pg_cron job calls
+ * process_document_reminders() every 5 minutes, which:
+ *   - Checks if documentation_status is already 'Complete' (skips if so)
+ *   - Fires a webhook to n8n for each due reminder
+ *   - Marks the reminder as sent
+ *
+ * This client-side service only sends the initial "user logged in" event
+ * so n8n knows about the session. The server-side reminders are independent.
  */
 
 const REMINDER_WEBHOOK_URL = 'https://davidvanwachem.app.n8n.cloud/webhook/get-website-filled-status';
 
 /**
  * Notify n8n that a user has logged in and may need document reminders.
- * n8n will schedule reminders at 5min, 1hr, and 24hr,
- * checking document completion status before each one.
+ * Server-side pg_cron handles the actual timed reminders at:
+ *   - 15 minutes
+ *   - 4 hours
+ *   - 17 hours
+ *   - 40 hours
  *
  * @param {string} phoneNumber - User's phone number (with country code)
  * @param {string} dossierId - User's dossier ID
