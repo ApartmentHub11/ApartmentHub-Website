@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -13,8 +13,14 @@ const ProtectedRoute = ({ children }) => {
     const router = useRouter();
     const pathname = usePathname();
 
-    // Show nothing while checking auth status
-    if (isLoading) {
+    useEffect(() => {
+        if (!isLoading && !isAuthenticated) {
+            router.push(`/login?from=${encodeURIComponent(pathname)}`);
+        }
+    }, [isLoading, isAuthenticated, router, pathname]);
+
+    // Show nothing while checking auth status or redirecting
+    if (isLoading || !isAuthenticated) {
         return (
             <div style={{
                 display: 'flex',
@@ -26,14 +32,6 @@ const ProtectedRoute = ({ children }) => {
                 Loading...
             </div>
         );
-    }
-
-    if (!isAuthenticated) {
-        // Redirect to login, preserving the intended destination
-        if (typeof window !== 'undefined') {
-            router.push(`/login?from=${encodeURIComponent(pathname)}`);
-        }
-        return null;
     }
 
     return children;

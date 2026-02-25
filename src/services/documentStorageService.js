@@ -22,9 +22,11 @@ const sanitizePhoneForPath = (phone) => {
  * @param {string} phoneNumber - The person's phone number (required for storage path)
  * @param {string} [accountId] - The CRM account ID (optional)
  * @param {number} [fileIndex] - Index for multi-file uploads (0-based), omit for single-file
+ * @param {string} [personRole] - Role of the person ('Hoofdhuurder', 'Medehuurder', 'Garantsteller')
+ * @param {string} [mainTenantPhone] - Main tenant's phone number (used as parent folder for co-tenants/guarantors)
  * @returns {Promise<{ok: boolean, document?: Object, error?: string}>}
  */
-export const uploadDocument = async (persoonId, dossierId, docType, file, phoneNumber, accountId = null, fileIndex = null) => {
+export const uploadDocument = async (persoonId, dossierId, docType, file, phoneNumber, accountId = null, fileIndex = null, personRole = null, mainTenantPhone = null) => {
     try {
         if (!supabase) {
             console.log('[Mock] uploadDocument:', { persoonId, docType, fileName: file.name });
@@ -51,7 +53,17 @@ export const uploadDocument = async (persoonId, dossierId, docType, file, phoneN
         const fileBaseName = fileIndex !== null && fileIndex !== undefined
             ? `${docType}_${fileIndex + 1}`
             : docType;
-        const storagePath = `${sanitizedPhone}/${fileBaseName}.${fileExt}`;
+
+        // Determine sub-folder based on person role
+        let subFolder = '';
+        if (personRole === 'Medehuurder') subFolder = 'co-tenant/';
+        else if (personRole === 'Garantsteller') subFolder = 'guarantor/';
+
+        // Use main tenant's phone as parent folder for co-tenants/guarantors
+        const folderPhone = (subFolder && mainTenantPhone)
+            ? sanitizePhoneForPath(mainTenantPhone)
+            : sanitizedPhone;
+        const storagePath = `${folderPhone}/${subFolder}${fileBaseName}.${fileExt}`;
 
         // Upload file to Storage (upsert: true to allow replacing existing files)
         const { data: uploadData, error: uploadError } = await supabase.storage
@@ -178,9 +190,11 @@ export const deleteDocument = async (documentId) => {
  * @param {string} phoneNumber - The person's phone number
  * @param {string} [accountId] - The CRM account ID (optional)
  * @param {number} [fileIndex] - Index for multi-file uploads (optional)
+ * @param {string} [personRole] - Role of the person
+ * @param {string} [mainTenantPhone] - Main tenant's phone number
  * @returns {Promise<{ok: boolean, document?: Object, error?: string}>}
  */
-export const replaceDocument = async (oldDocumentId, persoonId, dossierId, docType, newFile, phoneNumber, accountId = null, fileIndex = null) => {
+export const replaceDocument = async (oldDocumentId, persoonId, dossierId, docType, newFile, phoneNumber, accountId = null, fileIndex = null, personRole = null, mainTenantPhone = null) => {
     try {
         // Delete the old document
         const deleteResult = await deleteDocument(oldDocumentId);
@@ -189,7 +203,7 @@ export const replaceDocument = async (oldDocumentId, persoonId, dossierId, docTy
         }
 
         // Upload the new document
-        return await uploadDocument(persoonId, dossierId, docType, newFile, phoneNumber, accountId, fileIndex);
+        return await uploadDocument(persoonId, dossierId, docType, newFile, phoneNumber, accountId, fileIndex, personRole, mainTenantPhone);
     } catch (error) {
         console.error('Error in replaceDocument:', error);
         return { ok: false, error: 'Failed to replace document' };

@@ -28,7 +28,7 @@ const Login = () => {
     // Redirect if already authenticated
     React.useEffect(() => {
         if (isAuthenticated) {
-            const from = searchParams.get('from') || '/aanvraag';
+            const from = searchParams.get('from') || '/aanvraag-general';
             router.replace(from);
         }
     }, [isAuthenticated, router, searchParams]);
@@ -162,7 +162,7 @@ const Login = () => {
             login(data.token, data.phone_number, data.dossier_id, null, null, accountId);
 
             // Navigate to target page
-            const from = searchParams.get('from') || '/aanvraag';
+            const from = searchParams.get('from') || '/aanvraag-general';
             router.replace(from);
         } catch (err) {
             console.error('Error verifying code:', err);

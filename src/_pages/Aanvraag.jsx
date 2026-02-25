@@ -45,9 +45,9 @@ const Aanvraag = () => {
 
     useEffect(() => {
         const path = pathname.toLowerCase();
-        if (path.includes('aanvraag') && currentLang !== 'nl') {
+        if (path.includes('aanvraag-general') && currentLang !== 'nl') {
             dispatch(setLanguage('nl'));
-        } else if (path.includes('application') && currentLang !== 'en') {
+        } else if (path.includes('application-general') && currentLang !== 'en') {
             dispatch(setLanguage('en'));
         }
     }, [pathname, dispatch, currentLang]);
@@ -491,12 +491,16 @@ const Aanvraag = () => {
             const docPhoneNumber = persoon.telefoon || phoneNumber;
             const targetAccountId = persoon.accountId || (persoon.rol === 'Hoofdhuurder' ? accountId : null);
 
+            // Resolve the main tenant's phone for sub-folder routing
+            const hoofdhuurder = data.personen.find(p => p.rol === 'Hoofdhuurder');
+            const mainTenantPhone = hoofdhuurder?.telefoon || phoneNumber;
+
             for (let fi = 0; fi < filesToUpload.length; fi++) {
                 const file = filesToUpload[fi];
                 setSaveStatus('saving');
                 // For multi-file uploads pass file index; for single file pass null
                 const fileIndex = filesToUpload.length > 1 ? (existingDocs.length + fi) : null;
-                const result = await uploadDocument(persoonSupabaseId, dossierId, type, file, docPhoneNumber, targetAccountId, fileIndex);
+                const result = await uploadDocument(persoonSupabaseId, dossierId, type, file, docPhoneNumber, targetAccountId, fileIndex, persoon.rol, mainTenantPhone);
 
                 if (result.ok) {
                     uploadedDocs.push(result.document);
@@ -643,14 +647,16 @@ const Aanvraag = () => {
             if (existingAccount) {
                 newAccountId = existingAccount.id;
             } else {
-                // 2. Create new account
+                // 2. Create new account with link to main tenant
                 const { data: createdAccount } = await sb
                     .from('accounts')
                     .insert({
                         tenant_name: name,
                         whatsapp_number: whatsapp,
                         status: 'Deal In Progress',
-                        documentation_status: 'Pending'
+                        documentation_status: 'Pending',
+                        linked_account_id: accountId || null,
+                        account_role: addPersonRole === 'Medehuurder' ? 'co-tenant' : 'guarantor'
                     })
                     .select('id')
                     .maybeSingle();
@@ -658,6 +664,14 @@ const Aanvraag = () => {
                 if (createdAccount) {
                     newAccountId = createdAccount.id;
                 }
+            }
+
+            // 2b. If account already existed, update its link & role
+            if (existingAccount && accountId) {
+                await sb.from('accounts').update({
+                    linked_account_id: accountId,
+                    account_role: addPersonRole === 'Medehuurder' ? 'co-tenant' : 'guarantor'
+                }).eq('id', existingAccount.id);
             }
 
             // 3. Link them to the main tenant's account

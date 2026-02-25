@@ -27,7 +27,7 @@ const Signup = () => {
     // Redirect if already authenticated
     React.useEffect(() => {
         if (isAuthenticated) {
-            router.replace('/aanvraag');
+            router.replace('/aanvraag-general');
         }
     }, [isAuthenticated, router]);
 
@@ -127,7 +127,7 @@ const Signup = () => {
             login(data.token, data.phone_number, data.dossier_id, firstName, lastName);
 
             // Navigate to application page
-            router.replace('/aanvraag');
+            router.replace('/aanvraag-general');
         } catch (err) {
             console.error('Error verifying code:', err);
             setError(currentLang === 'en' ? 'Invalid code' : 'Ongeldige code');
